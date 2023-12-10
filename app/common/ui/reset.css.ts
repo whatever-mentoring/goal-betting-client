@@ -74,3 +74,12 @@ globalStyle('ol', {
   padding: 0,
   margin: 0,
 });
+
+globalStyle('textarea', {
+  border: 'none',
+  outline: 'none',
+  padding: 0,
+  margin: 0,
+  appearance: 'none',
+  resize: 'none',
+});
