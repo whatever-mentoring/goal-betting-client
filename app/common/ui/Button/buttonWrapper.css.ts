@@ -1,9 +1,5 @@
-import { style } from '@vanilla-extract/css';
+import { flexCenterCenter } from '../common.css';
 
 export const buttonWrapperStyles = {
-  base: style({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }),
+  base: flexCenterCenter,
 };

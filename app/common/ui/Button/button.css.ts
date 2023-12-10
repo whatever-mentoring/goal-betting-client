@@ -1,22 +1,22 @@
 import { RecipeVariants, recipe } from '@vanilla-extract/recipes';
 import { vars } from '../colors.css';
 import getRem from '../../util/getRem';
+import { flexCenterCenter } from '../common.css';
 
 export const buttonStyles = recipe({
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: `${getRem(16)}`,
-    border: 'none',
-    padding: `${getRem(18.5)} 0`,
-    width: '100%',
-    height: `${getRem(58)}`,
-    WebkitFontSmoothing: 'antialiased',
-    transition: 'color 0.3s ease-in-out, background-color 0.3s ease-in-out',
-    cursor: 'pointer',
-  },
-
+  base: [
+    flexCenterCenter,
+    {
+      width: '100%',
+      height: `${getRem(58)}`,
+      borderRadius: `${getRem(16)}`,
+      padding: `${getRem(18.5)} 0`,
+      border: 'none',
+      WebkitFontSmoothing: 'antialiased',
+      transition: 'color 0.3s ease-in-out, background-color 0.3s ease-in-out',
+      cursor: 'pointer',
+    },
+  ],
   variants: {
     color: {
       purple500: {
@@ -38,7 +38,6 @@ export const buttonStyles = recipe({
       yellow: { background: '#F5E14C', selectors: { '&:hover': { background: '#F5E14C' } } },
     },
   },
-
   defaultVariants: {
     color: 'purple500',
   },

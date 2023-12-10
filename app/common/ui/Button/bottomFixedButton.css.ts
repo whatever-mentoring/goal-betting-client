@@ -1,17 +1,19 @@
 import { style } from '@vanilla-extract/css';
 import getRem from '../../util/getRem';
 import { RecipeVariants, recipe } from '@vanilla-extract/recipes';
+import { flexCenterBetween } from '../common.css';
 
-export const bottomFixedButtonStyle = style({
-  position: 'fixed',
-  display: 'flex',
-  justifyContent: 'space-between',
-  columnGap: `${getRem(20)}`,
-  boxSizing: 'border-box',
-  width: '100%',
-  padding: `0 ${getRem(20)}`,
-  bottom: getRem(23),
-});
+export const bottomFixedButtonStyle = style([
+  flexCenterBetween,
+  {
+    position: 'fixed',
+    columnGap: `${getRem(20)}`,
+    boxSizing: 'border-box',
+    width: '100%',
+    padding: `0 ${getRem(20)}`,
+    bottom: getRem(23),
+  },
+]);
 
 export const bottomFixedButtonWrapperStyle = recipe({
   base: {
@@ -51,7 +53,6 @@ export const bottomFixedButtonWrapperStyle = recipe({
       },
     },
   },
-
   defaultVariants: {
     width: 100,
   },
