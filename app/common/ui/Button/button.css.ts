@@ -1,16 +1,17 @@
 import { RecipeVariants, recipe } from '@vanilla-extract/recipes';
 import { vars } from '../colors.css';
+import getRem from '../../util/getRem';
 
 export const buttonStyles = recipe({
   base: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '16px',
+    borderRadius: `${getRem(16)}`,
     border: 'none',
-    padding: '20px 40px',
+    padding: `${getRem(18.5)} 0`,
     width: '100%',
-    height: '58px',
+    height: `${getRem(58)}`,
     WebkitFontSmoothing: 'antialiased',
     transition: 'color 0.3s ease-in-out, background-color 0.3s ease-in-out',
     cursor: 'pointer',
@@ -43,4 +44,6 @@ export const buttonStyles = recipe({
   },
 });
 
-export type ButtonVariants = RecipeVariants<typeof buttonStyles>;
+type ButtonVariants = RecipeVariants<typeof buttonStyles>;
+type ExtractedColorType = Extract<ButtonVariants, { color?: any }>;
+export type ButtonColorType = ExtractedColorType['color'];
