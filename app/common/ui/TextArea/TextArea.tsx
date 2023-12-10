@@ -17,6 +17,26 @@ interface TextAreaProps {
   children?: React.ReactNode;
 }
 
+/**
+ *
+ * @description
+ * TextArea 컴포넌트는 입력창을 묶어주는 컴포넌트입니다.
+ * 입력창의 글자 수를 세어주는 기능을 제공합니다.
+ *
+ * @example
+ * <TextArea>
+ *  <TextArea.Base
+ *   value={input}
+ *   onChange={onChange}
+ *   placeholder="입력해주세요"
+ *   withCount={{ max: 100 }}
+ *   ref={textAreaRef}
+ *  />
+ *  <TextArea.Description text="최대 100자까지 입력 가능합니다." />
+ * </TextArea>
+ *
+ */
+
 const TextArea = ({ children }: TextAreaProps) => {
   return <>{children}</>;
 };
