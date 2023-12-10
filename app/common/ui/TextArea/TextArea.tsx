@@ -10,8 +10,9 @@ import React, {
 import { textAreaWithCount, textAreaStyle } from './textArea.css';
 import Text from '../Text/Text';
 import { ButtonIcon } from '../assets/Icon';
+import { calculateRem } from '../../util/getRem';
 
-const FONT_SIZE = 18 as const;
+const FONT_SIZE = calculateRem(18);
 
 interface TextAreaProps {
   children?: React.ReactNode;
