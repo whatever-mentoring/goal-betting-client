@@ -1,8 +1,5 @@
 import React, { forwardRef, ButtonHTMLAttributes, ReactNode } from 'react';
-import { ButtonVariants, buttonStyles } from './button.css';
-
-type ExtractedColorType = Extract<ButtonVariants, { color?: any }>;
-type ButtonColorType = ExtractedColorType['color'];
+import { ButtonColorType, buttonStyles } from './button.css';
 
 export type ButtonProps = {
   children: ReactNode;
