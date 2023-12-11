@@ -4,12 +4,6 @@ const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin');
 const withVanillaExtract = createVanillaExtractPlugin();
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  webpack: (config) => {
-    config.optimization.splitChunks = false;
-
-    return config;
-  },
-};
+const nextConfig = {};
 
 module.exports = withVanillaExtract(nextConfig);
