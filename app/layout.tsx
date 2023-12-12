@@ -3,6 +3,8 @@ import localFont from 'next/font/local';
 import './globals.css';
 import './common/ui/reset.css';
 import IconLoader from './common/ui/assets/IconLoader';
+import classNames from 'classnames';
+import { layoutStyle } from './layout.css';
 
 const pretendardFont = localFont({
   src: [
@@ -29,7 +31,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="ko">
-      <body className={pretendardFont.className}>
+      <body className={classNames(pretendardFont.className, layoutStyle)}>
         <IconLoader />
         {children}
       </body>
