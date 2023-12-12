@@ -1,6 +1,6 @@
 import { RecipeVariants, recipe } from '@vanilla-extract/recipes';
-import { vars } from '../colors.css';
 import getRem from '../../util/getRem';
+import { vars } from '../colors.css';
 import { flexCenterCenter } from '../common.css';
 
 export const buttonStyles = recipe({
@@ -19,23 +19,43 @@ export const buttonStyles = recipe({
   ],
   variants: {
     color: {
+      'purple500-active': {
+        background: vars.color.purple500,
+        selectors: {
+          '&:active': { background: vars.color.purple600 },
+          '&:disabled': { background: vars.color.purple500 },
+        },
+      },
+      'purple600-active': {
+        background: vars.color.purple600,
+        selectors: { '&:active': { background: vars.color.purple700 } },
+      },
+      'grey600-active': {
+        background: vars.color.grey600,
+        selectors: { '&:active': { background: vars.color.grey700 } },
+      },
+      'grey700-active': {
+        background: vars.color.grey700,
+        selectors: { '&:active': { background: vars.color.grey800 } },
+      },
+      'yellow-active': {
+        background: '#F5E14C',
+        selectors: { '&:active': { background: '#D9BF00' } },
+      },
+
       purple500: {
         background: vars.color.purple500,
-        selectors: { '&:hover': { background: vars.color.purple600 } },
       },
       purple600: {
         background: vars.color.purple600,
-        selectors: { '&:hover': { background: vars.color.purple700 } },
       },
       grey600: {
         background: vars.color.grey600,
-        selectors: { '&:hover': { background: vars.color.grey700 } },
       },
       grey700: {
         background: vars.color.grey700,
-        selectors: { '&:hover': { background: vars.color.grey800 } },
       },
-      yellow: { background: '#F5E14C', selectors: { '&:hover': { background: '#F5E14C' } } },
+      yellow: { background: '#F5E14C' },
     },
   },
   defaultVariants: {
