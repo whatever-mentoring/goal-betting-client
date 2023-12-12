@@ -2,17 +2,16 @@ import React, {
   ChangeEvent,
   ComponentPropsWithRef,
   forwardRef,
-  useState,
-  useRef,
-  useLayoutEffect,
   useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+  useState,
 } from 'react';
-import { textAreaWithCount, textAreaStyle } from './textArea.css';
 import Text from '../Text/Text';
 import { ButtonIcon } from '../assets/Icon';
-import { calculateRem } from '../../util/getRem';
+import { textAreaStyle, textAreaWithCount } from './textArea.css';
 
-const FONT_SIZE = calculateRem(18);
+const FONT_SIZE = 18;
 
 interface TextAreaProps {
   children?: React.ReactNode;
@@ -47,6 +46,7 @@ export type BaseProps = {
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   withCount?: {
     max: number;
+    initialVisible?: boolean;
   };
   maxLine?: number;
 } & ComponentPropsWithRef<'textarea'>;
@@ -67,7 +67,7 @@ const Base = forwardRef<HTMLTextAreaElement, BaseProps>(
           return;
         }
         textAreaRef.current.style.height = 'auto';
-        textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+        textAreaRef.current.style.height = `${textAreaRef.current.clientHeight}px`;
       }
     }, [value]);
 
@@ -85,24 +85,35 @@ const Base = forwardRef<HTMLTextAreaElement, BaseProps>(
       onChange({ target: { value: '' } } as ChangeEvent<HTMLTextAreaElement>);
     };
 
-    const withCountVisible = withCount && count > 0;
+    const withCountVisible = withCount;
+    const withCountInitialVisible = withCount?.initialVisible ?? false;
+
+    const getCountVisible = () => {
+      if (!withCountVisible) return false;
+      if (!!count) return true;
+      return withCountInitialVisible;
+    };
 
     return (
-      <div className={textAreaWithCount({ count: Boolean(withCount) })}>
-        <textarea
-          value={value}
-          onChange={handleChange}
-          ref={textAreaRef}
-          className={textAreaStyle.textAreaField}
-          itemType="text"
-          rows={1}
-          {...rest}
-        />
-        {!!withCountVisible && (
+      <div className={textAreaStyle.textAreaWrapper}>
+        <div className={textAreaWithCount({ count: Boolean(withCount) })}>
+          <textarea
+            value={value}
+            onChange={handleChange}
+            ref={textAreaRef}
+            className={textAreaStyle.textAreaField}
+            itemType="text"
+            rows={1}
+            {...rest}
+          />
+          {!!count && (
+            <ButtonIcon onClick={onClickClose} name="close-circle" size="m" fill="grey600" />
+          )}
+        </div>
+        {getCountVisible() && (
           <div className={textAreaStyle.countContainerStyle}>
-            <ButtonIcon onClick={onClickClose} name="close" size="m" fill="grey600" />
             <Text.BodyM color="grey600">
-              {count}/{withCount.max}
+              {count}/{withCount?.max}
             </Text.BodyM>
           </div>
         )}
