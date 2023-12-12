@@ -53,8 +53,10 @@ export default Icon;
 
 export type IconName =
   | 'arrow-left'
+  | 'arrow-down'
   | 'arrow-right'
   | 'close'
+  | 'close-circle'
   | 'calendar'
   | 'menu'
   | 'arrow-down'
