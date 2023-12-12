@@ -1,5 +1,4 @@
 import useCaptureAndDownloadImage from '@/app/common/hooks/useCaptureAndDownloadImage';
-import useDeviceDetect from '@/app/common/hooks/useDeviceDetect';
 import useTriggerShare from '@/app/common/hooks/useTriggerShare';
 import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import ButtonWrapper from '@/app/common/ui/Button/ButtonWrapper';
@@ -48,16 +47,10 @@ const ResultPage = ({ challenge }: ResultPageProps) => {
   };
 
   // 2. 유저 > 공유하기
-  const { isMobile } = useDeviceDetect();
   const { triggerShare } = useTriggerShare();
 
-  const onClickShare = async () => {
-    if (isMobile) {
-      triggerShare({ title, text: '내기 등록 완료!', url: location.href });
-      return;
-    }
-    await navigator.clipboard.writeText(location.href);
-    alert('링크가 복사되었습니다.');
+  const onClickShare = () => {
+    triggerShare({ title, text: '내기 등록 완료!', url: location.href });
   };
 
   return (
