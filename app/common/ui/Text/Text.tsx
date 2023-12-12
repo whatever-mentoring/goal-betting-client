@@ -15,61 +15,137 @@ const Text = ({ children, className, color = 'white' }: TextComponentProps) => {
 };
 
 // Title
-Text.TitleH1 = ({ children, color }: TextComponentProps) => (
-  <Text
-    className={classNames(textStyles.pretendard.bold, textStyles.textSize.titleH1)}
+interface HeaderTextProps extends TextComponentProps {
+  level: 'h1' | 'h2';
+}
+
+const HeaderText = ({ children, className, level, color = 'white' }: HeaderTextProps) => {
+  const colorClass = color ? textColors[color] : '';
+  if (level === 'h1') {
+    return (
+      <h1
+        className={classNames(
+          textStyles.pretendard.bold,
+          textStyles.textSize.titleH1,
+          colorClass,
+          className,
+        )}
+      >
+        {children}
+      </h1>
+    );
+  }
+  if (level === 'h2') {
+    return (
+      <h2
+        className={classNames(
+          textStyles.pretendard.bold,
+          textStyles.textSize.titleH2,
+          colorClass,
+          className,
+        )}
+      >
+        {children}
+      </h2>
+    );
+  }
+};
+
+Text.TitleH1 = ({ children, color, className }: TextComponentProps) => (
+  <HeaderText
+    className={classNames(textStyles.pretendard.bold, textStyles.textSize.titleH1, className)}
     color={color}
+    level="h1"
   >
     {children}
-  </Text>
+  </HeaderText>
 );
-Text.TitleH2 = ({ children, color }: TextComponentProps) => (
-  <Text
-    className={classNames(textStyles.pretendard.bold, textStyles.textSize.titleH2)}
+Text.TitleH2 = ({ children, color, className }: TextComponentProps) => (
+  <HeaderText
+    className={classNames(textStyles.pretendard.bold, textStyles.textSize.titleH2, className)}
     color={color}
+    level="h2"
   >
     {children}
-  </Text>
+  </HeaderText>
 );
 
 // Button
-Text.ButtonL = ({ children, color }: TextComponentProps) => (
-  <Text
-    className={classNames(textStyles.pretendard.semiBold, textStyles.textSize.buttonL)}
+interface ButtonTextProps extends TextComponentProps {
+  level: 'buttonL' | 'buttonM';
+}
+
+const ButtonText = ({ children, className, level, color = 'white' }: ButtonTextProps) => {
+  const colorClass = color ? textColors[color] : '';
+  if (level === 'buttonL') {
+    return (
+      <span
+        className={classNames(
+          textStyles.pretendard.semiBold,
+          textStyles.textSize.buttonL,
+          colorClass,
+          className,
+        )}
+      >
+        {children}
+      </span>
+    );
+  }
+  if (level === 'buttonM') {
+    return (
+      <span
+        className={classNames(
+          textStyles.pretendard.semiBold,
+          textStyles.textSize.buttonM,
+          colorClass,
+          className,
+        )}
+      >
+        {children}
+      </span>
+    );
+  }
+};
+
+Text.ButtonL = ({ children, color, className }: TextComponentProps) => (
+  <ButtonText
+    className={classNames(textStyles.pretendard.semiBold, textStyles.textSize.buttonL, className)}
     color={color}
+    level="buttonL"
   >
     {children}
-  </Text>
+  </ButtonText>
 );
-Text.ButtonM = ({ children, color }: TextComponentProps) => (
-  <Text
-    className={classNames(textStyles.pretendard.semiBold, textStyles.textSize.buttonM)}
+Text.ButtonM = ({ children, color, className }: TextComponentProps) => (
+  <ButtonText
+    className={classNames(textStyles.pretendard.semiBold, textStyles.textSize.buttonM, className)}
     color={color}
+    level="buttonM"
   >
     {children}
-  </Text>
+  </ButtonText>
 );
 
 // Body
-Text.BodyL = ({ children, color }: TextComponentProps) => (
+Text.BodyL = ({ children, color, className }: TextComponentProps) => (
   <Text
-    className={classNames(textStyles.pretendard.medium, textStyles.textSize.bodyL)}
+    className={classNames(textStyles.pretendard.medium, textStyles.textSize.bodyL, className)}
     color={color}
   >
     {children}
   </Text>
 );
-Text.BodyM = ({ children, color }: TextComponentProps) => (
+Text.BodyM = ({ children, color, className }: TextComponentProps) => (
   <Text
-    className={classNames(textStyles.pretendard.medium, textStyles.textSize.bodyM)}
+    className={classNames(textStyles.pretendard.medium, textStyles.textSize.bodyM, className)}
     color={color}
   >
     {children}
   </Text>
 );
-Text.BodyS = ({ children, color }: TextComponentProps) => (
+Text.BodyS = ({ children, color, className }: TextComponentProps) => (
   <Text
-    className={classNames(textStyles.pretendard.medium, textStyles.textSize.bodyS)}
+    className={classNames(textStyles.pretendard.medium, textStyles.textSize.bodyS, className)}
     color={color}
   >
     {children}
