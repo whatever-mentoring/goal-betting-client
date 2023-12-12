@@ -1,10 +1,11 @@
 'use client';
+import { extractNonEmptyArrayKeys } from '@/app/common/hooks/funnel/models';
+import navigationPath from '@/app/common/navigation/navigationPath';
 import dayjs from 'dayjs';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useFunnel } from '../../common/hooks/funnel/useFunnel';
 import BetPage from '../ui/Bet/BetPage';
 import ChallengeInputPage from '../ui/Description/ChallengeInputPage';
-
 import PreviewPage from '../ui/Preview/PreviewPage';
 import ResultPage from '../ui/Result/ResultPage';
 import StartDatePage from '../ui/StartDate/StartDatePage';
@@ -24,13 +25,7 @@ export interface Challenge {
 }
 
 const ChallengeAddFunnel = () => {
-  const [Funnel, setStep] = useFunnel([
-    '다짐_입력_화면',
-    '기프티콘_업로드',
-    '다짐_시작일',
-    '다짐_등록_확인',
-    '다짐_등록_완료',
-  ]);
+  const [Funnel, setStep] = useFunnel(extractNonEmptyArrayKeys(navigationPath.다짐_생성_퍼널));
 
   const [challenge, setChallenge] = useState<Challenge>({
     title: '',
@@ -42,7 +37,7 @@ const ChallengeAddFunnel = () => {
 
   return (
     <Funnel>
-      <Funnel.Step name="다짐_입력_화면">
+      <Funnel.Step name="다짐_입력">
         <ChallengeInputPage
           challenge={challenge}
           setChallenge={setChallenge}
