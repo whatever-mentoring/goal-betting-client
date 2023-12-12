@@ -1,5 +1,6 @@
 import React, { ButtonHTMLAttributes } from 'react';
 import { buttonWrapperStyles } from './buttonWrapper.css';
+import classNames from 'classnames';
 
 type ButtonWrapperProps = {
   children: React.ReactNode;
@@ -7,7 +8,7 @@ type ButtonWrapperProps = {
 
 const ButtonWrapper = ({ children, ...rest }: ButtonWrapperProps) => {
   return (
-    <button className={buttonWrapperStyles.base} {...rest}>
+    <button className={classNames(buttonWrapperStyles.base, rest.className)} {...rest}>
       {children}
     </button>
   );

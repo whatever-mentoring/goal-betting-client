@@ -1,10 +1,18 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { vars } from '../colors.css';
 import getRem from '../../util/getRem';
+import { vars } from '../colors.css';
 import { flexCenterCenter } from '../common.css';
 
 export const textAreaStyle = {
+  textAreaWrapper: style([
+    flexCenterCenter,
+    {
+      flexDirection: 'column',
+      rowGap: `${getRem(6)}`,
+      width: '100%',
+    },
+  ]),
   base: style([
     flexCenterCenter,
     {
@@ -32,11 +40,14 @@ export const textAreaStyle = {
       color: vars.color.grey500,
     },
   }),
+
   countContainerStyle: style([
-    flexCenterCenter,
     {
-      gap: `${getRem(8)}`,
-      marginLeft: `${getRem(48)}`,
+      display: 'flex',
+      width: '100%',
+      justifyContent: 'flex-end',
+      paddingTop: `${getRem(17)}`,
+      paddingRight: `${getRem(20)}`,
     },
   ]),
   descriptionWrapper: style({
