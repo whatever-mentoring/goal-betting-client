@@ -1,10 +1,11 @@
 'use client';
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import { useFunnel } from '../common/hooks/funnel/useFunnel';
-import NicknamePage from './ui/Nickname/NicknamePage';
 import { useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { extractNonEmptyArrayKeys } from '../common/hooks/funnel/models';
+import { useFunnel } from '../common/hooks/funnel/useFunnel';
 import navigationPath from '../common/navigation/navigationPath';
 import LoginPage from './ui/Login/LoginPage';
+import NicknamePage from './ui/Nickname/NicknamePage';
 
 export interface LoginFunnelProps {
   user: User;
@@ -18,7 +19,7 @@ interface User {
 
 const LoginFunnel = () => {
   const router = useRouter();
-  const [Funnel, setStep] = useFunnel(['로그인', '닉네임_설정']);
+  const [Funnel, setStep] = useFunnel(extractNonEmptyArrayKeys(navigationPath.로그인_퍼널));
 
   const [user, setUser] = useState<User>({
     nickname: '',
@@ -33,7 +34,7 @@ const LoginFunnel = () => {
         <NicknamePage
           user={user}
           setUser={setUser}
-          onNext={() => router.push(navigationPath.다짐_입력_화면)}
+          onNext={() => router.push(navigationPath.다짐_생성_퍼널.다짐_입력)}
         />
       </Funnel.Step>
     </Funnel>
