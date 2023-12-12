@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import getRem from '../../util/getRem';
-import { flexCenterBetween, flexCenterCenter, flexCenterEnd } from '../common.css';
+import { flexCenterBetween, flexCenterEnd, flexCenterStart } from '../common.css';
 
 export const headerStyles = {
   container: style([
@@ -17,7 +17,7 @@ export const headerStyles = {
   ]),
 
   left: style([
-    flexCenterCenter,
+    flexCenterStart,
     {
       flex: 1,
     },
