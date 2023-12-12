@@ -1,12 +1,29 @@
 import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import Text from '@/app/common/ui/Text/Text';
+import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { useEffect } from 'react';
 import { LoginFunnelProps } from '../../page';
 import { loginPageStyles } from './login.css';
 
 type LoginPageProps = Omit<LoginFunnelProps, 'user' | 'setUser'>;
 
 const LoginPage = ({ onNext }: LoginPageProps) => {
+  // TODO : 미들웨어 적용
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session) {
+      onNext();
+    }
+  }, [session]);
+
+  const onClickKakaoLogin = () => {
+    signIn('kakao', {
+      redirect: true,
+      callbackUrl: '/login',
+    });
+  };
   return (
     <>
       <div className={loginPageStyles.headerWrapper}>
@@ -15,14 +32,15 @@ const LoginPage = ({ onNext }: LoginPageProps) => {
       </div>
       <div className={loginPageStyles.imageWrapper}>
         <Image
+          priority
           className={loginPageStyles.image}
           src="/images/dog.png"
-          layout="fill"
+          fill
           alt="challenge_add"
         />
       </div>
       <BottomFixedButton>
-        <BottomFixedButton.First width={100} onClick={onNext} color="yellow-active">
+        <BottomFixedButton.First width={100} onClick={onClickKakaoLogin} color="yellow-active">
           <Text.ButtonL color="black">카카오 로그인하기</Text.ButtonL>
         </BottomFixedButton.First>
       </BottomFixedButton>
