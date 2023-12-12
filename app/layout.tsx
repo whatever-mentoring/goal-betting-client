@@ -1,9 +1,10 @@
+import classNames from 'classnames';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import './globals.css';
-import './common/ui/reset.css';
+import AuthSession from './common/components/AuthSession';
 import IconLoader from './common/ui/assets/IconLoader';
-import classNames from 'classnames';
+import './common/ui/reset.css';
+import './globals.css';
 import { layoutStyle } from './layout.css';
 
 const pretendardFont = localFont({
@@ -32,8 +33,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="ko">
       <body className={classNames(pretendardFont.className, layoutStyle)}>
-        <IconLoader />
-        {children}
+        <AuthSession>
+          <IconLoader />
+          {children}
+        </AuthSession>
       </body>
     </html>
   );
