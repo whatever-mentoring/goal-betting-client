@@ -6,7 +6,7 @@ import { headerTextWrapper } from '@/app/common/ui/common.css';
 import Image from 'next/image';
 import { Dispatch, SetStateAction } from 'react';
 import { Challenge, ChallengeFunnelProps } from '../../add/page';
-import { challengeInputPageStyles } from './challengeInput';
+import { challengeInputPageStyles } from './challengeInput.css';
 
 interface DescriptionPageProps extends ChallengeFunnelProps {
   challenge: Challenge;
