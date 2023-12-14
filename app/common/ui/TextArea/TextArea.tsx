@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, {
   ChangeEvent,
   ComponentPropsWithRef,
@@ -52,7 +53,7 @@ export type BaseProps = {
 } & ComponentPropsWithRef<'textarea'>;
 
 const Base = forwardRef<HTMLTextAreaElement, BaseProps>(
-  ({ value, onChange, withCount, maxLine = 3, ...rest }, ref) => {
+  ({ value, onChange, withCount, maxLine = 3, className, ...rest }, ref) => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
     // 외부의 ref를 사용할 수 있도록 함
@@ -60,7 +61,7 @@ const Base = forwardRef<HTMLTextAreaElement, BaseProps>(
 
     // textarea의 높이를 자동으로 조절
     useLayoutEffect(() => {
-      if (textAreaRef.current) {
+      if (textAreaRef.current && value.length) {
         if (textAreaRef.current.scrollHeight > FONT_SIZE * maxLine) {
           textAreaRef.current.style.height = `${FONT_SIZE * maxLine}px`;
           textAreaRef.current.style.overflowY = 'auto';
@@ -95,7 +96,7 @@ const Base = forwardRef<HTMLTextAreaElement, BaseProps>(
     };
 
     return (
-      <div className={textAreaStyle.textAreaWrapper}>
+      <div className={classNames(textAreaStyle.textAreaWrapper, className)}>
         <div className={textAreaWithCount({ count: Boolean(withCount) })}>
           <textarea
             value={value}
