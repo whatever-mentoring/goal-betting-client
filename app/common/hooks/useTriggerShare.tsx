@@ -14,15 +14,17 @@ const useTriggerShare = () => {
     async (shareData: ShareData) => {
       const url = shareData.url ?? window.location.href;
 
-      if (isMobile) {
+      if (isMobile && navigator.share) {
         await navigator.share(shareData).catch((error) => {
           console.error('공유하기 에러', error);
         });
         return;
       }
 
-      navigator.clipboard.writeText(url);
-      alert('링크가 복사되었습니다.');
+      navigator.clipboard
+        .writeText(url)
+        .then(() => alert('링크가 복사되었습니다.'))
+        .catch(() => alert('링크 복사에 실패했습니다.'));
     },
     [isMobile],
   );
