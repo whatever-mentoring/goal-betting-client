@@ -27,9 +27,6 @@ const handler = NextAuth({
       }
       return {
         ...token,
-        accessToken: '',
-        accessTokenExpires: '',
-        refreshToken: '',
       };
     },
 
