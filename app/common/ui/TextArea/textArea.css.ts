@@ -31,10 +31,11 @@ export const textAreaStyle = {
     backgroundColor: 'transparent',
     boxSizing: 'border-box',
     fontFamily: 'Pretendard-Medium',
-    fontSize: `${getRem(18)}`,
+    fontSize: '16px',
     ':focus': {
       outline: 'none',
       fontFamily: 'Pretendard-Medium',
+      fontSize: '16px',
     },
     '::placeholder': {
       color: vars.color.grey500,
