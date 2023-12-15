@@ -1,4 +1,5 @@
-import React, { forwardRef, ButtonHTMLAttributes, ReactNode } from 'react';
+import classNames from 'classnames';
+import { ButtonHTMLAttributes, ReactNode, forwardRef } from 'react';
 import { ButtonColorType, buttonStyles } from './button.css';
 
 export type ButtonProps = {
@@ -9,7 +10,12 @@ export type ButtonProps = {
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ children, type = 'button', color = 'purple500', ...rest }, ref) => {
     return (
-      <button type={type} ref={ref} className={buttonStyles({ color })} {...rest}>
+      <button
+        type={type}
+        ref={ref}
+        className={classNames(buttonStyles({ color }), rest.className)}
+        {...rest}
+      >
         {children}
       </button>
     );
