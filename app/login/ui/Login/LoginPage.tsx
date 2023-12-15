@@ -13,7 +13,7 @@ const LoginPage = ({ onNext }: LoginPageProps) => {
   const { data: session } = useSession();
 
   useEffect(() => {
-    if (session) {
+    if (session?.user.accessToken) {
       onNext();
     }
   }, [session]);
