@@ -1,5 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import getRem from '../../util/getRem';
+import { vars } from '../colors.css';
 import { flexCenterBetween, flexCenterEnd, flexCenterStart } from '../common.css';
 
 export const headerStyles = {
@@ -12,7 +13,8 @@ export const headerStyles = {
       boxSizing: 'border-box',
       padding: `0 ${getRem(19)}`,
       height: getRem(52),
-      backgroundColor: 'transparent',
+      backgroundColor: vars.color.background,
+      zIndex: 9999,
     },
   ]),
 
