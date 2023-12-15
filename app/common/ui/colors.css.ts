@@ -28,7 +28,7 @@ export const vars = createGlobalTheme(':root', {
     grey600: '#525462',
     grey700: '#3E404D',
     grey800: '#292D35',
-    grey950: '#010000',
+    grey900: '#23272F',
     // cyan
     cyan050: '#F0FBFD',
     cyan100: '#D3F1F6',
@@ -40,5 +40,7 @@ export const vars = createGlobalTheme(':root', {
     cyan700: '#0095A8',
     cyan800: '#007E8A',
     cyan900: '#05707A',
+    // background
+    background: '#22272F',
   },
 });
