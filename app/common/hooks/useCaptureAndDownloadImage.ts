@@ -1,16 +1,16 @@
 import { saveAs } from 'file-saver';
-import html2canvas from 'html2canvas';
+import { toPng } from 'html-to-image';
 import { RefObject } from 'react';
 
 const useCaptureAndDownloadImage = (ref: RefObject<HTMLElement>) => {
   const captureAndDownload = async (filename: string = 'download.png') => {
     if (ref.current) {
-      const canvas = await html2canvas(ref.current);
-      canvas.toBlob((blob) => {
-        if (blob) {
-          saveAs(blob, filename);
-        }
-      });
+      try {
+        const link = await toPng(ref.current, { cacheBust: false });
+        saveAs(link, filename);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
