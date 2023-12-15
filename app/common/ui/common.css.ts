@@ -29,6 +29,10 @@ export const fixedButtonOverWrapper = style({
   marginBottom: `${getRem(20)}`,
 });
 
+export const underLineText = style({
+  textDecoration: 'underline',
+});
+
 export const flexCenterBetween = style([flex, alignItemsCenter, justifyContentSpaceBetween]);
 export const flexCenterCenter = style([flex, alignItemsCenter, justifyContentCenter]);
 export const flexCenterStart = style([flex, alignItemsCenter, justifyContentFlexStart]);
@@ -39,9 +43,21 @@ export const withPreWrapCenter = style({
   textAlign: 'center',
 });
 
+export const withPreWrapStart = style({
+  whiteSpace: 'pre-wrap',
+  textAlign: 'start',
+});
+
 export const headerTextWrapper = style([
   flexCenterCenter,
   {
     marginTop: `${getRem(4)}`,
+  },
+]);
+
+export const headerColumnTextWrapper = style([
+  flexCenterCenter,
+  {
+    flexDirection: 'column',
   },
 ]);
