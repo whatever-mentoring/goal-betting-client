@@ -1,6 +1,6 @@
-import { useEffect, Children, ReactElement, isValidElement, useMemo, useCallback } from 'react';
-import { NonEmptyArray } from './models';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Children, ReactElement, isValidElement, useCallback, useEffect, useMemo } from 'react';
+import { NonEmptyArray } from './models';
 
 interface FunnelProps<Steps extends NonEmptyArray<string>> {
   steps: Steps;
