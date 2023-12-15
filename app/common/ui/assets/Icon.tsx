@@ -63,7 +63,8 @@ export type IconName =
   | 'setting'
   | 'docs'
   | 'fist'
-  | 'share'
+  | 'link'
   | 'download'
   | 'more'
-  | 'camera';
+  | 'camera'
+  | 'share';
