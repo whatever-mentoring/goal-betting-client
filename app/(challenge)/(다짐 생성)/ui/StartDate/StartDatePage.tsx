@@ -35,12 +35,16 @@ const StartDatePage = ({ challenge, setChallenge, onNext }: StartDatePageProps) 
         </div>
       </div>
       <div className={startDatePageStyles.calendarWrapper}>
-        <Calendar onChangeDate={onChangeDate} />
+        <Calendar
+          onChangeDate={onChangeDate}
+          mode={{ mode: 'SEVERAL_DAYS', count: 7, startDate: dayjs().add(1, 'day') }}
+          disablePast
+        />
       </div>
       <BottomFixedButton>
         <BottomFixedButton.OverItem className={fixedButtonOverWrapper}>
           <ButtonWrapper onClick={onNext}>
-            <Text.BodyM color="white">내기는 7일간 진행될거야!</Text.BodyM>
+            <Text.BodyM color="white">시작일 전까지 내기 참여자를 모을 수 있어!</Text.BodyM>
           </ButtonWrapper>
         </BottomFixedButton.OverItem>
         <BottomFixedButton.First width={100} onClick={onNext}>
