@@ -82,6 +82,7 @@ const CertificationPage = ({ certification, setCertification, onNext }: Challeng
               <Image
                 alt="image"
                 fill
+                objectFit="cover"
                 className={certificationPageStyles.image}
                 src={URL.createObjectURL(certification.file!)}
               />
