@@ -61,3 +61,7 @@ export const headerColumnTextWrapper = style([
     flexDirection: 'column',
   },
 ]);
+
+export const withFixedButtonScrollView = style({
+  marginBottom: `${getRem(150)}`,
+});
