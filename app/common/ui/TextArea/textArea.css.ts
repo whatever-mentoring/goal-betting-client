@@ -16,6 +16,7 @@ export const textAreaStyle = {
   base: style([
     flexCenterCenter,
     {
+      display: 'flex',
       minHeight: `${getRem(56)}`,
       width: '100%',
       backgroundColor: vars.color.grey800,
@@ -26,12 +27,15 @@ export const textAreaStyle = {
     },
   ]),
   textAreaField: style({
-    flex: 1,
+    flexGrow: 1,
     color: 'inherit',
     backgroundColor: 'transparent',
     boxSizing: 'border-box',
     fontFamily: 'Pretendard-Medium',
+    lineHeight: '24px',
     fontSize: '16px',
+    border: 'none',
+    resize: 'none',
     ':focus': {
       outline: 'none',
       fontFamily: 'Pretendard-Medium',
@@ -39,6 +43,25 @@ export const textAreaStyle = {
     },
     '::placeholder': {
       color: vars.color.grey500,
+      fontFamily: 'Pretendard-Medium',
+      lineHeight: '24px',
+      fontSize: '16px',
+    },
+    selectors: {
+      '&:disabled': {
+        color: vars.color.grey500,
+        cursor: 'not-allowed',
+      },
+      '&::-webkit-scrollbar': {
+        width: `${getRem(8)}`,
+      },
+      '&::-webkit-scrollbar-track': {
+        backgroundColor: vars.color.grey800,
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: vars.color.grey600,
+        borderRadius: `${getRem(8)}`,
+      },
     },
   }),
 
@@ -47,7 +70,7 @@ export const textAreaStyle = {
       display: 'flex',
       width: '100%',
       justifyContent: 'flex-end',
-      paddingTop: `${getRem(17)}`,
+      paddingTop: `${getRem(3)}`,
       paddingRight: `${getRem(20)}`,
     },
   ]),

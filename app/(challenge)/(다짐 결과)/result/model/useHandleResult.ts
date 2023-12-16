@@ -83,7 +83,7 @@ const useHandleResult = ({ setStep }: HandleResultProps) => {
         headerText: `${nickname}님이\n다짐을 성공했어요!`,
         button: {
           text: '나도 내기 만들기',
-          callback: () => router.push(navigationPath.다짐_생성_퍼널.다짐_입력),
+          callback: () => router.push(navigationPath.다짐_생성_퍼널.다짐_입력, { scroll: false }),
         },
       });
     }
@@ -100,7 +100,7 @@ const useHandleResult = ({ setStep }: HandleResultProps) => {
           headerText: `${nickname}님이\n당첨되었어요`,
           button: {
             text: '나도 내기 만들기',
-            callback: () => router.push(navigationPath.다짐_생성_퍼널.다짐_입력),
+            callback: () => router.push(navigationPath.다짐_생성_퍼널.다짐_입력, { scroll: false }),
           },
         },
       );

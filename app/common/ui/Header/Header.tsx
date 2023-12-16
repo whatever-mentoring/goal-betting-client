@@ -36,7 +36,7 @@ const Header = ({
   const onClickBack = () => {
     if (backCallback) backCallback();
     if (backTo) {
-      router.push(backTo);
+      router.push(backTo, { scroll: false });
       return;
     }
     router.back();

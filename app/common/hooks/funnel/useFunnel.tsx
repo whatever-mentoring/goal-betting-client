@@ -72,7 +72,7 @@ export const useFunnel = <Steps extends NonEmptyArray<string>>(
 
   const setStep = useCallback(
     (step: Steps[number]) => {
-      router.push(`?step=${step}`);
+      router.push(`?step=${step}`, { scroll: false });
     },
     [router],
   );

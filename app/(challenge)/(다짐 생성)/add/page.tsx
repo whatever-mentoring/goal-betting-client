@@ -71,7 +71,7 @@ const ChallengeAddFunnel = () => {
         <ResultPage
           challenge={challenge}
           setChallenge={setChallenge}
-          onNext={() => router.push(navigationPath.다짐_도전_퍼널.다짐_도전)}
+          onNext={() => router.push(navigationPath.다짐_도전_퍼널.다짐_도전, { scroll: false })}
         />
       </Funnel.Step>
     </Funnel>

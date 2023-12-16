@@ -9,13 +9,22 @@ import { ButtonIcon } from '@/app/common/ui/assets/Icon';
 import { withPreWrapCenter } from '@/app/common/ui/common.css';
 import dayjs from 'dayjs';
 import Image from 'next/image';
-import { useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { useLayoutEffect, useRef } from 'react';
 import { successPageStyles } from './success.css';
 
 type OmitNextStep = Omit<ChallengerFunnelProps, 'onNext'>;
 interface ChallengeAddPageProps extends OmitNextStep {}
 
 const SuccessPage = ({ certification, setCertification }: ChallengeAddPageProps) => {
+  const router = useRouter();
+  // 새로고침
+  // TODO : HOC 패턴으로 개선
+  useLayoutEffect(() => {
+    if (!certification.file) {
+      router.push(navigationPath.다짐_도전_퍼널.다짐_도전, { scroll: false });
+    }
+  }, [certification.file]);
   // UI RENDER
   const startDate = dayjs().subtract(1, 'day');
 

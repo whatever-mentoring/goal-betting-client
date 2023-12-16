@@ -2,6 +2,7 @@ import useCaptureAndDownloadImage from '@/app/common/hooks/useCaptureAndDownload
 import useTriggerShare from '@/app/common/hooks/useTriggerShare';
 import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import ButtonWrapper from '@/app/common/ui/Button/ButtonWrapper';
+import { useDrawer } from '@/app/common/ui/Drawer/DrawerContext';
 import Header from '@/app/common/ui/Header/Header';
 import Text from '@/app/common/ui/Text/Text';
 import Icon, { ButtonIcon } from '@/app/common/ui/assets/Icon';
@@ -37,6 +38,8 @@ const ResultPage = ({ challenge, onNext }: ResultPageProps) => {
   };
 
   // USER INTERACTION
+  // 1. 유저 > 상단 헤더 메뉴 클릭
+  const { openDrawer } = useDrawer();
   // 1. 유저 > 이미지 다운로드
   // 1-1. 이미지 생성
   const imageRef = useRef<HTMLDivElement>(null);
@@ -56,7 +59,9 @@ const ResultPage = ({ challenge, onNext }: ResultPageProps) => {
 
   return (
     <>
-      <Header appendingRightButton={<ButtonIcon name="menu" fill="white" size="l" />} />
+      <Header
+        appendingRightButton={<ButtonIcon onClick={openDrawer} name="menu" fill="white" size="l" />}
+      />
       <div className={resultPageStyles.dateLeftWrapper}>
         <div className={resultPageStyles.dateLeftBox}>
           <Text.BodyM color="white">{`D-${getLeftDate()}`}</Text.BodyM>
@@ -66,8 +71,9 @@ const ResultPage = ({ challenge, onNext }: ResultPageProps) => {
         <div className={resultPageStyles.imageWrapper}>
           <Image
             src="/images/dog.png"
-            layout="fill"
+            fill
             alt="challenge-info"
+            priority
             className={resultPageStyles.image}
           />
         </div>

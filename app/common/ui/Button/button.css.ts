@@ -34,9 +34,9 @@ export const buttonStyles = recipe({
         background: vars.color.grey600,
         selectors: { '&:active': { background: vars.color.grey700 } },
       },
-      'grey700-active': {
-        background: vars.color.grey700,
-        selectors: { '&:active': { background: vars.color.grey800 } },
+      'grey800-active': {
+        background: vars.color.grey800,
+        selectors: { '&:active': { background: vars.color.grey900 } },
       },
       'yellow-active': {
         background: '#F5E14C',

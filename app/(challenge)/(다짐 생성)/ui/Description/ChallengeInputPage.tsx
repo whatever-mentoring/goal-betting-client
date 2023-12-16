@@ -39,8 +39,9 @@ const ChallengeInputPage = ({ challenge, setChallenge, onNext }: DescriptionPage
         <Image
           className={challengeInputPageStyles.image}
           src="/images/dog.png"
-          layout="fill"
+          fill
           alt="challenge_add"
+          priority
         />
       </div>
       <BottomFixedButton>

@@ -96,7 +96,7 @@ export const checkPageStyles = {
     {
       flexDirection: 'column',
       marginTop: `${getRem(34)}`,
-      padding: `0 ${getRem(34)}`,
+      padding: `0 ${getRem(20)}`,
     },
   ]),
 
@@ -108,6 +108,7 @@ export const checkPageStyles = {
       minHeight: `${getRem(129)}`,
       borderRadius: `${getRem(18)}`,
       marginBottom: `${getRem(6)}`,
+      overflow: 'ellipsis',
     },
   ]),
   textCount: style([

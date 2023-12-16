@@ -96,8 +96,9 @@ const CertificationPage = ({ certification, setCertification, onNext }: Challeng
             placeholder="오늘 다짐을 진행하면서&#10;어떤 일이 있었나요?"
             value={certification.text}
             onChange={(e) => setCertification((prev) => ({ ...prev, text: e.target.value }))}
-            rows={5}
-            maxLine={7}
+            minRows={4}
+            rows={4}
+            maxRows={5}
             withCount={{ max: 200, initialVisible: true }}
           />
         </div>

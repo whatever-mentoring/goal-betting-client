@@ -34,7 +34,7 @@ const LoginFunnel = () => {
         <NicknamePage
           user={user}
           setUser={setUser}
-          onNext={() => router.push(navigationPath.다짐_생성_퍼널.다짐_입력)}
+          onNext={() => router.push(navigationPath.다짐_생성_퍼널.다짐_입력, { scroll: false })}
         />
       </Funnel.Step>
     </Funnel>
