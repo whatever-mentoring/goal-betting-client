@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from '../colors.css';
 import getRem from '../../util/getRem';
+import { vars } from '../colors.css';
 
 export const calendarStyle = {
   base: style({
@@ -36,7 +36,7 @@ export const calendarStyle = {
   weekHeader: style({
     display: 'grid',
     gridTemplateColumns: 'repeat(7, minmax(20px, 1fr))',
-    gap: '4px',
+    // gap: '4px',
     justifyContent: 'center',
     alignItems: 'center',
   }),
@@ -53,13 +53,14 @@ export const calendarStyle = {
   week: style({
     display: 'grid',
     gridTemplateColumns: 'repeat(7, minmax(20px, 1fr))',
-    gap: '4px',
+    // gap: '4px',
     justifyContent: 'center',
     alignItems: 'center',
   }),
 
   dayWrapper: style({
     display: 'grid',
+    position: 'relative',
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: '35px',
@@ -72,12 +73,47 @@ export const calendarStyle = {
     alignItems: 'center',
     width: '40px',
     height: '40px',
+  }),
+
+  fixedFirstCircle: style({
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    width: '38px',
+    height: '38px',
     borderRadius: '50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: `${vars.color.purple200}`,
+    zIndex: 1,
+  }),
+
+  fixedLastCircle: style({
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    width: '38px',
+    height: '38px',
+    borderRadius: '50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: `${vars.color.purple200}`,
+    zIndex: 1,
+  }),
+
+  firstDay: style({
+    background: `linear-gradient(to left, #41435C 0%, #41435C 50%, transparent 50%) no-repeat !important`,
+    backgroundSize: 'calc(100%) calc(100%) !important',
+    backgroundPosition: 'right bottom !important',
+  }),
+
+  lastDay: style({
+    background: `linear-gradient(to right, #41435C 0%, #41435C 50%, transparent 50%) no-repeat !important`,
+    backgroundSize: 'calc(100%) calc(100%) !important',
+    backgroundPosition: 'right bottom !important',
   }),
 
   currentDay: style({
-    backgroundColor: vars.color.purple200,
-    color: vars.color.black,
+    color: `${vars.color.white}`,
+    backgroundColor: `#41435C`,
   }),
 
   emptyCell: style({
@@ -86,5 +122,16 @@ export const calendarStyle = {
 
   otherMonthDay: style({
     color: vars.color.grey700,
+  }),
+
+  blackColorDay: style({
+    color: `${vars.color.black} !important`,
+    zIndex: 2,
+  }),
+
+  dayText: style({
+    fontSize: '14px',
+    color: vars.color.white,
+    zIndex: 2,
   }),
 };
