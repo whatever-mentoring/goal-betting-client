@@ -9,13 +9,36 @@ dayjs.locale('ko');
 
 type MonthType = 'PREV' | 'CURRENT' | 'NEXT';
 
-interface CalendarProps {
-  onChangeDate?: (value: dayjs.Dayjs) => void;
+interface OneDayMode {
+  mode: 'ONE_DAY';
+  date: dayjs.Dayjs;
 }
 
-const Calendar = ({ onChangeDate }: CalendarProps) => {
+interface SeveralDaysMode {
+  mode: 'SEVERAL_DAYS';
+  startDate: dayjs.Dayjs;
+  count: number;
+}
+
+interface CalendarProps {
+  onChangeDate?: (value: dayjs.Dayjs) => void;
+  mode: OneDayMode | SeveralDaysMode;
+  disablePast?: boolean;
+}
+
+const Calendar = ({ onChangeDate, mode, disablePast = false }: CalendarProps) => {
   const [currentMonth, setCurrentMonth] = useState(dayjs());
-  const [selectedDay, setSelectedDay] = useState(dayjs());
+  const makeInitialDays = (mode: OneDayMode | SeveralDaysMode): dayjs.Dayjs[] => {
+    if (mode.mode === 'ONE_DAY') {
+      return [mode.date];
+    }
+    if (mode.mode === 'SEVERAL_DAYS') {
+      const daysArray = makeDaysToArray(mode.startDate, mode.count);
+      return daysArray;
+    }
+    return [];
+  };
+  const [selectedDays, setSelectedDays] = useState(makeInitialDays(mode));
 
   const handleDayClick = (day: number, monthType: MonthType) => {
     let newMonth = currentMonth;
@@ -26,9 +49,21 @@ const Calendar = ({ onChangeDate }: CalendarProps) => {
       newMonth = currentMonth.add(1, 'month');
     }
 
-    const newSelectedDay = newMonth.set('date', day);
-    setSelectedDay(newSelectedDay);
     setCurrentMonth(newMonth);
+
+    const newSelectedDay = newMonth.set('date', day);
+
+    if (disablePast && newSelectedDay.isBefore(dayjs().add(1, 'day'), 'day')) {
+      return;
+    }
+
+    if (mode.mode === 'ONE_DAY') {
+      setSelectedDays([newSelectedDay]);
+    }
+    if (mode.mode === 'SEVERAL_DAYS') {
+      const daysArray = makeDaysToArray(newSelectedDay, mode.count);
+      setSelectedDays(daysArray);
+    }
 
     if (onChangeDate) {
       onChangeDate(newSelectedDay);
@@ -39,7 +74,11 @@ const Calendar = ({ onChangeDate }: CalendarProps) => {
     <div className={calendarStyle.base}>
       <Header currentMonth={currentMonth} setCurrentMonth={setCurrentMonth} />
       <HeaderRow />
-      <DayGrid currentMonth={currentMonth} selectedDay={selectedDay} onDayClick={handleDayClick} />
+      <DayGrid
+        currentMonth={currentMonth}
+        selectedDays={selectedDays}
+        onDayClick={handleDayClick}
+      />
     </div>
   );
 };
@@ -85,11 +124,11 @@ const HeaderRow = () => {
 
 interface DayGridProps {
   currentMonth: dayjs.Dayjs;
-  selectedDay: dayjs.Dayjs;
+  selectedDays: dayjs.Dayjs[];
   onDayClick: (day: number, monthType: MonthType) => void;
 }
 
-const DayGrid = ({ currentMonth, selectedDay, onDayClick }: DayGridProps) => {
+const DayGrid = ({ currentMonth, selectedDays, onDayClick }: DayGridProps) => {
   const monthStart = currentMonth.startOf('month');
   const monthEnd = currentMonth.endOf('month');
   const startWeekday = monthStart.day();
@@ -104,7 +143,11 @@ const DayGrid = ({ currentMonth, selectedDay, onDayClick }: DayGridProps) => {
         key={`prev-${day}`}
         day={day}
         monthType="PREV"
-        isSelected={selectedDay.isSame(currentMonth.subtract(1, 'month').set('date', day), 'day')}
+        isSelected={selectedDays.some((selectedDay) =>
+          selectedDay.isSame(currentMonth.subtract(1, 'month').set('date', day), 'day'),
+        )}
+        isFirst={getIsFirstDay(currentMonth.subtract(1, 'month').set('date', day), selectedDays)}
+        isLast={getIsLastDay(currentMonth.subtract(1, 'month').set('date', day), selectedDays)}
         onDayClick={onDayClick}
       />,
     );
@@ -116,7 +159,11 @@ const DayGrid = ({ currentMonth, selectedDay, onDayClick }: DayGridProps) => {
         key={`current-${i}`}
         day={i}
         monthType="CURRENT"
-        isSelected={selectedDay.isSame(currentMonth.set('date', i), 'day')}
+        isSelected={selectedDays.some((selectedDay) =>
+          selectedDay.isSame(currentMonth.set('date', i), 'day'),
+        )}
+        isFirst={getIsFirstDay(currentMonth.set('date', i), selectedDays)}
+        isLast={getIsLastDay(currentMonth.set('date', i), selectedDays)}
         onDayClick={onDayClick}
       />,
     );
@@ -129,7 +176,11 @@ const DayGrid = ({ currentMonth, selectedDay, onDayClick }: DayGridProps) => {
         key={`next-${i}`}
         day={i}
         monthType="NEXT"
-        isSelected={selectedDay.isSame(currentMonth.add(1, 'month').set('date', i), 'day')}
+        isSelected={selectedDays.some((selectedDay) =>
+          selectedDay.isSame(currentMonth.add(1, 'month').set('date', i), 'day'),
+        )}
+        isFirst={getIsFirstDay(currentMonth.add(1, 'month').set('date', i), selectedDays)}
+        isLast={getIsLastDay(currentMonth.add(1, 'month').set('date', i), selectedDays)}
         onDayClick={onDayClick}
       />,
     );
@@ -143,21 +194,68 @@ interface DayProps {
   monthType: MonthType;
   isSelected: boolean;
   onDayClick: (day: number, monthType: MonthType) => void;
+  isFirst?: boolean;
+  isLast?: boolean;
 }
 
-const Day = ({ day, monthType, isSelected, onDayClick }: DayProps) => {
+const Day = ({
+  day,
+  monthType,
+  isSelected,
+  onDayClick,
+  isFirst = false,
+  isLast = false,
+}: DayProps) => {
   const dayClass = classNames(calendarStyle.day, {
-    [calendarStyle.currentDay]: isSelected,
     [calendarStyle.otherMonthDay]: monthType !== 'CURRENT',
   });
 
+  const dayWrapperClass = classNames(calendarStyle.dayWrapper, {
+    [calendarStyle.firstDay]: isFirst,
+    [calendarStyle.lastDay]: isLast,
+    [calendarStyle.currentDay]: isSelected,
+  });
+
+  const getFixedCircleClass = () => {
+    if (isFirst) return calendarStyle.fixedFirstCircle;
+    if (isLast) return calendarStyle.fixedLastCircle;
+    return '';
+  };
+
+  const getDateTextClass = () => {
+    if (isFirst || isLast) return calendarStyle.blackColorDay;
+    if (isSelected) return calendarStyle.dayText;
+    if (monthType !== 'CURRENT') return calendarStyle.otherMonthDay;
+    return '';
+  };
+
   return (
-    <div className={calendarStyle.dayWrapper} onClick={() => onDayClick(day, monthType)}>
+    <div className={dayWrapperClass} onClick={() => onDayClick(day, monthType)}>
+      <div className={getFixedCircleClass()} />
       <div className={dayClass} onClick={() => onDayClick(day, monthType)}>
-        {day}
+        <span className={getDateTextClass()}>{day}</span>
       </div>
     </div>
   );
 };
 
 export default Calendar;
+
+const makeDaysToArray = (startDate: dayjs.Dayjs, days: number) => {
+  const daysArray = [];
+  for (let i = 0; i < days; i++) {
+    daysArray.push(startDate.add(i, 'day'));
+  }
+  return daysArray;
+};
+
+const getIsFirstDay = (day: dayjs.Dayjs, selectedDays: dayjs.Dayjs[]) => {
+  return selectedDays[0].isSame(day, 'day') && selectedDays[0].month() === day.month();
+};
+
+const getIsLastDay = (day: dayjs.Dayjs, selectedDays: dayjs.Dayjs[]) => {
+  return (
+    selectedDays[selectedDays.length - 1].isSame(day, 'day') &&
+    selectedDays[selectedDays.length - 1].month() === day.month()
+  );
+};
