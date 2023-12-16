@@ -1,18 +1,9 @@
 import classNames from 'classnames';
-import React, {
-  ChangeEvent,
-  ComponentPropsWithRef,
-  forwardRef,
-  useImperativeHandle,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { ChangeEvent, forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import TextAreaAutoSize, { TextareaAutosizeProps } from 'react-textarea-autosize';
 import Text from '../Text/Text';
 import { ButtonIcon } from '../assets/Icon';
 import { textAreaStyle, textAreaWithCount } from './textArea.css';
-
-const FONT_SIZE = 18;
 
 interface TextAreaProps {
   children?: React.ReactNode;
@@ -49,34 +40,21 @@ export type BaseProps = {
     max: number;
     initialVisible?: boolean;
   };
-  maxLine?: number;
-} & ComponentPropsWithRef<'textarea'>;
+} & TextareaAutosizeProps;
 
 const Base = forwardRef<HTMLTextAreaElement, BaseProps>(
-  ({ value, onChange, withCount, maxLine = 3, className, ...rest }, ref) => {
+  ({ value, onChange, withCount, className, ...rest }, ref) => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
     // 외부의 ref를 사용할 수 있도록 함
     useImperativeHandle(ref, () => textAreaRef.current as HTMLTextAreaElement);
-
-    // textarea의 높이를 자동으로 조절
-    useLayoutEffect(() => {
-      if (textAreaRef.current && value.length) {
-        if (textAreaRef.current.scrollHeight > FONT_SIZE * maxLine) {
-          textAreaRef.current.style.height = `${FONT_SIZE * maxLine}px`;
-          textAreaRef.current.style.overflowY = 'auto';
-          return;
-        }
-        textAreaRef.current.style.height = 'auto';
-        textAreaRef.current.style.height = `${textAreaRef.current.clientHeight}px`;
-      }
-    }, [value]);
 
     // withCount가 있을 경우 글자 수를 세어줌
     const [count, setCount] = useState(value.length ?? 0);
 
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
       if (withCount && e.target.value.length > withCount.max) return;
+
       setCount(e.target.value.length);
       onChange(e);
     };
@@ -98,16 +76,15 @@ const Base = forwardRef<HTMLTextAreaElement, BaseProps>(
     return (
       <div className={classNames(textAreaStyle.textAreaWrapper, className)}>
         <div className={textAreaWithCount({ count: Boolean(withCount) })}>
-          <textarea
+          <TextAreaAutoSize
             value={value}
             onChange={handleChange}
             ref={textAreaRef}
             className={textAreaStyle.textAreaField}
             itemType="text"
-            rows={1}
             {...rest}
           />
-          {!!count && (
+          {!!count && !rest.disabled && (
             <ButtonIcon onClick={onClickClose} name="close-circle" size="m" fill="grey600" />
           )}
         </div>
