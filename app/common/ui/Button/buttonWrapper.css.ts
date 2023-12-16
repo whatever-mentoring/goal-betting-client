@@ -6,6 +6,7 @@ export const buttonWrapperStyles = {
     flexCenterCenter,
     {
       cursor: 'pointer',
+      boxSizing: 'border-box',
       selectors: {
         '&:active': {
           backgroundColor: 'transparent',
