@@ -1,5 +1,7 @@
+import { DrawerProvider } from '@/app/common/ui/Drawer/DrawerContext';
+import LoginDrawer from '@/app/common/ui/Drawer/LoginDrawer';
+import { withFixedButtonScrollView } from '@/app/common/ui/common.css';
 import type { Metadata } from 'next';
-import { layoutStyle } from './layout.css';
 
 export const metadata: Metadata = {
   title: 'Root Layout',
@@ -8,9 +10,9 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="ko">
-      <body className={layoutStyle}>{children}</body>
-    </html>
+    <main className={withFixedButtonScrollView}>
+      <DrawerProvider drawerChildren={<LoginDrawer />}>{children}</DrawerProvider>
+    </main>
   );
 };
 
