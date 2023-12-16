@@ -33,7 +33,7 @@ export const challengePageStyles = {
 
   fixedBox: style({
     position: 'fixed',
-    width: `calc(100% - ${getRem(40)})`, // 20px * 2
+    width: `calc(100% - ${getRem(40)})`,
     height: `60%`,
     top: '40%',
     left: `${getRem(20)}`,
@@ -85,14 +85,9 @@ export const challengePageStyles = {
     width: '100%',
     height: '100%',
     justifyContent: 'center',
-  }),
-
-  gridSecondRow: style({
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    padding: `0 calc(${getRem(44)} + 100vw / 10)`,
-    gap: `${getRem(8)}`,
-    marginBottom: `${getRem(24)}`,
+    padding: `${getRem(8)}`,
+    backgroundColor: vars.color.grey900,
+    borderRadius: `${getRem(18)}`,
   }),
 
   image: style({
@@ -102,6 +97,7 @@ export const challengePageStyles = {
   }),
 
   userCountWrapper: style([flexCenterCenter, {}]),
+
   textButtonStyles: style([
     flexCenterCenter,
     {

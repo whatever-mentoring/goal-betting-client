@@ -18,6 +18,11 @@ interface ChallengePageProps extends ChallengerFunnelProps {
   buttonText: string;
 }
 
+interface BallImage {
+  imgSrc: string;
+  id: number;
+}
+
 const ChallengePage = ({ buttonText, onNext }: ChallengePageProps) => {
   // TODO : 추후 새로고침 여부에 따라 첫 화면으로 넘길 것
   const router = useRouter();
@@ -31,20 +36,10 @@ const ChallengePage = ({ buttonText, onNext }: ChallengePageProps) => {
     return diff;
   };
 
-  const get7DayPeriodText = () => {
-    const endDate = startDate.add(7, 'day');
+  const getDayPeriodToText = (startDate: dayjs.Dayjs, day: number) => {
+    const endDate = startDate.add(day, 'day');
     return `${startDate.format('YYYY.MM.DD')} ~ ${endDate.format('YYYY.MM.DD')}`;
   };
-
-  const images = [
-    '/images/dog.png',
-    '/images/dog.png',
-    '/images/dog.png',
-    '/images/dog.png',
-    '/images/dog.png',
-    '/images/dog.png',
-    '/images/dog.png',
-  ];
 
   const { openDrawer } = useDrawer();
 
@@ -60,7 +55,7 @@ const ChallengePage = ({ buttonText, onNext }: ChallengePageProps) => {
       </div>
       <div className={challengePageStyles.headerTextWrapper}>
         <Text.TitleH2>{title}</Text.TitleH2>
-        <Text.BodyS color="grey400">{get7DayPeriodText()}</Text.BodyS>
+        <Text.BodyS color="grey400">{getDayPeriodToText(startDate, 7)}</Text.BodyS>
       </div>
 
       <div className={challengePageStyles.fixedBox}></div>
@@ -70,7 +65,7 @@ const ChallengePage = ({ buttonText, onNext }: ChallengePageProps) => {
           <Image
             className={challengePageStyles.image}
             src="/images/dog.png"
-            alt="Image description"
+            alt="Main Challenge Image"
             fill
             quality={100}
             priority
@@ -79,34 +74,22 @@ const ChallengePage = ({ buttonText, onNext }: ChallengePageProps) => {
       </div>
 
       <div className={challengePageStyles.gridContainer}>
-        {images.slice(0, 4).map((image, idx) => (
-          <div key={`${image + idx}`} className={challengePageStyles.gridItem}>
-            <Image
-              className={challengePageStyles.image}
-              src={image}
-              alt="Image description"
-              width={100}
-              height={100}
-              priority
-            />
+        {images.map((image) => (
+          <div key={image.id} className={challengePageStyles.gridItem}>
+            {image.imgSrc && (
+              <Image
+                className={challengePageStyles.image}
+                src={image.imgSrc}
+                alt="Challenge Ball Image"
+                width={100}
+                height={100}
+                priority
+              />
+            )}
           </div>
         ))}
       </div>
 
-      <div className={challengePageStyles.gridSecondRow}>
-        {images.slice(4).map((image, idx) => (
-          <div key={`${image + idx}`} className={challengePageStyles.gridItem}>
-            <Image
-              className={challengePageStyles.image}
-              src={image}
-              alt="Image description"
-              width={100}
-              height={100}
-              priority
-            />
-          </div>
-        ))}
-      </div>
       <div className={challengePageStyles.userCountWrapper}>
         <ButtonWrapper
           onClick={() => router.push(navigationPath.유저_목록_페이지, { scroll: false })}
@@ -126,3 +109,38 @@ const ChallengePage = ({ buttonText, onNext }: ChallengePageProps) => {
 };
 
 export default ChallengePage;
+
+const images: BallImage[] = [
+  {
+    imgSrc: '/images/dog.png',
+    id: 1,
+  },
+  {
+    imgSrc: '/images/dog.png',
+    id: 2,
+  },
+  {
+    imgSrc: '/images/dog.png',
+    id: 3,
+  },
+  {
+    imgSrc: '/images/dog.png',
+    id: 4,
+  },
+  {
+    imgSrc: '/images/dog.png',
+    id: 5,
+  },
+  {
+    imgSrc: '/images/dog.png',
+    id: 6,
+  },
+  {
+    imgSrc: '/images/dog.png',
+    id: 7,
+  },
+  {
+    imgSrc: '',
+    id: 8,
+  },
+];
