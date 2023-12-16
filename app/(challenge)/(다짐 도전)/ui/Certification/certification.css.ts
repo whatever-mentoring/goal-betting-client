@@ -97,7 +97,7 @@ export const certificationPageStyles = {
     {
       flexDirection: 'column',
       marginTop: `${getRem(34)}`,
-      padding: `0 ${getRem(35)}`,
+      padding: `0 ${getRem(20)}`,
     },
   ]),
 };
