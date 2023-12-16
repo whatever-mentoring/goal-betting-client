@@ -30,7 +30,7 @@ const NicknamePage = ({ user, setUser, onNext }: NicknamePageProps) => {
             placeholder="이름을 입력해주세요"
             value={user.nickname}
             onChange={onChangeNickname}
-            maxLine={2}
+            maxRows={1}
             withCount={{
               max: 7,
             }}

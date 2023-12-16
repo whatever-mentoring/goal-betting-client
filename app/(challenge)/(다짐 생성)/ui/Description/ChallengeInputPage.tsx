@@ -27,7 +27,6 @@ const ChallengeInputPage = ({ challenge, setChallenge, onNext }: DescriptionPage
             placeholder="다짐한 제목은 변경할 수 없어요!"
             value={challenge.title}
             onChange={(e) => setChallenge((prev) => ({ ...prev, title: e.target.value }))}
-            maxLine={3}
             withCount={{
               max: 20,
               initialVisible: true,
@@ -39,8 +38,9 @@ const ChallengeInputPage = ({ challenge, setChallenge, onNext }: DescriptionPage
         <Image
           className={challengeInputPageStyles.image}
           src="/images/dog.png"
-          layout="fill"
+          fill
           alt="challenge_add"
+          priority
         />
       </div>
       <BottomFixedButton>
