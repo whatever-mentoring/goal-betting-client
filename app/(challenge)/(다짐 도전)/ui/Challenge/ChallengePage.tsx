@@ -2,6 +2,7 @@ import { ChallengerFunnelProps } from '@/app/(challenge)/(다짐 도전)/page';
 import navigationPath from '@/app/common/navigation/navigationPath';
 import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import ButtonWrapper from '@/app/common/ui/Button/ButtonWrapper';
+import { useDrawer } from '@/app/common/ui/Drawer/DrawerContext';
 import Header from '@/app/common/ui/Header/Header';
 import Text from '@/app/common/ui/Text/Text';
 import { ButtonIcon } from '@/app/common/ui/assets/Icon';
@@ -45,9 +46,13 @@ const ChallengePage = ({ buttonText, onNext }: ChallengePageProps) => {
     '/images/dog.png',
   ];
 
+  const { openDrawer } = useDrawer();
+
   return (
     <>
-      <Header appendingRightButton={<ButtonIcon name="menu" fill="white" size="l" />} />
+      <Header
+        appendingRightButton={<ButtonIcon onClick={openDrawer} name="menu" fill="white" size="l" />}
+      />
       <div className={challengePageStyles.dateLeftWrapper}>
         <div className={challengePageStyles.dateLeftBox}>
           <Text.ButtonM color="white">{`${getAfterDate()}일차`}</Text.ButtonM>
@@ -104,7 +109,7 @@ const ChallengePage = ({ buttonText, onNext }: ChallengePageProps) => {
       </div>
       <div className={challengePageStyles.userCountWrapper}>
         <ButtonWrapper
-          onClick={() => router.push(navigationPath.유저_목록_페이지)}
+          onClick={() => router.push(navigationPath.유저_목록_페이지, { scroll: false })}
           className={challengePageStyles.textButtonStyles}
         >
           <Text.BodyS color="grey300">{userCount}명이 내기에 참여했어요</Text.BodyS>
