@@ -14,7 +14,7 @@ export const headerStyles = {
       padding: `0 ${getRem(19)}`,
       height: getRem(52),
       backgroundColor: vars.color.background,
-      zIndex: 9999,
+      zIndex: 1,
     },
   ]),
 
