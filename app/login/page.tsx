@@ -22,7 +22,7 @@ const LoginFunnel = () => {
   const [Funnel, setStep] = useFunnel(extractNonEmptyArrayKeys(navigationPath.로그인_퍼널));
 
   const [user, setUser] = useState<User>({
-    nickname: '',
+    nickname: '빛나는 청룡',
   });
 
   return (

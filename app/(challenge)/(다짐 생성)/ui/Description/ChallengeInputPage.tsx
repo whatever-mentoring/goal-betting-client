@@ -50,6 +50,7 @@ const ChallengeInputPage = ({ challenge, setChallenge, onNext }: DescriptionPage
           width={100}
           onClick={onNext}
           color="purple500-active"
+          type="submit"
         >
           <Text.ButtonL color={isAllFilled ? 'white' : 'grey400'}>다음으로</Text.ButtonL>
         </BottomFixedButton.First>

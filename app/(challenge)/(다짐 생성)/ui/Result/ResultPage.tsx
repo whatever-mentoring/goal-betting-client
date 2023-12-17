@@ -7,6 +7,7 @@ import Header from '@/app/common/ui/Header/Header';
 import Text from '@/app/common/ui/Text/Text';
 import Icon, { ButtonIcon } from '@/app/common/ui/assets/Icon';
 import { fixedButtonOverWrapper, underLineText } from '@/app/common/ui/common.css';
+import { getDayPeriodToText } from '@/app/common/util/date';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import Image from 'next/image';
@@ -30,11 +31,6 @@ const ResultPage = ({ challenge, onNext }: ResultPageProps) => {
   const getLeftDate = () => {
     const today = dayjs();
     return startDate.diff(today, 'day');
-  };
-
-  const get7DayPeriodText = () => {
-    const endDate = startDate.add(7, 'day');
-    return `${startDate.format('YYYY.MM.DD')} ~ ${endDate.format('YYYY.MM.DD')}`;
   };
 
   // USER INTERACTION
@@ -79,7 +75,7 @@ const ResultPage = ({ challenge, onNext }: ResultPageProps) => {
         </div>
         <div className={resultPageStyles.challengeTextWrapper}>
           <Text.BodyL>{title}</Text.BodyL>
-          <Text.BodyS color="grey400">{get7DayPeriodText()}</Text.BodyS>
+          <Text.BodyS color="grey400">{getDayPeriodToText(startDate, 7)}</Text.BodyS>
         </div>
       </div>
       <div className={resultPageStyles.downloadWrapper}>
