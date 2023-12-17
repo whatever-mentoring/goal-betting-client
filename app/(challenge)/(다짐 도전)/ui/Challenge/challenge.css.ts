@@ -70,7 +70,6 @@ export const challengePageStyles = {
   }),
 
   gridContainer: style([
-    flexCenterCenter,
     {
       display: 'grid',
       gridTemplateColumns: 'repeat(4, 1fr)',
