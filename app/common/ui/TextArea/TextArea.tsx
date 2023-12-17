@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { ChangeEvent, forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import React, { ChangeEvent, forwardRef, useState } from 'react';
 import TextAreaAutoSize, { TextareaAutosizeProps } from 'react-textarea-autosize';
 import Text from '../Text/Text';
 import { ButtonIcon } from '../assets/Icon';
@@ -44,15 +44,10 @@ export type BaseProps = {
 
 const Base = forwardRef<HTMLTextAreaElement, BaseProps>(
   ({ value, onChange, withCount, className, ...rest }, ref) => {
-    const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
-    // 외부의 ref를 사용할 수 있도록 함
-    useImperativeHandle(ref, () => textAreaRef.current as HTMLTextAreaElement);
-
-    // withCount가 있을 경우 글자 수를 세어줌
     const [count, setCount] = useState(value.length ?? 0);
 
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+      if (rest.maxRows && rest.maxRows === 1 && e.target.value.includes('\n')) return;
       if (withCount && e.target.value.length > withCount.max) return;
 
       setCount(e.target.value.length);
@@ -64,13 +59,10 @@ const Base = forwardRef<HTMLTextAreaElement, BaseProps>(
       onChange({ target: { value: '' } } as ChangeEvent<HTMLTextAreaElement>);
     };
 
-    const withCountVisible = withCount;
-    const withCountInitialVisible = withCount?.initialVisible ?? false;
-
     const getCountVisible = () => {
-      if (!withCountVisible) return false;
-      if (!!count) return true;
-      return withCountInitialVisible;
+      if (!withCount) return false;
+      if (count > 0) return true;
+      return withCount.initialVisible ?? false;
     };
 
     return (
@@ -79,9 +71,10 @@ const Base = forwardRef<HTMLTextAreaElement, BaseProps>(
           <TextAreaAutoSize
             value={value}
             onChange={handleChange}
-            ref={textAreaRef}
+            ref={ref}
             className={textAreaStyle.textAreaField}
             itemType="text"
+            required
             {...rest}
           />
           {!!count && !rest.disabled && (
