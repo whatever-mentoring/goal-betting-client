@@ -6,6 +6,7 @@ import { useDrawer } from '@/app/common/ui/Drawer/DrawerContext';
 import Header from '@/app/common/ui/Header/Header';
 import Text from '@/app/common/ui/Text/Text';
 import { ButtonIcon } from '@/app/common/ui/assets/Icon';
+import { getDayPeriodToText } from '@/app/common/util/date';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import Image from 'next/image';
@@ -34,11 +35,6 @@ const ChallengePage = ({ buttonText, onNext }: ChallengePageProps) => {
   const getAfterDate = () => {
     const diff = dayjs().diff(startDate, 'day');
     return diff;
-  };
-
-  const getDayPeriodToText = (startDate: dayjs.Dayjs, day: number) => {
-    const endDate = startDate.add(day, 'day');
-    return `${startDate.format('YYYY.MM.DD')} ~ ${endDate.format('YYYY.MM.DD')}`;
   };
 
   const { openDrawer } = useDrawer();

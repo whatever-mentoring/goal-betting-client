@@ -6,6 +6,7 @@ import {
   headerTextWrapper,
   withPreWrapCenter,
 } from '@/app/common/ui/common.css';
+import { getDayPeriodToText } from '@/app/common/util/date';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import { Dispatch, SetStateAction } from 'react';
@@ -21,11 +22,6 @@ const PreviewPage = ({ challenge, onNext }: PreviewPageProps) => {
   // TODO : 추후 새로고침 여부에 따라 첫 화면으로 넘길 것
   const title = challenge.title ?? '한달동안 3kg 감량할거야';
   const startDate = challenge.startDate ?? dayjs();
-
-  const get7DayPeriodText = () => {
-    const endDate = startDate.add(7, 'day');
-    return `${startDate.format('YYYY.MM.DD')} ~ ${endDate.format('YYYY.MM.DD')}`;
-  };
 
   return (
     <>
@@ -46,7 +42,7 @@ const PreviewPage = ({ challenge, onNext }: PreviewPageProps) => {
         </div>
         <div className={previewPageStyles.challengeTextWrapper}>
           <Text.BodyL>{title}</Text.BodyL>
-          <Text.BodyS color="grey400">{get7DayPeriodText()}</Text.BodyS>
+          <Text.BodyS color="grey400">{getDayPeriodToText(startDate, 7)}</Text.BodyS>
         </div>
       </div>
       <BottomFixedButton>
