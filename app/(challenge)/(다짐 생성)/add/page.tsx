@@ -23,7 +23,7 @@ export interface Challenge {
   gifticon: {
     file: File | null;
   };
-  startDate: dayjs.Dayjs | null;
+  startDate: dayjs.Dayjs;
 }
 
 const ChallengeAddFunnel = () => {
@@ -35,7 +35,7 @@ const ChallengeAddFunnel = () => {
     gifticon: {
       file: null,
     },
-    startDate: null,
+    startDate: dayjs().add(1, 'day'),
   });
 
   return (
