@@ -1,10 +1,12 @@
 import { User } from 'next-auth';
 import NextAuth from 'next-auth/next';
 import KakaoProvider from 'next-auth/providers/kakao';
+import { postRefreshToken, postToken } from '../token';
 
 export interface AuthUser extends User {
+  userId: number;
+  nickname: string;
   accessToken: string;
-  accessTokenExpires: number;
   refreshToken: string;
 }
 
@@ -16,14 +18,36 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, account, user }) {
-      if (account && user) {
-        return {
-          accessToken: account.access_token,
-          accessTokenExpires: account.expires_at,
-          refreshToken: account.refresh_token,
-          user,
-        };
+    async signIn({ user }) {
+      if (user.accessToken) {
+        try {
+          const { data } = await postRefreshToken({ accessToken: user.accessToken });
+
+          user.accessToken = data.accessToken;
+          user.refreshToken = data.refreshToken;
+
+          return true;
+        } catch (error) {
+          console.error(error);
+          return false;
+        }
+      }
+      return true;
+    },
+    async jwt({ token, account }) {
+      if (account && account.access_token) {
+        try {
+          const user = await postToken({ accessToken: account.access_token as string });
+
+          return {
+            accessToken: user.data.accessToken,
+            accessTokenExpires: Date.now() + 60 * 30,
+            refreshToken: user.data.refreshToken,
+            user: user.data,
+          };
+        } catch (error) {
+          console.error(error);
+        }
       }
       return {
         ...token,
@@ -31,7 +55,8 @@ const handler = NextAuth({
     },
 
     async session({ session, token }) {
-      session.user = token as unknown as AuthUser;
+      session.user = token.user as AuthUser;
+
       return session;
     },
   },

@@ -1,4 +1,5 @@
 'use client';
+import RefreshCheck from '@/app/common/hooks/funnel/RefreshCheck';
 import { extractNonEmptyArrayKeys } from '@/app/common/hooks/funnel/models';
 import navigationPath from '@/app/common/navigation/navigationPath';
 import dayjs from 'dayjs';
@@ -22,7 +23,7 @@ export interface Challenge {
   gifticon: {
     file: File | null;
   };
-  startDate: dayjs.Dayjs | null;
+  startDate: dayjs.Dayjs;
 }
 
 const ChallengeAddFunnel = () => {
@@ -34,7 +35,7 @@ const ChallengeAddFunnel = () => {
     gifticon: {
       file: null,
     },
-    startDate: null,
+    startDate: dayjs().add(1, 'day'),
   });
 
   return (
@@ -47,25 +48,31 @@ const ChallengeAddFunnel = () => {
         />
       </Funnel.Step>
       <Funnel.Step name="기프티콘_업로드">
-        <BetPage
-          challenge={challenge}
-          setChallenge={setChallenge}
-          onNext={() => setStep('다짐_시작일')}
-        />
+        <RefreshCheck onRefresh={() => setStep('다짐_입력')}>
+          <BetPage
+            challenge={challenge}
+            setChallenge={setChallenge}
+            onNext={() => setStep('다짐_시작일')}
+          />
+        </RefreshCheck>
       </Funnel.Step>
       <Funnel.Step name="다짐_시작일">
-        <StartDatePage
-          challenge={challenge}
-          setChallenge={setChallenge}
-          onNext={() => setStep('다짐_등록_확인')}
-        />
+        <RefreshCheck onRefresh={() => setStep('다짐_입력')}>
+          <StartDatePage
+            challenge={challenge}
+            setChallenge={setChallenge}
+            onNext={() => setStep('다짐_등록_확인')}
+          />
+        </RefreshCheck>
       </Funnel.Step>
       <Funnel.Step name="다짐_등록_확인">
-        <PreviewPage
-          challenge={challenge}
-          setChallenge={setChallenge}
-          onNext={() => setStep('다짐_등록_완료')}
-        />
+        <RefreshCheck onRefresh={() => setStep('다짐_입력')}>
+          <PreviewPage
+            challenge={challenge}
+            setChallenge={setChallenge}
+            onNext={() => setStep('다짐_등록_완료')}
+          />
+        </RefreshCheck>
       </Funnel.Step>
       <Funnel.Step name="다짐_등록_완료">
         <ResultPage

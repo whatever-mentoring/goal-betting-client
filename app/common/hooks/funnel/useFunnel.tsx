@@ -63,9 +63,7 @@ export const useFunnel = <Steps extends NonEmptyArray<string>>(
   const step = useMemo(() => {
     const step = searchParams.get('step');
 
-    if (typeof step === 'string' && steps.includes(step)) {
-      return step;
-    }
+    if (typeof step === 'string' && steps.includes(step)) return step;
 
     return steps[0];
   }, [searchParams, steps]);
@@ -88,7 +86,7 @@ export const useFunnel = <Steps extends NonEmptyArray<string>>(
         },
       ),
 
-    [searchParams],
+    [step],
   );
 
   FunnelComponent.Step = Step;

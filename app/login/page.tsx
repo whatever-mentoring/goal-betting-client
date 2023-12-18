@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { extractNonEmptyArrayKeys } from '../common/hooks/funnel/models';
 import { useFunnel } from '../common/hooks/funnel/useFunnel';
 import navigationPath from '../common/navigation/navigationPath';
@@ -19,10 +19,11 @@ interface User {
 
 const LoginFunnel = () => {
   const router = useRouter();
-  const [Funnel, setStep] = useFunnel(extractNonEmptyArrayKeys(navigationPath.로그인_퍼널));
+  const memoStep = useMemo(() => extractNonEmptyArrayKeys(navigationPath.로그인_퍼널), []);
+  const [Funnel, setStep] = useFunnel(memoStep);
 
   const [user, setUser] = useState<User>({
-    nickname: '빛나는 청룡',
+    nickname: '',
   });
 
   return (
@@ -34,7 +35,7 @@ const LoginFunnel = () => {
         <NicknamePage
           user={user}
           setUser={setUser}
-          onNext={() => router.push(navigationPath.다짐_생성_퍼널.다짐_입력, { scroll: false })}
+          onNext={() => router.replace(navigationPath.다짐_생성_퍼널.다짐_입력, { scroll: false })}
         />
       </Funnel.Step>
     </Funnel>

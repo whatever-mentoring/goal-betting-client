@@ -7,10 +7,10 @@ import {
   withPreWrapCenter,
 } from '@/app/common/ui/common.css';
 import { getDayPeriodToText } from '@/app/common/util/date';
-import dayjs from 'dayjs';
 import Image from 'next/image';
 import { Dispatch, SetStateAction } from 'react';
 import { Challenge, ChallengeAddFunnelProps } from '../../add/page';
+import useHandlePreview from '../../module/preview/useHandlePreview';
 import { previewPageStyles } from './preview.css';
 
 interface PreviewPageProps extends ChallengeAddFunnelProps {
@@ -19,9 +19,12 @@ interface PreviewPageProps extends ChallengeAddFunnelProps {
 }
 
 const PreviewPage = ({ challenge, onNext }: PreviewPageProps) => {
-  // TODO : 추후 새로고침 여부에 따라 첫 화면으로 넘길 것
-  const title = challenge.title ?? '한달동안 3kg 감량할거야';
-  const startDate = challenge.startDate ?? dayjs();
+  const { submit } = useHandlePreview({ challenge });
+
+  const onClickSubmit = () => {
+    submit();
+    onNext();
+  };
 
   return (
     <>
@@ -41,15 +44,15 @@ const PreviewPage = ({ challenge, onNext }: PreviewPageProps) => {
           />
         </div>
         <div className={previewPageStyles.challengeTextWrapper}>
-          <Text.BodyL>{title}</Text.BodyL>
-          <Text.BodyS color="grey400">{getDayPeriodToText(startDate, 7)}</Text.BodyS>
+          <Text.BodyL>{challenge.title}</Text.BodyL>
+          <Text.BodyS color="grey400">{getDayPeriodToText(challenge.startDate, 7)}</Text.BodyS>
         </div>
       </div>
       <BottomFixedButton>
         <BottomFixedButton.OverItem className={fixedButtonOverWrapper}>
           <Text.BodyM color="white">지금 등록하면 수정할 수 없어요!</Text.BodyM>
         </BottomFixedButton.OverItem>
-        <BottomFixedButton.First width={100} onClick={onNext}>
+        <BottomFixedButton.First width={100} onClick={onClickSubmit}>
           <Text.ButtonL>내기 등록 완료하기</Text.ButtonL>
         </BottomFixedButton.First>
       </BottomFixedButton>

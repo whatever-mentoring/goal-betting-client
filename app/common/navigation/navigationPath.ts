@@ -2,7 +2,7 @@ type 로그인_퍼널_Key = '로그인' | '닉네임_설정';
 
 const 로그인_퍼널: Record<로그인_퍼널_Key, string> = {
   로그인: '/login',
-  닉네임_설정: 'login?step=닉네임_설정',
+  닉네임_설정: '/login?step=닉네임_설정',
 };
 
 type 다짐_생성_퍼널_Key =
