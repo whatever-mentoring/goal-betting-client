@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { ChangeEvent, forwardRef, useState } from 'react';
+import React, { ChangeEvent, forwardRef } from 'react';
 import TextAreaAutoSize, { TextareaAutosizeProps } from 'react-textarea-autosize';
 import Text from '../Text/Text';
 import { ButtonIcon } from '../assets/Icon';
@@ -44,24 +44,20 @@ export type BaseProps = {
 
 const Base = forwardRef<HTMLTextAreaElement, BaseProps>(
   ({ value, onChange, withCount, className, ...rest }, ref) => {
-    const [count, setCount] = useState(value.length ?? 0);
-
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
       if (rest.maxRows && rest.maxRows === 1 && e.target.value.includes('\n')) return;
       if (withCount && e.target.value.length > withCount.max) return;
 
-      setCount(e.target.value.length);
       onChange(e);
     };
 
     const onClickClose = () => {
-      setCount(0);
       onChange({ target: { value: '' } } as ChangeEvent<HTMLTextAreaElement>);
     };
 
     const getCountVisible = () => {
       if (!withCount) return false;
-      if (count > 0) return true;
+
       return withCount.initialVisible ?? false;
     };
 
@@ -77,14 +73,14 @@ const Base = forwardRef<HTMLTextAreaElement, BaseProps>(
             required
             {...rest}
           />
-          {!!count && !rest.disabled && (
+          {!!value.length && !rest.disabled && (
             <ButtonIcon onClick={onClickClose} name="close-circle" size="m" fill="grey600" />
           )}
         </div>
         {getCountVisible() && (
           <div className={textAreaStyle.countContainerStyle}>
             <Text.BodyM color="grey600">
-              {count}/{withCount?.max}
+              {value.length}/{withCount?.max}
             </Text.BodyM>
           </div>
         )}
