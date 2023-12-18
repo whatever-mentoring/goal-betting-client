@@ -1,23 +1,13 @@
 import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import Text from '@/app/common/ui/Text/Text';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
-import { useEffect } from 'react';
 import { LoginFunnelProps } from '../../page';
 import { loginPageStyles } from './login.css';
 
 type LoginPageProps = Omit<LoginFunnelProps, 'user' | 'setUser'>;
 
-const LoginPage = ({ onNext }: LoginPageProps) => {
-  // TODO : 미들웨어 적용
-  const { data: session } = useSession();
-
-  useEffect(() => {
-    if (session?.user.accessToken) {
-      onNext();
-    }
-  }, [session]);
-
+const LoginPage = ({}: LoginPageProps) => {
   const onClickKakaoLogin = () => {
     signIn('kakao', {
       redirect: true,
