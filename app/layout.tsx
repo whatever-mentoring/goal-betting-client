@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import AuthSession from './common/components/AuthSession';
+import QueryProvider from './common/components/QueryProvider';
 import IconLoader from './common/ui/assets/IconLoader';
 import './common/ui/reset.css';
 import './globals.css';
@@ -34,8 +35,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html lang="ko">
       <body className={classNames(pretendardFont.className, layoutStyle)}>
         <AuthSession>
-          <IconLoader />
-          {children}
+          <QueryProvider>
+            <IconLoader />
+            {children}
+          </QueryProvider>
         </AuthSession>
       </body>
     </html>
