@@ -1,12 +1,16 @@
 'use client';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import navigationPath from '../../navigation/navigationPath';
 import Text from '../Text/Text';
 import Icon from '../assets/Icon';
 import { loginDrawerStyles } from './loginDrawer.css';
 
+// TODO : 로그인 상태 아니면 카카오 로그인 버튼 띄우기
+
 const LoginDrawer = () => {
-  const nickname = '용용';
+  const { data } = useSession();
+  const nickname = data?.user?.nickname;
   return (
     <div className={loginDrawerStyles.container}>
       <div className={loginDrawerStyles.headerTextWrapper}>
