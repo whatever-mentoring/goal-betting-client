@@ -15,6 +15,7 @@ const NicknamePage = ({ user, setUser, onNext }: NicknamePageProps) => {
     setUser,
     onNext,
   });
+
   return (
     <>
       <Header showBackButton />
@@ -33,6 +34,7 @@ const NicknamePage = ({ user, setUser, onNext }: NicknamePageProps) => {
             rows={1}
             withCount={{
               max: 7,
+              initialVisible: true,
             }}
             required
           />
