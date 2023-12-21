@@ -4,7 +4,7 @@ import getRem from '@/app/common/util/getRem';
 import { style } from '@vanilla-extract/css';
 
 export const challengePageStyles = {
-  dateLeftWrapper: style([
+  labelWrapper: style([
     flexCenterCenter,
     {
       flexDirection: 'column',
