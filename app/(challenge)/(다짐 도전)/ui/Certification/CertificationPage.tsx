@@ -1,4 +1,4 @@
-import { ChallengerFunnelProps } from '@/app/(challenge)/(다짐 도전)/page';
+import { usePOSTMediaFileMutation } from '@/app/common/api/media';
 import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import ButtonWrapper from '@/app/common/ui/Button/ButtonWrapper';
 import Header from '@/app/common/ui/Header/Header';
@@ -11,10 +11,11 @@ import {
   withPreWrapCenter,
 } from '@/app/common/ui/common.css';
 import Image from 'next/image';
-import React, { MouseEvent, useRef, useState } from 'react';
+import React, { MouseEvent, memo, useRef, useState } from 'react';
+import { ChallengeCertificationFunnelProps } from '../../challenge/[goalId]/page';
 import { certificationPageStyles } from './certification.css';
 
-interface ChallengeAddPageProps extends ChallengerFunnelProps {}
+interface ChallengeAddPageProps extends ChallengeCertificationFunnelProps {}
 
 const CertificationPage = ({ certification, setCertification, onNext }: ChallengeAddPageProps) => {
   // USER INTERACTION
@@ -27,10 +28,18 @@ const CertificationPage = ({ certification, setCertification, onNext }: Challeng
     inputRef.current?.click();
   };
 
+  const { mutate } = usePOSTMediaFileMutation({
+    onSuccess: (data) => {
+      setCertification((prev) => ({ ...prev, imageSrc: data.data }));
+    },
+  });
+
   const onInputImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
     const file = e.target.files[0];
+    if (!file) return;
+    mutate({ postData: { multipartFile: file } });
     setCertification((prev) => ({ ...prev, file }));
   };
 
@@ -41,7 +50,7 @@ const CertificationPage = ({ certification, setCertification, onNext }: Challeng
   };
 
   // 1-3. 이미지 업로드 씬에서 파일 존재 여부
-  const isFileExist = !!certification.file;
+  const isFileExist = !!certification.imageSrc;
 
   // 3. 유저 > 다음으로
   const isAllFilled = isFileExist;
@@ -79,12 +88,9 @@ const CertificationPage = ({ certification, setCertification, onNext }: Challeng
               <Icon name="close" fill="white" size="l" />
             </ButtonWrapper>
             <div className={certificationPageStyles.imageWrapper}>
-              <Image
-                alt="image"
-                fill
-                objectFit="cover"
-                className={certificationPageStyles.image}
-                src={URL.createObjectURL(certification.file!)}
+              <MemoImage
+                src={certification.imageSrc ? certification.imageSrc : ''}
+                alt="certification-image"
               />
             </div>
           </>
@@ -118,3 +124,19 @@ const CertificationPage = ({ certification, setCertification, onNext }: Challeng
 };
 
 export default CertificationPage;
+
+interface MemoImageProps {
+  src: string;
+  alt: string;
+}
+
+const MemoImage = memo(({ src, alt }: MemoImageProps) => (
+  <Image
+    key="image"
+    alt={alt}
+    fill
+    objectFit="cover"
+    className={certificationPageStyles.image}
+    src={src}
+  />
+));
