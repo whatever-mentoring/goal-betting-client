@@ -13,17 +13,17 @@ import { Challenge, ChallengeAddFunnelProps } from '../../add/page';
 import useHandlePreview from '../../module/preview/useHandlePreview';
 import { previewPageStyles } from './preview.css';
 
-interface PreviewPageProps extends ChallengeAddFunnelProps {
+type OmitOnNext = Omit<ChallengeAddFunnelProps, 'onNext'>;
+interface PreviewPageProps extends OmitOnNext {
   challenge: Challenge;
   setChallenge: Dispatch<SetStateAction<Challenge>>;
 }
 
-const PreviewPage = ({ challenge, onNext }: PreviewPageProps) => {
+const PreviewPage = ({ challenge }: PreviewPageProps) => {
   const { submit } = useHandlePreview({ challenge });
 
   const onClickSubmit = () => {
     submit();
-    onNext();
   };
 
   return (
