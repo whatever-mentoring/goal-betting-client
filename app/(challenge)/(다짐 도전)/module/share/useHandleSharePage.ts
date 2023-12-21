@@ -4,6 +4,7 @@ import useCaptureAndDownloadImage from '@/app/common/hooks/useCaptureAndDownload
 import useTriggerShare from '@/app/common/hooks/useTriggerShare';
 import navigationPath from '@/app/common/navigation/navigationPath';
 import { useDrawer } from '@/app/common/ui/Drawer/DrawerContext';
+import { getLeftDaysFromDate } from '@/app/common/util/date';
 import dayjs from 'dayjs';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -11,6 +12,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ParticipateButtonProps } from '../../ui/Share/CompoundSharePage';
 import { useGetChallengeInfoQuery } from '../api/challenge';
 import { ChallengeData } from '../api/challengeList';
+import { useDeleteParticipateMutation } from '../api/deleteParticipate';
 import { useGETChallengeParticipantQuery } from '../api/participantList';
 import { usePOSTParticipateChallengeMutation } from '../api/participate';
 
@@ -60,22 +62,47 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
     onClickOverItem: () => {},
   });
 
-  const { mutate: postParticipate } = usePOSTParticipateChallengeMutation({
-    onSuccess: () => {
-      setParticipantInfo({
-        overItemText: `내기 참여 취소하기`,
-        buttonText: '나도 내기 만들기',
-        onClick: () =>
-          router.push(navigationPath.다짐_생성_퍼널.다짐_입력, {
-            scroll: false,
-          }),
-        onClickOverItem: () => {},
-      });
-    },
-  });
+  // 4. 참가하기
+  const { mutate: postParticipate } = usePOSTParticipateChallengeMutation({});
 
   const onClickParticipate = () => {
-    postParticipate({ postData: { goalId, predictionType: 'FAIL' } });
+    postParticipate(
+      { postData: { goalId, predictionType: 'FAIL' } },
+      {
+        onSuccess: (data) => {
+          setParticipantInfo({
+            overItemText: `내기 참여 취소하기`,
+            buttonText: '나도 내기 만들기',
+            onClick: () =>
+              router.push(navigationPath.다짐_생성_퍼널.다짐_입력, {
+                scroll: false,
+              }),
+            onClickOverItem: () => onClickCancel(data.data.bettingRetrieveResponse.id),
+          });
+        },
+      },
+    );
+  };
+
+  const { mutate: deleteParticipate } = useDeleteParticipateMutation();
+
+  const onClickCancel = (bettingId: number) => {
+    deleteParticipate(
+      { bettingId },
+      {
+        onSuccess: () => {
+          setParticipantInfo({
+            overItemText: `여러명이 내기에 참여했어요`,
+            buttonText: '내기 참여하기',
+            onClick: onClickParticipate,
+            onClickOverItem: () =>
+              router.push(navigationPath.유저_목록_페이지(goalId), {
+                scroll: false,
+              }),
+          });
+        },
+      },
+    );
   };
 
   useEffect(() => {
@@ -83,7 +110,7 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
     if (!sessionData) return;
     const participants = participantsData.data.participants;
 
-    const isParticipant = participants.some((participant) => {
+    const isParticipant = participants.find((participant) => {
       return participant.userId === Number(sessionData.user.userId);
     });
 
@@ -91,7 +118,7 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
       setParticipantInfo({
         overItemText: `여러명이 내기에 참여했어요`,
         buttonText: '내기 참여하기',
-        onClick: () => onClickParticipate(),
+        onClick: onClickParticipate,
         onClickOverItem: () =>
           router.push(navigationPath.유저_목록_페이지(goalId), {
             scroll: false,
@@ -105,7 +132,7 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
           router.push(navigationPath.다짐_생성_퍼널.다짐_입력, {
             scroll: false,
           }),
-        onClickOverItem: () => {},
+        onClickOverItem: () => onClickCancel(isParticipant.bettingId),
       });
     }
   }, [sessionData, participantsData]);
@@ -113,8 +140,7 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
   // UI LOGIC
   const getLeftDays = () => {
     if (!challengeInfo) return 0;
-    const today = dayjs();
-    return dayjs(challengeInfo.startDate).diff(today, 'day');
+    return getLeftDaysFromDate(challengeInfo.startDate);
   };
 
   // USER INTERACTION
