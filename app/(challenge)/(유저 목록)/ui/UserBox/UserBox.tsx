@@ -16,7 +16,7 @@ const UserBox = ({ nickName, profileSrc, date, withBorder = false }: UserBoxProp
     <div className={classNames(userBoxStyles.base, withBorder && userBoxStyles.witheBorder)}>
       <Left profileSrc={profileSrc} />
       <Middle nickName={nickName} date={date} />
-      <Right />
+      {/* <Right /> */}
     </div>
   );
 };
@@ -56,10 +56,11 @@ const Middle = ({ nickName, date }: MiddleProps) => {
   );
 };
 
-const Right = () => {
-  return (
-    <div className={userBoxStyles.rightWrapper}>
-      <Text.ButtonM>더보기</Text.ButtonM>
-    </div>
-  );
-};
+// NOTE : 현재 유저 상세 페이지가 없어서 주석 처리
+// const Right = () => {
+//   return (
+//     <div className={userBoxStyles.rightWrapper}>
+//       <Text.ButtonM>더보기</Text.ButtonM>
+//     </div>
+//   );
+// };
