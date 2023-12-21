@@ -6,13 +6,13 @@ import Text from '@/app/common/ui/Text/Text';
 import { withPreWrapCenter } from '@/app/common/ui/common.css';
 import Image from 'next/image';
 import { useRef } from 'react';
-import { ChallengeResultFunnel } from '../../page';
+import { ChallengeResultFunnel } from '../../result/[goalId]/page';
 import { savePageStyles } from './save.css';
 
 type OmitOnNext = Omit<ChallengeResultFunnel, 'onNext'>;
 interface SaverPageProps extends OmitOnNext {}
 
-const SavePage = ({ user }: SaverPageProps) => {
+const SavePage = ({}: SaverPageProps) => {
   const imageRef = useRef<HTMLDivElement>(null);
   // 1-2. 이미지 다운로드
   const { captureAndDownload } = useCaptureAndDownloadImage(imageRef);
@@ -32,15 +32,12 @@ const SavePage = ({ user }: SaverPageProps) => {
   ];
 
   const getHeaderText = () => {
-    if (user.type === 'challenger' && user.isSuccess) {
-      return '7일 동안 고생했어!';
-    }
     return '다음에는\n기프티콘 회수해보자';
   };
 
   return (
     <>
-      <Header showBackButton backTo={navigationPath.다짐_도전_퍼널.다짐_도전} />
+      <Header showBackButton backTo={navigationPath.홈_페이지} />
 
       <div className={savePageStyles.headerTextWrapper}>
         <Text.TitleH1 className={withPreWrapCenter}>{getHeaderText()}</Text.TitleH1>

@@ -6,7 +6,7 @@ import Text from '@/app/common/ui/Text/Text';
 import { withPreWrapCenter } from '@/app/common/ui/common.css';
 import Image from 'next/image';
 import { useRef } from 'react';
-import { ChallengeResultFunnel } from '../../page';
+import { ChallengeResultFunnel } from '../../result/[goalId]/page';
 import { kakaoPageStyles } from './kakao.css';
 
 type OmitOnNext = Omit<ChallengeResultFunnel, 'onNext'>;
@@ -23,7 +23,7 @@ const KakaoDownloadPage = ({}: SaverPageProps) => {
 
   return (
     <>
-      <Header showBackButton backTo={navigationPath.다짐_도전_퍼널.다짐_도전} />
+      <Header showBackButton backTo={navigationPath.홈_페이지} />
       <div className={kakaoPageStyles.headerTextWrapper}>
         <Text.TitleH1 className={withPreWrapCenter}>{'기프티콘을\n저장해주세요'}</Text.TitleH1>
       </div>
