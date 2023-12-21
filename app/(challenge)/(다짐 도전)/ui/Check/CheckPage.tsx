@@ -1,4 +1,3 @@
-import { ChallengerFunnelProps } from '@/app/(challenge)/(다짐 도전)/page';
 import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import ButtonWrapper from '@/app/common/ui/Button/ButtonWrapper';
 import Header from '@/app/common/ui/Header/Header';
@@ -11,11 +10,20 @@ import {
   withPreWrapStart,
 } from '@/app/common/ui/common.css';
 import Image from 'next/image';
+import { ChallengeCertificationFunnelProps } from '../../challenge/[goalId]/page';
+import useHandleCertificate from '../../module/certificate/useHandleCertificate';
 import { checkPageStyles } from './check.css';
 
-interface ChallengeAddPageProps extends ChallengerFunnelProps {}
+interface ChallengeAddPageProps extends ChallengeCertificationFunnelProps {
+  onNext: () => (certificationId: number) => string;
+  params: {
+    goalId: number;
+  };
+}
 
-const CheckPage = ({ certification, onNext }: ChallengeAddPageProps) => {
+const CheckPage = ({ certification, onNext, params }: ChallengeAddPageProps) => {
+  const { onClickSubmit } = useHandleCertificate({ certification, goalId: params.goalId, onNext });
+
   return (
     <>
       <Header showBackButton />
@@ -30,7 +38,7 @@ const CheckPage = ({ certification, onNext }: ChallengeAddPageProps) => {
               fill
               priority
               className={checkPageStyles.image}
-              src={certification.file ? URL.createObjectURL(certification.file) : '/images/dog.png'}
+              src={certification.imageSrc ? certification.imageSrc : '/images/dog.png'}
             />
           </div>
         </>
@@ -53,7 +61,7 @@ const CheckPage = ({ certification, onNext }: ChallengeAddPageProps) => {
             <Text.BodyM color="grey500">메시지는 추후에 수정할 수 없어요</Text.BodyM>
           </ButtonWrapper>
         </BottomFixedButton.OverItem>
-        <BottomFixedButton.First onClick={onNext} color="purple500-active">
+        <BottomFixedButton.First onClick={onClickSubmit} color="purple500-active">
           <Text.ButtonL color={'white'}>작성완료</Text.ButtonL>
         </BottomFixedButton.First>
       </BottomFixedButton>
