@@ -1,14 +1,10 @@
 'use client';
 
-import { Dispatch, SetStateAction, useMemo, useState } from 'react';
-import { extractNonEmptyArrayKeys } from '../../common/hooks/funnel/models';
-import { useFunnel } from '../../common/hooks/funnel/useFunnel';
-import navigationPath from '../../common/navigation/navigationPath';
-import useChallengeData from './model/challenge/useChallengeData';
-import CertificationPage from './ui/Certification/CertificationPage';
-import ChallengePage from './ui/Challenge/ChallengePage';
-import CheckPage from './ui/Check/CheckPage';
-import SuccessPage from './ui/Success/SuccessPage';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction, Suspense, useEffect, useState } from 'react';
+import navigationPath, { 다짐_도전_퍼널_Key } from '../../common/navigation/navigationPath';
+import { useGetChallengeListQuery } from './module/api/challengeList';
 
 interface Certification {
   file: File | null;
@@ -19,47 +15,36 @@ export interface ChallengerFunnelProps {
   onNext: () => void;
   certification: Certification;
   setCertification: Dispatch<SetStateAction<Certification>>;
+  setStep?: (step: 다짐_도전_퍼널_Key) => void;
 }
 
+const ChallengeDynamicPage = dynamic(() => import('./ui/Challenge/ChallengeInfoPage'), {
+  ssr: false,
+});
+
 const ChallengeFunnel = () => {
-  const funnelStep = useMemo(() => extractNonEmptyArrayKeys(navigationPath.다짐_도전_퍼널), []);
-  const [Funnel, setStep] = useFunnel(funnelStep);
+  const router = useRouter();
 
-  const [certification, setCertification] = useState<Certification>({
-    file: null,
-    text: '',
-  });
+  const { data: challengeList } = useGetChallengeListQuery();
+  const [currentChallengeId, setCurrentChallengeId] = useState<number | null>(null);
 
-  const { buttonInfo } = useChallengeData();
+  useEffect(() => {
+    if (!challengeList) return;
+    if (challengeList?.data.length) {
+      setCurrentChallengeId(challengeList.data[0].id);
+    } else {
+      router.push(navigationPath.다짐_생성_퍼널.다짐_입력, { scroll: false });
+    }
+  }, [challengeList]);
 
   return (
-    <Funnel>
-      <Funnel.Step name="다짐_도전">
-        <ChallengePage
-          buttonText={buttonInfo.text}
-          onNext={() => setStep(buttonInfo.link)}
-          certification={certification}
-          setCertification={setCertification}
-        />
-      </Funnel.Step>
-      <Funnel.Step name="다짐_인증">
-        <CertificationPage
-          onNext={() => setStep('다짐_인증_확인')}
-          certification={certification}
-          setCertification={setCertification}
-        />
-      </Funnel.Step>
-      <Funnel.Step name="다짐_인증_확인">
-        <CheckPage
-          onNext={() => setStep('다짐_인증_완료')}
-          certification={certification}
-          setCertification={setCertification}
-        />
-      </Funnel.Step>
-      <Funnel.Step name="다짐_인증_완료">
-        <SuccessPage certification={certification} setCertification={setCertification} />
-      </Funnel.Step>
-    </Funnel>
+    <>
+      {!!currentChallengeId && (
+        <Suspense fallback={<div></div>}>
+          <ChallengeDynamicPage goalId={currentChallengeId} />
+        </Suspense>
+      )}
+    </>
   );
 };
 
