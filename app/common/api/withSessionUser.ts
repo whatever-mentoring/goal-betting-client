@@ -1,4 +1,3 @@
-import { AxiosError, AxiosHeaders } from 'axios';
 import { getSession } from 'next-auth/react';
 import client from './client';
 
@@ -11,22 +10,12 @@ export function withSessionUser<T, R>(
   return async (...args: T[]) => {
     const session = await getSession();
     if (!session || !session.user) {
-      const headers = new AxiosHeaders();
-
-      throw new AxiosError('Unauthorized', '401', undefined, null, {
-        data: 'Unauthorized',
-        status: 401,
-        statusText: 'Unauthorized',
-        config: {
-          headers,
-        },
-        headers: {},
-      });
+      throw new Error('로그인이 필요합니다.');
     }
 
     // axios 기본 헤더 설정
-    if (client.defaults.headers.common.Authorization !== `Bearer ${session.user.accessToken}`) {
-      client.defaults.headers.common.Authorization = `Bearer ${session.user.accessToken}`;
+    if (client.defaults.headers.common.Authorization !== `Bearer ${session?.user.accessToken}`) {
+      client.defaults.headers.common.Authorization = `Bearer ${session?.user.accessToken}`;
     }
 
     return handler(...args);
