@@ -6,6 +6,9 @@ const withVanillaExtract = createVanillaExtractPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
+  images: {
+    domains: ['localhost', process.env.S3_URL],
+  },
   async rewrites() {
     return [
       {
