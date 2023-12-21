@@ -6,7 +6,11 @@ const useCaptureAndDownloadImage = (ref: RefObject<HTMLElement>) => {
   const captureAndDownload = async (filename: string = 'download.png') => {
     if (ref.current) {
       try {
-        const link = await toPng(ref.current, { cacheBust: false });
+        const link = await toPng(ref.current, {
+          quality: 1,
+          pixelRatio: 1,
+          cacheBust: false,
+        });
         saveAs(link, filename);
       } catch (error) {
         console.log(error);
