@@ -36,11 +36,7 @@ const IconRecord: Record<ChallengeCardProps['challengeStatus'], IconNameAndColor
 
 const ChallengeCard = ({ title, nickname, date, challengeStatus }: ChallengeCardProps) => {
   return (
-    <Link
-      href={navigationPath.다짐_도전_퍼널.다짐_도전}
-      scroll={false}
-      className={challengeCardStyles.wrapper}
-    >
+    <Link href={navigationPath.홈_페이지} scroll={false} className={challengeCardStyles.wrapper}>
       <Left title={title} nickname={nickname} date={date} challengeStatus={challengeStatus} />
       <Right />
     </Link>
