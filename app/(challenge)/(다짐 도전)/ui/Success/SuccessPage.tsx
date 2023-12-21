@@ -1,89 +1,41 @@
-import { ChallengerFunnelProps } from '@/app/(challenge)/(다짐 도전)/page';
-import useCaptureAndDownloadImage from '@/app/common/hooks/useCaptureAndDownloadImage';
-import useTriggerShare from '@/app/common/hooks/useTriggerShare';
 import navigationPath from '@/app/common/navigation/navigationPath';
 import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import Header from '@/app/common/ui/Header/Header';
+import Label from '@/app/common/ui/Label/Label';
 import Text from '@/app/common/ui/Text/Text';
 import { ButtonIcon } from '@/app/common/ui/assets/Icon';
 import { withPreWrapCenter } from '@/app/common/ui/common.css';
-import dayjs from 'dayjs';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useLayoutEffect, useRef } from 'react';
+import useHandleCertificateSuccess from '../../module/certificate/useHandleCertificateSuccess';
 import { successPageStyles } from './success.css';
 
-type OmitNextStep = Omit<ChallengerFunnelProps, 'onNext'>;
-interface ChallengeAddPageProps extends OmitNextStep {}
+interface SuccessPageProps {
+  goalId: number;
+  goalProofId: number;
+}
 
-const SuccessPage = ({ certification, setCertification }: ChallengeAddPageProps) => {
-  const router = useRouter();
-  // 새로고침
-  // TODO : HOC 패턴으로 개선
-  useLayoutEffect(() => {
-    if (!certification.file) {
-      router.push(navigationPath.다짐_도전_퍼널.다짐_도전, { scroll: false });
-    }
-  }, [certification.file]);
-  // UI RENDER
-  const startDate = dayjs().subtract(1, 'day');
-
-  const getAfterDate = () => {
-    const diff = dayjs().diff(startDate, 'day');
-    return diff;
-  };
-
-  const getImageUrl = () => {
-    if (!certification.file) return '';
-    return URL.createObjectURL(certification.file);
-  };
-  // USER INTERACTION
-  // 1. 사용자 > 뒤로가기
-  const onClickBack = () => {
-    // 데이터 초기화
-    setCertification({
-      text: '',
-      file: null,
-    });
-  };
-
-  // 2. 사용자 > 이미지 다운로드
-  const imageRef = useRef<HTMLDivElement>(null);
-  const { captureAndDownload } = useCaptureAndDownloadImage(imageRef);
-
-  const onClickDownload = () => {
-    captureAndDownload('다짐을 인증해줘!');
-  };
-
-  // 3. 사용자 > 공유하기
-  const { triggerShare } = useTriggerShare();
-
-  const onClickShare = () => {
-    triggerShare({
-      title: certification.text,
-    });
-  };
-
+const SuccessPage = ({ goalId, goalProofId }: SuccessPageProps) => {
+  const { certification, imageRef, onClickDownload, onClickShare } = useHandleCertificateSuccess({
+    goalId,
+    goalProofId,
+  });
   return (
     <>
       <Header
         showBackButton
-        backTo={navigationPath.다짐_도전_퍼널.다짐_도전}
-        backCallback={onClickBack}
+        backTo={navigationPath.홈_페이지}
         appendingRightButton={
           <ButtonIcon name="share" fill="white" size="l" onClick={onClickShare} />
         }
       />
       <div className={successPageStyles.wrapper} ref={imageRef}>
         <div className={successPageStyles.dateLeftWrapper}>
-          <div className={successPageStyles.dateLeftBox}>
-            <Text.ButtonM color="white">{`${getAfterDate()}일차`}</Text.ButtonM>
-          </div>
+          <Label {...certification.label} />
         </div>
         <div className={successPageStyles.headerTextWrapper}>
-          <Text.TitleH1 className={withPreWrapCenter}>{'다짐을 인증해줘!'}</Text.TitleH1>
+          <Text.TitleH1 className={withPreWrapCenter}>{certification.title}</Text.TitleH1>
           <Text.BodyS className={withPreWrapCenter} color="grey400">
-            {'2023.12.01'}
+            {certification.dateText}
           </Text.BodyS>
         </div>
         <div className={successPageStyles.inputImageWrapper}>
@@ -95,13 +47,13 @@ const SuccessPage = ({ certification, setCertification }: ChallengeAddPageProps)
               layout="responsive"
               className={successPageStyles.image}
               priority
-              src={getImageUrl()}
+              src={certification.imgSrc ? certification.imgSrc : '/images/dog.png'}
             />
           </div>
         </div>
         <div className={successPageStyles.textAreaWrapper}>
           <Text.BodyS className={withPreWrapCenter} color="white">
-            {certification.text}
+            {certification.content}
           </Text.BodyS>
         </div>
       </div>
