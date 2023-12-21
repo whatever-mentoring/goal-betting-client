@@ -18,7 +18,7 @@ export interface ChallengerFunnelProps {
   setStep?: (step: 다짐_도전_퍼널_Key) => void;
 }
 
-const ChallengeDynamicPage = dynamic(() => import('./ui/Challenge/ChallengeInfoPage'), {
+const ChallengeDynamicPage = dynamic(() => import('./ui/Challenge/ChallengePage'), {
   ssr: false,
 });
 
