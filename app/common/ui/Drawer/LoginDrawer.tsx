@@ -40,12 +40,6 @@ const LoginDrawer = () => {
             <Text.ButtonM color="white">용용 팀 소개</Text.ButtonM>
           </li>
         </Link>
-        <Link href={navigationPath.다짐_결과_퍼널.도전_결과} scroll={false}>
-          <li className={loginDrawerStyles.linkButton}>
-            <Icon name="link" size="s" fill="white" />
-            <Text.ButtonM color="white">결과 페이지 이동</Text.ButtonM>
-          </li>
-        </Link>
       </ul>
     </div>
   );
