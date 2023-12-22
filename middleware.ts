@@ -12,35 +12,39 @@ interface CustomToken extends JWT {
 
 export async function middleware(req: NextRequest) {
   const token = (await getToken({ req })) as CustomToken | null;
-
   const { origin, pathname } = req.nextUrl;
 
-  if (token && token.user.accessToken) {
-    if (!hasQueryParams(req, 'step') && pathname === navigationPath.로그인_퍼널.로그인) {
+  // 로그인 상태
+  if (token) {
+    // 로그인 페이지 접근
+    if (pathname === '/login') {
+      if (token.user.nicknameIsModified) {
+        return NextResponse.redirect(`${origin}/`);
+      }
+      // 닉네임 설정 페이지 접근
+      if (req.nextUrl.searchParams.has('step')) {
+        return NextResponse.next();
+      }
+      // 로그인 후 접근
       return NextResponse.redirect(`${origin}${navigationPath.로그인_퍼널.닉네임_설정}`);
     }
+    return NextResponse.next();
   }
 
+  // 비로그인 상태
   if (!token) {
-    if (req.nextUrl.pathname.startsWith('/login')) {
-      console.log('Authentication Error');
-      return new NextResponse('Authentication Error', { status: 401 });
+    // 로그인 페이지 접근
+    if (pathname === '/login') {
+      return NextResponse.next();
     }
-
-    const { pathname, search, origin, basePath } = req.nextUrl;
-    const signInUrl = new URL(`${basePath}/login`, origin);
-    signInUrl.searchParams.append('callbackUrl', `${basePath}${pathname}${search}`);
-    return NextResponse.redirect(signInUrl);
+    // 유저 설정 페이지 접근
+    if (pathname.includes('/user')) {
+      return NextResponse.redirect(`${origin}/login`);
+    }
+    return NextResponse.next();
   }
-
-  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/', '/login'],
-};
-
-const hasQueryParams = (url: NextRequest, paramName: string) => {
-  const params = new URLSearchParams(url.nextUrl.search);
-  return params.has(paramName);
+  matcher: ['/login', '/login/:path*', '/user/:path*'],
 };
