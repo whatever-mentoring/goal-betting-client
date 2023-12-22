@@ -1,4 +1,4 @@
-import { getSession } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import client from './client';
 
 export function withSessionUser<R>(handler: () => Promise<R>): () => Promise<R>;
@@ -10,6 +10,7 @@ export function withSessionUser<T, R>(
   return async (...args: T[]) => {
     const session = await getSession();
     if (!session || !session.user) {
+      signIn('kakao', { redirect: false });
       throw new Error('로그인이 필요합니다.');
     }
 
