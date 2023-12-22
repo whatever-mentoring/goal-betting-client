@@ -34,7 +34,7 @@ const SharePage = ({ params }: { params: { goalId: number } }) => {
         <CompoundSharePage.ImageCard
           src={'/images/dog.png'}
           alt={'challenge-info'}
-          title={shareData.challengeInfo?.content.value ?? ''}
+          title={shareData.challengeInfo?.content?.value ?? ''}
           periodText={getDayPeriodToText(dayjs(shareData.challengeInfo?.startDate), 7) ?? ''}
           ref={shareData.imageRef}
         />

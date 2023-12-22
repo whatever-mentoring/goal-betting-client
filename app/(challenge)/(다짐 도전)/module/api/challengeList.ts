@@ -49,7 +49,7 @@ export type EndDate = Date;
 const getChallengeListAPI = withSessionUser(async () => {
   const { data } = await client<Json>({
     method: 'get',
-    url: '/v1/api/goal',
+    url: '/v1/api/me/goal',
     data: {},
   });
 

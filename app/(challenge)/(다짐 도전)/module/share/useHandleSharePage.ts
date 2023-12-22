@@ -24,12 +24,26 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
   const router = useRouter();
   // SERVER
   const [challengeInfo, setChallengeInfo] = useState<ChallengeData | null>(null);
-  const { data: challengeInfoData } = useGetChallengeInfoQuery({ goalId });
+  const { data: challengeInfoData, error } = useGetChallengeInfoQuery({ goalId });
+
+  if (error) {
+    throw error;
+  }
+
+  // TODO : Error Boundary 설정 필요
+  useEffect(() => {
+    if (error) {
+      router.push(navigationPath.홈_페이지),
+        {
+          scroll: false,
+        };
+    }
+  }, [error]);
 
   // 1. 챌린지 정보 가져오기
   useEffect(() => {
     if (!challengeInfoData) return;
-    if (dayjs(challengeInfoData.data.startDate).isBefore(dayjs())) {
+    if (dayjs(challengeInfoData.data.goal.startDate).isBefore(dayjs())) {
       router.push(navigationPath.홈_페이지),
         {
           scroll: false,
@@ -37,7 +51,7 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
       return;
     }
     if (challengeInfoData.data) {
-      setChallengeInfo(challengeInfoData.data);
+      setChallengeInfo(challengeInfoData.data.goal);
     }
   }, [challengeInfoData]);
 
