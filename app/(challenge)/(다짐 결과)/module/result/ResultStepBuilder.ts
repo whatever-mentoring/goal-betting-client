@@ -87,10 +87,10 @@ class 주최자_다짐실패_기프티콘없음 implements ActionHandler {
     return [
       {
         headerText: failText(this.nickname),
-        buttonText: '나도 내기 만들기',
+        buttonText: '다음으로',
         buttonTo: {
-          type: 'link',
-          link: navigationPath.다짐_생성_퍼널.다짐_입력,
+          type: 'funnel',
+          step: '도전_결과_저장',
         },
       },
     ];
