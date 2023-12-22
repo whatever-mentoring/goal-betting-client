@@ -59,32 +59,6 @@ export const savePageStyles = {
     },
   ]),
 
-  imageWrapper: style([
-    flexCenterCenter,
-    {
-      width: `100%`,
-      display: 'block',
-      borderRadius: `${getRem(16)}`,
-    },
-  ]),
-
-  image: style({
-    boxSizing: 'border-box',
-    borderRadius: `${getRem(16)}`,
-  }),
-
-  imageUploadBox: style([
-    flexCenterCenter,
-    {
-      flexDirection: 'column',
-      rowGap: `${getRem(12)}`,
-      width: `100%`,
-      height: `${getRem(177)}`,
-      backgroundColor: vars.color.grey800,
-      borderRadius: `${getRem(16)}`,
-    },
-  ]),
-
   linkButtonWrapper: style([
     flexCenterCenter,
     {
@@ -112,64 +86,46 @@ export const savePageStyles = {
     },
   ]),
 
-  allImageWrapper: style([
+  boxCanvas: style([
+    {
+      padding: `0 ${getRem(20)}`,
+      marginTop: `${getRem(20)}`,
+    },
+  ]),
+
+  boxWrapper: style([
     flexCenterCenter,
     {
       flexDirection: 'column',
-      padding: `0 ${getRem(20)}`,
-      height: `calc(100dvh - ${getRem(52 + 120)})`,
+      padding: `${getRem(20)}`,
+      borderRadius: `${getRem(16)}`,
+      backgroundColor: vars.color.grey800,
+      rowGap: `${getRem(20)}`,
     },
   ]),
 
-  mainImageWrapper: style([
+  imageWrapper: style([
+    flexCenterCenter,
     {
-      display: 'flex',
       width: '100%',
-      height: `calc(100dvh / 4)`,
-      borderRadius: `${getRem(18)}`,
-      marginBottom: `${getRem(34)}`,
-      justifyContent: 'center',
-    },
-  ]),
-
-  mainImageBox: style([
-    flexCenterCenter,
-    {
-      width: '50%',
-      height: '100%',
+      height: `${getRem(250)}`,
       position: 'relative',
-      borderRadius: `${getRem(18)}`,
+      borderRadius: `${getRem(16)}`,
     },
   ]),
 
-  mainImage: style({
+  image: style({
     width: '100%',
     height: '100%',
-    borderRadius: `${getRem(18)}`,
+    objectFit: 'fill',
+    borderRadius: `${getRem(16)}`,
   }),
 
-  gridContainer: style([
+  challengeTextWrapper: style([
     flexCenterCenter,
     {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(4, 1fr)',
-      gap: `${getRem(8)}`,
-      padding: `0 ${getRem(44)}`,
-      marginBottom: `${getRem(12)}`,
+      flexDirection: 'column',
+      rowGap: `${getRem(6)}`,
     },
   ]),
-
-  gridItem: style({
-    display: 'flex',
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-  }),
-
-  gridSecondRow: style({
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    padding: `0 calc(${getRem(44)} + 100vw / 10)`,
-    gap: `${getRem(8)}`,
-  }),
 };

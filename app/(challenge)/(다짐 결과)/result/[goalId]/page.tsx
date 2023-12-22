@@ -5,13 +5,16 @@ import navigationPath from '@/app/common/navigation/navigationPath';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import KakaoDownloadPage from '../../ui/Kakao/KakaoDownloadPage';
-import SavePage from '../../ui/Save/SavePage';
 
 export interface ChallengeResultFunnel {
   onNext: () => void;
 }
 
 const DynamicChallengeResultPage = dynamic(() => import('../../ui/Result/ResultPage'), {
+  ssr: false,
+});
+
+const DynamicSavePage = dynamic(() => import('../../ui/Save/SavePage'), {
   ssr: false,
 });
 
@@ -28,7 +31,9 @@ const page = ({ params }: { params: { goalId: number } }) => {
         </Suspense>
       </Funnel.Step>
       <Funnel.Step name="도전_결과_저장">
-        <SavePage />
+        <Suspense>
+          <DynamicSavePage goalId={params.goalId} />
+        </Suspense>
       </Funnel.Step>
       <Funnel.Step name="도전_기프티콘">
         <KakaoDownloadPage />
