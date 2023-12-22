@@ -43,7 +43,7 @@ export const sharePageStyles = {
     flexCenterCenter,
     {
       width: '100%',
-      height: `${getRem(200)}`,
+      height: `${getRem(250)}`,
       position: 'relative',
       borderRadius: `${getRem(16)}`,
     },
