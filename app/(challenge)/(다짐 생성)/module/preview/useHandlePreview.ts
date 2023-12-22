@@ -18,7 +18,7 @@ const useHandlePreview = ({ challenge }: PreviewProps) => {
     mutate(
       {
         postData: {
-          type: 'FREE',
+          type: challenge.gifticon.imgSrc ? 'BILLING' : 'FREE',
           content: challenge.title,
           startDate: dayjs(challenge.startDate).toISOString(),
           endDate: dayjs(challenge.startDate).add(7, 'day').toISOString(),
