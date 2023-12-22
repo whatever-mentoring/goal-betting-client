@@ -13,13 +13,23 @@ interface HandleResultProps {
 }
 
 const useHandleResult = ({ goalId, setStep }: HandleResultProps) => {
+  const router = useRouter();
+  // SERVER
+  // 로그인 체크
   const { data: sessionData } = useSession();
 
+  // 챌린지 정보 가져오기
   const { data: challengeInfo } = useGetChallengeInfoQuery({ goalId });
 
-  const router = useRouter();
-
   const [steps, setSteps] = useState<Step[] | null>(null);
+
+  useEffect(() => {
+    if (!sessionData) return;
+    if (!challengeInfo) return;
+    if (!challengeInfo.data.myBetting) {
+      throw new Error('아직 종료되지 않은 챌린지입니다.');
+    }
+  }, [sessionData, challengeInfo]);
 
   useEffect(() => {
     if (!sessionData) return;
@@ -66,7 +76,6 @@ const transformStep = <T>(
       button: {
         text: builderStep.buttonText,
         callback: () => {
-          // callback 함수 내에서도 다시 한 번 확인
           if (builderStep.buttonTo && builderStep.buttonTo.type === 'link') {
             router.push(builderStep.buttonTo.link);
           }
@@ -79,7 +88,6 @@ const transformStep = <T>(
     button: {
       text: builderStep.buttonText,
       callback: () => {
-        // callback 함수 내에서도 다시 한 번 확인
         if (builderStep.buttonTo && builderStep.buttonTo.type === 'funnel') {
           setStep(builderStep.buttonTo.step as T);
         }
