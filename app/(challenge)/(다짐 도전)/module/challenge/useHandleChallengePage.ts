@@ -4,6 +4,7 @@ import { getDayPeriodToText, nthDayFromStartDate } from '@/app/common/util/date'
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useGetChallengeInfoQuery } from '../api/challenge';
 import { useGETChallengeParticipantQuery } from '../api/participantList';
@@ -28,6 +29,7 @@ interface HandleChallengePageProps {
 }
 
 const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
+  const router = useRouter();
   // SERVER
   const [challengeInfo, setChallengeInfo] = useState<ChallengeInfo>({
     id: 0,
@@ -40,6 +42,17 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
     participateInfoText: '',
   });
   const { data: challengeInfoData } = useGetChallengeInfoQuery({ goalId });
+
+  // 첼린지가 시작하지 않는 경우 공유하기 페이지로 이동
+  useEffect(() => {
+    if (!challengeInfoData) return;
+    if (dayjs(challengeInfoData.data.goal.startDate).isAfter(dayjs())) {
+      router.push(navigationPath.다짐_공유_페이지(goalId)),
+        {
+          scroll: false,
+        };
+    }
+  }, [challengeInfoData]);
 
   // 1. 챌린지 정보 가져오기
   useEffect(() => {
