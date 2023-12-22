@@ -1,3 +1,4 @@
+import { BallImage } from '@/app/common/constants/ballImage';
 import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import ButtonWrapper from '@/app/common/ui/Button/ButtonWrapper';
 import Label from '@/app/common/ui/Label/Label';
@@ -5,7 +6,6 @@ import Text from '@/app/common/ui/Text/Text';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import { CertificateInfo } from '../../module/challenge/useHandleChallengePage';
-import { BallImage } from './ChallengePage';
 import { challengePageStyles } from './challenge.css';
 
 interface CompoundChallengePageProps {
