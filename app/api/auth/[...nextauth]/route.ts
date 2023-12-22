@@ -8,6 +8,7 @@ export interface AuthUser extends User {
   nickname: string;
   accessToken: string;
   refreshToken: string;
+  nicknameIsModified: boolean;
 }
 
 const handler = NextAuth({
@@ -34,7 +35,18 @@ const handler = NextAuth({
       }
       return true;
     },
-    async jwt({ token, account }) {
+    async jwt({ token, session, account, trigger }) {
+      if (trigger === 'update') {
+        if (session.nickname) {
+          return {
+            ...token,
+            user: {
+              ...(token.user as AuthUser),
+              nickname: session.nickname,
+            },
+          };
+        }
+      }
       if (account && account.access_token) {
         try {
           const user = await postToken({ accessToken: account.access_token as string });
