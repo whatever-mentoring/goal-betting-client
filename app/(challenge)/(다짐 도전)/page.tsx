@@ -30,7 +30,7 @@ const ChallengeFunnel = () => {
 
   useEffect(() => {
     if (!challengeList) return;
-    if (challengeList?.data) {
+    if (challengeList?.data && challengeList.data.length > 0) {
       setCurrentChallengeId(challengeList.data[0].id);
     } else {
       router.push(navigationPath.다짐_생성_퍼널.다짐_입력, { scroll: false });
