@@ -34,9 +34,7 @@ const KakaoDownloadPage = ({}: SaverPageProps) => {
             className={kakaoPageStyles.image}
             src="/images/dog.png"
             alt="Image description"
-            layout="responsive"
-            width={100}
-            height={100}
+            fill
             quality={100}
             priority
           />
