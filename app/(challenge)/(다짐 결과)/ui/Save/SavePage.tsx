@@ -1,88 +1,44 @@
-import useCaptureAndDownloadImage from '@/app/common/hooks/useCaptureAndDownloadImage';
 import navigationPath from '@/app/common/navigation/navigationPath';
 import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import Header from '@/app/common/ui/Header/Header';
 import Text from '@/app/common/ui/Text/Text';
 import { withPreWrapCenter } from '@/app/common/ui/common.css';
 import Image from 'next/image';
-import { useRef } from 'react';
+import useHandleSavePage from '../../module/result/useHandleSavePage';
 import { ChallengeResultFunnel } from '../../result/[goalId]/page';
 import { savePageStyles } from './save.css';
 
 type OmitOnNext = Omit<ChallengeResultFunnel, 'onNext'>;
-interface SaverPageProps extends OmitOnNext {}
+interface SaverPageProps extends OmitOnNext {
+  goalId: number;
+}
 
-const SavePage = ({}: SaverPageProps) => {
-  const imageRef = useRef<HTMLDivElement>(null);
-  // 1-2. 이미지 다운로드
-  const { captureAndDownload } = useCaptureAndDownloadImage(imageRef);
-
-  const onClickDownload = () => {
-    captureAndDownload('다짐을 인증해줘!');
-  };
-
-  const images = [
-    '/images/dog.png',
-    '/images/dog.png',
-    '/images/dog.png',
-    '/images/dog.png',
-    '/images/dog.png',
-    '/images/dog.png',
-    '/images/dog.png',
-  ];
-
-  const getHeaderText = () => {
-    return '다음에는\n기프티콘 회수해보자';
-  };
+const SavePage = ({ goalId }: SaverPageProps) => {
+  const { imageRef, challengeInfo, onClickDownload } = useHandleSavePage({ goalId });
 
   return (
     <>
       <Header showBackButton backTo={navigationPath.홈_페이지} />
 
       <div className={savePageStyles.headerTextWrapper}>
-        <Text.TitleH1 className={withPreWrapCenter}>{getHeaderText()}</Text.TitleH1>
+        <Text.TitleH1 className={withPreWrapCenter}>{'다음에는\n기프티콘 회수해보자'}</Text.TitleH1>
       </div>
 
-      <div className={savePageStyles.allImageWrapper} ref={imageRef}>
-        <div className={savePageStyles.mainImageWrapper}>
-          <div className={savePageStyles.mainImageBox}>
+      <div className={savePageStyles.boxCanvas}>
+        <div ref={imageRef} className={savePageStyles.boxWrapper}>
+          <div className={savePageStyles.imageWrapper}>
             <Image
-              className={savePageStyles.image}
-              src="/images/dog.png"
-              alt="Image description"
+              src={'/images/dog.png'}
               fill
-              quality={100}
+              alt="mirr character"
               priority
+              className={savePageStyles.image}
             />
           </div>
-        </div>
-        <div className={savePageStyles.gridContainer}>
-          {images.slice(0, 4).map((image, idx) => (
-            <div key={`${image + idx}`} className={savePageStyles.gridItem}>
-              <Image
-                className={savePageStyles.image}
-                src={image}
-                alt="Image description"
-                width={100}
-                height={100}
-                priority
-              />
-            </div>
-          ))}
-        </div>
-        <div className={savePageStyles.gridSecondRow}>
-          {images.slice(4).map((image, idx) => (
-            <div key={`${image + idx}`} className={savePageStyles.gridItem}>
-              <Image
-                className={savePageStyles.image}
-                src={image}
-                alt="Image description"
-                width={100}
-                height={100}
-                priority
-              />
-            </div>
-          ))}
+          <div className={savePageStyles.challengeTextWrapper}>
+            <Text.BodyL>{challengeInfo.title}</Text.BodyL>
+            <Text.BodyS color="grey400">{challengeInfo.periodText}</Text.BodyS>
+          </div>
         </div>
       </div>
 
