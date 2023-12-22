@@ -15,7 +15,8 @@ interface ChallengePageProps extends OmitFunnel {
 const ChallengePage = ({ goalId }: ChallengePageProps) => {
   const router = useRouter();
   const { openDrawer } = useDrawer();
-  const { challengeInfo, fixedButtonInfo } = useHandleChallengePage({ goalId });
+  const { challengeInfo, certificateList, fixedButtonInfo, onClickCertificate } =
+    useHandleChallengePage({ goalId });
   return (
     <>
       <Header
@@ -29,8 +30,15 @@ const ChallengePage = ({ goalId }: ChallengePageProps) => {
           title={challengeInfo.title}
           periodText={challengeInfo.periodText}
         />
-        <CompoundChallengePage.MainImage src={'/images/dog.png'} alt={'challenge-info'} />
-        <CompoundChallengePage.BallImages images={images} />
+        <CompoundChallengePage.MainImage src={'/images/mirr/stand.png'} alt={'challenge-info'} />
+        <CompoundChallengePage.BallImages
+          images={images}
+          certificationList={certificateList}
+          onClickCertificate={onClickCertificate}
+          onClickAddNewChallenge={() =>
+            router.push(navigationPath.다짐_생성_퍼널.다짐_입력, { scroll: false })
+          }
+        />
         <CompoundChallengePage.LinkButton
           onClick={() =>
             router.push(navigationPath.유저_목록_페이지(challengeInfo.id), {
@@ -53,41 +61,53 @@ const ChallengePage = ({ goalId }: ChallengePageProps) => {
 export default ChallengePage;
 
 export interface BallImage {
-  imgSrc: string;
+  onImgSrc: string;
+  offImgSrc: string;
+  text: string;
   id: number;
 }
 
 const images: BallImage[] = [
   {
-    imgSrc: '/images/dog.png',
+    onImgSrc: '/images/balls/ball_on_1.png',
+    offImgSrc: '/images/balls/ball_off_1.png',
+    text: '하루',
     id: 1,
   },
   {
-    imgSrc: '/images/dog.png',
+    onImgSrc: '/images/balls/ball_on_2.png',
+    offImgSrc: '/images/balls/ball_off_2.png',
+    text: '이틀',
     id: 2,
   },
   {
-    imgSrc: '/images/dog.png',
+    onImgSrc: '/images/balls/ball_on_3.png',
+    offImgSrc: '/images/balls/ball_off_3.png',
+    text: '사흘',
     id: 3,
   },
   {
-    imgSrc: '/images/dog.png',
+    onImgSrc: '/images/balls/ball_on_4.png',
+    offImgSrc: '/images/balls/ball_off_4.png',
+    text: '나흘',
     id: 4,
   },
   {
-    imgSrc: '/images/dog.png',
+    onImgSrc: '/images/balls/ball_on_5.png',
+    offImgSrc: '/images/balls/ball_off_5.png',
+    text: '닷새',
     id: 5,
   },
   {
-    imgSrc: '/images/dog.png',
+    onImgSrc: '/images/balls/ball_on_6.png',
+    offImgSrc: '/images/balls/ball_off_6.png',
+    text: '엿새',
     id: 6,
   },
   {
-    imgSrc: '/images/dog.png',
+    onImgSrc: '/images/balls/ball_on_7.png',
+    offImgSrc: '/images/balls/ball_off_7.png',
+    text: '이레',
     id: 7,
   },
-  {
-    imgSrc: '',
-    id: 8,
-  },
-];
+] as const;

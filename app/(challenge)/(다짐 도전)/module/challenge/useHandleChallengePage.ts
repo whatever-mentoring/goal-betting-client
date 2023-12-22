@@ -6,6 +6,7 @@ import 'dayjs/locale/ko';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useGETCertificateListQuery } from '../api/certificateList';
 import { useGetChallengeInfoQuery } from '../api/challenge';
 import { useGETChallengeParticipantQuery } from '../api/participantList';
 
@@ -26,6 +27,11 @@ export interface ChallengeInfo {
 
 interface HandleChallengePageProps {
   goalId: number;
+}
+
+export interface CertificateInfo {
+  progressDay: number;
+  bettingId: number;
 }
 
 const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
@@ -81,7 +87,33 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
     }
   }, [sessionData, challengeInfoData]);
 
-  // 3. 참가자 정보 가져오기
+  // 3. 인증 내역 가져오기
+  const [certificateList, setCertificateList] = useState<CertificateInfo[]>([]);
+  const { data: certificateListData } = useGETCertificateListQuery({ goalId });
+
+  useEffect(() => {
+    if (!sessionData) return;
+    if (!certificateListData) return;
+    certificateListData.data.goalProofs.forEach((proof) => {
+      setCertificateList((prev) => [
+        ...prev,
+        {
+          progressDay: proof.progressDay,
+          bettingId: proof.id,
+        },
+      ]);
+    });
+    setCertificateList((prev) => prev.sort((a, b) => a.progressDay - b.progressDay));
+  }, [sessionData, certificateListData]);
+
+  const onClickCertificate = (bettingId: number) => {
+    router.push(navigationPath.다짐_인증_확인_페이지(goalId)(bettingId)),
+      {
+        scroll: false,
+      };
+  };
+
+  // 4. 참가자 정보 가져오기
   const { data: participantsData } = useGETChallengeParticipantQuery({ goalId });
 
   useEffect(() => {
@@ -119,7 +151,9 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
 
   return {
     challengeInfo,
+    certificateList,
     fixedButtonInfo,
+    onClickCertificate,
   };
 };
 
