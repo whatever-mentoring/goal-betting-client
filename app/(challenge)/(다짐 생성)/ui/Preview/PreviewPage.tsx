@@ -38,7 +38,7 @@ const PreviewPage = ({ challenge }: PreviewPageProps) => {
         <div className={previewPageStyles.imageWrapper}>
           <Image
             src="/images/dog.png"
-            layout="fill"
+            fill
             alt="challenge-info"
             className={previewPageStyles.image}
           />
