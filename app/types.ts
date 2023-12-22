@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import 'next-auth';
 import { DefaultSession, DefaultUser } from 'next-auth';
 import type { AuthUser } from './api/auth/[...nextauth]/route';
@@ -19,5 +20,14 @@ declare module 'next-auth' {
     accessTokenExpires: number;
     refreshToken: string;
     user: AuthUser;
+  }
+}
+
+export type BETTING_TYPE = 'FREE' | 'BILLING';
+export type BETTING_RESULT = 'PROCEEDING' | 'SUCCESS' | 'FAIL';
+
+declare module '@tanstack/react-query' {
+  interface Register {
+    defaultError: AxiosError;
   }
 }
