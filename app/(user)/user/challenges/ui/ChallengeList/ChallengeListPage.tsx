@@ -4,9 +4,9 @@ import Text from '@/app/common/ui/Text/Text';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import useHandleChallenge from '../../module/useHandleChallenge';
+import ChallengeCard, { ChallengeCardProps } from '../ChallengeCard/ChallengeCard';
 import { challengesPageStyles, selectButton } from './challenges.css';
-import ChallengeCard, { ChallengeCardProps } from './ui/ChallengeCard/ChallengeCard';
 
 dayjs.locale('ko');
 
@@ -17,36 +17,8 @@ const StepText: Record<ToggleState, string> = {
   right: '내가 참여한 다짐',
 } as const;
 
-const ChallengesPage = () => {
-  const [toggleState, setToggleState] = useState<ToggleState>('left');
-
-  const myChallenges: ChallengeCardProps[] = [
-    {
-      id: 1,
-      title: '일주일 동안 매일 10분씩 운동하기',
-      date: dayjs().format('MM월 DD일 HH:mm:ss'),
-      nickname: '장동현',
-      challengeStatus: 'SUCCESS',
-    },
-  ] as const;
-
-  const otherChallenges: ChallengeCardProps[] = [
-    {
-      id: 3,
-      title: '일주일 동안 매일 10분씩 운동하기',
-      date: dayjs().format('MM월 DD일 HH:mm:ss'),
-      nickname: '장동현',
-      challengeStatus: 'FAIL',
-    },
-    {
-      id: 4,
-      title: '아티클 10개 읽기',
-      date: dayjs().format('MM월 DD일 HH:mm:ss'),
-      nickname: '김민수',
-      challengeStatus: 'PROGRESS',
-    },
-  ] as const;
-
+const ChallengeListPage = () => {
+  const { toggleState, betList, challengeList, setToggleState } = useHandleChallenge();
   return (
     <div style={{ overflowX: 'hidden' }}>
       <Header showBackButton />
@@ -61,7 +33,7 @@ const ChallengesPage = () => {
             transition={{ ease: 'easeInOut', duration: 0.3 }}
             className={challengesPageStyles.indicator}
           >
-            <StepComponent headerText={StepText[toggleState]} challenges={myChallenges} />
+            <StepComponent headerText={StepText[toggleState]} challenges={challengeList} />
           </motion.div>
         )}
         {toggleState === 'right' && (
@@ -73,7 +45,7 @@ const ChallengesPage = () => {
             transition={{ ease: 'easeInOut', duration: 0.3 }}
             className={challengesPageStyles.indicator}
           >
-            <StepComponent headerText={StepText[toggleState]} challenges={otherChallenges} />
+            <StepComponent headerText={StepText[toggleState]} challenges={betList} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -81,7 +53,7 @@ const ChallengesPage = () => {
   );
 };
 
-export default ChallengesPage;
+export default ChallengeListPage;
 
 interface ToggleButtonProps {
   toggleState: ToggleState;
@@ -109,7 +81,6 @@ const ToggleButton = ({ toggleState, setToggleState }: ToggleButtonProps) => {
         >
           내 다짐
         </label>
-
         <input
           type="radio"
           id="right"
