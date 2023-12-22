@@ -38,7 +38,7 @@ const ChallengeCard = ({ title, nickname, date, challengeStatus }: ChallengeCard
   return (
     <Link href={navigationPath.홈_페이지} scroll={false} className={challengeCardStyles.wrapper}>
       <Left title={title} nickname={nickname} date={date} challengeStatus={challengeStatus} />
-      <Right />
+      {/* <Right /> */}
     </Link>
   );
 };
@@ -71,10 +71,10 @@ const Left = ({ title, nickname, date, challengeStatus }: LeftProps) => {
   );
 };
 
-const Right = () => {
-  return (
-    <div className={challengeCardStyles.right}>
-      <Text.BodyS>더보기</Text.BodyS>
-    </div>
-  );
-};
+// const Right = () => {
+//   return (
+//     <div className={challengeCardStyles.right}>
+//       <Text.BodyS color="grey600">더보기</Text.BodyS>
+//     </div>
+//   );
+// };
