@@ -1,6 +1,7 @@
-import { withSessionUser } from '@/app/common/api/withSessionUser';
 import client from '@/app/common/api/client';
+import { withSessionUser } from '@/app/common/api/withSessionUser';
 import { useMutation } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
 
 export interface Json {
   isSuccess: boolean;
@@ -38,8 +39,12 @@ export interface PutNicknameAPIRequest {
 const PUT_NICKNAME_KEY = () => ['nickname'];
 
 export const usePUTNickname = () => {
+  const { update } = useSession();
   return useMutation({
     mutationKey: PUT_NICKNAME_KEY(),
     mutationFn: putNicknameAPI,
+    onSuccess: async (data) => {
+      await update({ nickname: data.data.nickname.value });
+    },
   });
 };
