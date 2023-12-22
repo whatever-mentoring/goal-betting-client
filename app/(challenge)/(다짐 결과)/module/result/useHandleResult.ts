@@ -1,3 +1,4 @@
+import { useGetChallengeInfoQuery } from '@/app/(challenge)/(다짐 도전)/module/api/challenge';
 import { 다짐_결과_퍼널_Key } from '@/app/common/navigation/navigationPath';
 import { Step } from '@/app/common/ui/Animated/TransitionComponent';
 import { useSession } from 'next-auth/react';
@@ -11,8 +12,10 @@ interface HandleResultProps {
   goalId: number;
 }
 
-const useHandleResult = ({ setStep }: HandleResultProps) => {
+const useHandleResult = ({ goalId, setStep }: HandleResultProps) => {
   const { data: sessionData } = useSession();
+
+  const { data: challengeInfo } = useGetChallengeInfoQuery({ goalId });
 
   const router = useRouter();
 
@@ -20,12 +23,15 @@ const useHandleResult = ({ setStep }: HandleResultProps) => {
 
   useEffect(() => {
     if (!sessionData) return;
+    if (!challengeInfo) return;
     const builderSteps = new ResultStepBuilder({
-      nickname: sessionData?.user.nickname || '',
-      hasGifticon: true,
-      isOwner: true,
+      nickname: challengeInfo.data.goal.hostUserNickname,
+      hasGifticon: challengeInfo.data.goal.type === 'BILLING',
+      isOwner: sessionData.user.userId === challengeInfo.data.goal.hostUserId,
+      // TODO : 백엔드 수정 후 수정 필요
       isSuccess: false,
       winnerNickname: '김코딩',
+      isWinner: challengeInfo.data.myBetting?.result === 'GET_GIFTICON',
     });
     const actionHandler = builderSteps.build();
     if (!actionHandler) return;
@@ -34,7 +40,7 @@ const useHandleResult = ({ setStep }: HandleResultProps) => {
       return transformStep(step, router, setStep);
     });
     setSteps(transformedStep);
-  }, [sessionData]);
+  }, [sessionData, challengeInfo]);
 
   return { steps };
 };
