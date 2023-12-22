@@ -62,7 +62,7 @@ const CheckPage = ({ certification, onNext, params }: ChallengeAddPageProps) => 
           </ButtonWrapper>
         </BottomFixedButton.OverItem>
         <BottomFixedButton.First onClick={onClickSubmit} color="purple500-active">
-          <Text.ButtonL color={'white'}>작성완료</Text.ButtonL>
+          <Text.ButtonL color={'white'}>결과보기</Text.ButtonL>
         </BottomFixedButton.First>
       </BottomFixedButton>
     </>

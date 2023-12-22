@@ -104,7 +104,7 @@ export const checkPageStyles = {
     {
       width: `100%`,
       backgroundColor: vars.color.grey800,
-      padding: `${getRem(19)} ${getRem(21)}`,
+      padding: `${getRem(21)} ${getRem(20)}`,
       minHeight: `${getRem(129)}`,
       borderRadius: `${getRem(18)}`,
       marginBottom: `${getRem(6)}`,
@@ -117,7 +117,7 @@ export const checkPageStyles = {
       display: 'flex',
       width: '100%',
       justifyContent: 'flex-end',
-      paddingTop: `${getRem(17)}`,
+      paddingTop: `${getRem(3)}`,
       paddingRight: `${getRem(20)}`,
     },
   ]),
