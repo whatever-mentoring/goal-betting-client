@@ -27,8 +27,8 @@ export const 다짐_공유_페이지 = (goalId: number) => `/share/${goalId}`;
 export type 다짐_도전_퍼널_Key = '다짐_인증' | '다짐_인증_확인';
 
 const 다짐_도전_퍼널 = (goalId: number): Record<다짐_도전_퍼널_Key, string> => ({
-  다짐_인증: `/challenge/${goalId}?step=다짐_인증`,
-  다짐_인증_확인: `/challenge/${goalId}?step=다짐_인증_확인`,
+  다짐_인증: `/challenge/${goalId}/certificate?step=다짐_인증`,
+  다짐_인증_확인: `/challenge/${goalId}/certificate?step=다짐_인증_확인`,
 });
 
 const 다짐_인증_확인_페이지 = (goalId: number) => (certificationId: number) =>
