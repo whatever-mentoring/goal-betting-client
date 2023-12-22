@@ -1,9 +1,10 @@
 import useCaptureAndDownloadImage from '@/app/common/hooks/useCaptureAndDownloadImage';
 import useTriggerShare from '@/app/common/hooks/useTriggerShare';
 import { LabelProps } from '@/app/common/ui/Label/Label';
-import { covertFormatDate, nthDayFromStartDate } from '@/app/common/util/date';
+import dayjs from 'dayjs';
 import { useEffect, useRef, useState } from 'react';
 import { useGETCertificateResultQuery } from '../api/certificate';
+import { useGETCertificateListQuery } from '../api/certificateList';
 import { useGetChallengeInfoQuery } from '../api/challenge';
 
 interface HandleCertificateSuccessProps {
@@ -30,27 +31,56 @@ const useHandleCertificateSuccess = ({ goalId, goalProofId }: HandleCertificateS
     imgSrc: '',
     content: '',
   });
+
   // SERVER
   const { data: challengeData } = useGetChallengeInfoQuery({ goalId });
   useEffect(() => {
     if (!challengeData) return;
     setCertification((prev) => ({
       ...prev,
-      label: {
-        text: `${nthDayFromStartDate(challengeData.data.goal.startDate)}일차`,
-        labelColor: 'purple400',
-      },
       title: challengeData.data.goal.content.value,
     }));
   }, [challengeData]);
 
   const { data: certificatedData } = useGETCertificateResultQuery({ goalProofId });
+  const { data: certificateList } = useGETCertificateListQuery({ goalId });
+
+  // TODO : 백엔드 API 변경 필요
+  useEffect(() => {
+    if (!certificateList) return;
+    if (!goalProofId) return;
+    const certificateInfo = certificateList.data.goalProofs.find(
+      (certificate) => Number(certificate.id) === Number(goalProofId),
+    );
+    if (!certificateInfo) return;
+    setCertification((prev) => ({
+      ...prev,
+      label: {
+        text: `${certificateInfo.progressDay}일차`,
+        labelColor: 'purple400',
+      },
+    }));
+  }, [certificateList, goalProofId]);
+
+  useEffect(() => {
+    if (!challengeData) return;
+    if (!certificatedData) return;
+    const certificateInfo = certificateList.data.goalProofs.find(
+      (certificate) => certificate.id === Number(goalProofId),
+    );
+    if (!certificateInfo) return;
+    setCertification((prev) => ({
+      ...prev,
+      dateText: dayjs(challengeData.data.goal.startDate)
+        .add(certificateInfo.progressDay, 'day')
+        .format('YYYY.MM.DD일'),
+    }));
+  }, [challengeData, certificatedData, goalProofId]);
 
   useEffect(() => {
     if (!certificatedData) return;
     setCertification((prev) => ({
       ...prev,
-      dateText: covertFormatDate(new Date(), 'YYYY.MM.DD일'),
       imgSrc: certificatedData.data.url,
       content: certificatedData.data.comment,
     }));
@@ -71,6 +101,7 @@ const useHandleCertificateSuccess = ({ goalId, goalProofId }: HandleCertificateS
   const onClickShare = () => {
     triggerShare({
       title: certification.title,
+      files: [Object.assign(new File([], ''), { preview: certification.imgSrc })],
     });
   };
 
