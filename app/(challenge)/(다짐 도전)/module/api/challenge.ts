@@ -16,6 +16,7 @@ export interface Json {
 
 export interface ChallengeData {
   hostUserId: number;
+  hostUserNickname: string;
   id: number;
   type: ChallengeType;
   content: Content;
