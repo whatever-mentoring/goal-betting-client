@@ -1,4 +1,3 @@
-import navigationPath from '@/app/common/navigation/navigationPath';
 import Text from '@/app/common/ui/Text/Text';
 import Icon, { IconName } from '@/app/common/ui/assets/Icon';
 import { Color } from '@/app/common/ui/colors.css';
@@ -11,6 +10,7 @@ export interface ChallengeCardProps {
   date: string;
   id: number;
   challengeStatus: 'SUCCESS' | 'FAIL' | 'PROGRESS';
+  href: string;
 }
 
 type IconNameAndColor = {
@@ -34,13 +34,9 @@ const IconRecord: Record<ChallengeCardProps['challengeStatus'], IconNameAndColor
   },
 };
 
-const ChallengeCard = ({ id, title, nickname, date, challengeStatus }: ChallengeCardProps) => {
+const ChallengeCard = ({ title, nickname, date, challengeStatus, href }: ChallengeCardProps) => {
   return (
-    <Link
-      href={navigationPath.다짐_페이지(id)}
-      scroll={false}
-      className={challengeCardStyles.wrapper}
-    >
+    <Link href={href} scroll={false} className={challengeCardStyles.wrapper}>
       <Left title={title} nickname={nickname} date={date} challengeStatus={challengeStatus} />
       {/* <Right /> */}
     </Link>
