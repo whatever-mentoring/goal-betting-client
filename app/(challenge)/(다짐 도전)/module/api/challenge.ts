@@ -1,12 +1,16 @@
 'use client';
 import client from '@/app/common/api/client';
 import { withSessionUser } from '@/app/common/api/withSessionUser';
+import { BETTING_RESULT } from '@/app/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ChallengeType } from './challengeList';
 
 export interface Json {
   isSuccess: boolean;
-  data: ChallengeData;
+  data: {
+    goal: ChallengeData;
+    myBetting: MyBetting | null;
+  };
   errorResponse: unknown;
 }
 
@@ -16,8 +20,16 @@ export interface ChallengeData {
   type: ChallengeType;
   content: Content;
   threshold: Threshold;
-  startDate: StartDate;
-  endDate: EndDate;
+  startDate: Date;
+  endDate: Date;
+}
+
+export interface MyBetting {
+  id: number;
+  userId: number;
+  goalId: number;
+  predictionType: BETTING_RESULT;
+  result: BETTING_RESULT | null;
 }
 
 export interface Content {
@@ -27,9 +39,6 @@ export interface Content {
 export interface Threshold {
   value: number;
 }
-export type StartDate = Date;
-
-export type EndDate = Date;
 
 interface RequestInterface {
   goalId: number;
@@ -54,6 +63,6 @@ export const useGetChallengeInfoQuery = (params: GetChallengeInfoQueryRequest) =
   return useSuspenseQuery({
     queryKey: GET_CHALLENGE_INFO_KEY(params),
     queryFn: () => getChallengeInfoAPI(params),
-    networkMode: 'online',
+    notifyOnChangeProps: ['data'],
   });
 };
