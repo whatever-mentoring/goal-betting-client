@@ -28,6 +28,8 @@ const ChallengeInputPage = ({ challenge, setChallenge, onNext }: DescriptionPage
             value={challenge.title}
             onChange={(e) => setChallenge((prev) => ({ ...prev, title: e.target.value }))}
             maxRows={3}
+            minRows={1}
+            rows={1}
             withCount={{
               max: 20,
               initialVisible: true,
