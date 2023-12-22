@@ -1,7 +1,7 @@
-import { textColors, textStyles } from './text.css';
-import { Color } from '../colors.css';
 import classNames from 'classnames';
 import { ReactNode } from 'react';
+import { Color } from '../colors.css';
+import { textColors, textStyles } from './text.css';
 
 type TextComponentProps = {
   children: ReactNode;
