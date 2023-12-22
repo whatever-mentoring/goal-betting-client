@@ -27,9 +27,9 @@ const UserListInfo = ({ params }: { params: { goalId: number } }) => {
       </div>
       {!!params.goalId && (
         <div className={userListPageStyles.userList}>
-          {!userList.length && (
+          {!userList.slice(1).length && (
             <CenterBlank>
-              <Text.BodyS color="grey500">내기에 참여한 사림이 없어요</Text.BodyS>
+              <Text.BodyS color="grey500">내기에 참여한 사람이 없어요</Text.BodyS>
             </CenterBlank>
           )}
           {!!userList.length &&
