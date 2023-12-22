@@ -15,7 +15,10 @@ const Portal = ({ children }: PortalProps) => {
     setContainer(newContainer);
 
     return () => {
-      document.body.removeChild(newContainer);
+      if (newContainer && document.body) {
+        if (document.body.contains(newContainer))
+          document.body && document.body?.removeChild(newContainer);
+      }
     };
   }, []);
 
