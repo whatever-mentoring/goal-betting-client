@@ -10,7 +10,7 @@ import {
   withPreWrapStart,
 } from '@/app/common/ui/common.css';
 import Image from 'next/image';
-import { ChallengeCertificationFunnelProps } from '../../challenge/[goalId]/page';
+import { ChallengeCertificationFunnelProps } from '../../challenge/[goalId]/certificate/page';
 import useHandleCertificate from '../../module/certificate/useHandleCertificate';
 import { checkPageStyles } from './check.css';
 

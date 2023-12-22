@@ -12,7 +12,7 @@ import {
 } from '@/app/common/ui/common.css';
 import Image from 'next/image';
 import React, { MouseEvent, memo, useRef, useState } from 'react';
-import { ChallengeCertificationFunnelProps } from '../../challenge/[goalId]/page';
+import { ChallengeCertificationFunnelProps } from '../../challenge/[goalId]/certificate/page';
 import { certificationPageStyles } from './certification.css';
 
 interface ChallengeAddPageProps extends ChallengeCertificationFunnelProps {}

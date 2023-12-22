@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import { ChallengeCertificationFunnelProps } from '../../challenge/[goalId]/page';
+import { ChallengeCertificationFunnelProps } from '../../challenge/[goalId]/certificate/page';
 import { usePOSTChallengeCertificate } from '../api/postChallenge';
 
 type OmitOnNext = Omit<ChallengeCertificationFunnelProps, 'setCertification'>;
