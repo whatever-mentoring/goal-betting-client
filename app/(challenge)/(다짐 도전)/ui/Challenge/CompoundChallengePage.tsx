@@ -4,6 +4,7 @@ import Label from '@/app/common/ui/Label/Label';
 import Text from '@/app/common/ui/Text/Text';
 import Image from 'next/image';
 import { ReactNode } from 'react';
+import { CertificateInfo } from '../../module/challenge/useHandleChallengePage';
 import { BallImage } from './ChallengePage';
 import { challengePageStyles } from './challenge.css';
 
@@ -66,6 +67,7 @@ const ChallengeMainImage = ({ src, alt }: ChallengeMainImagesProps) => {
           src={src}
           alt={alt}
           fill
+          sizes="(max-width: 768px) 100px, 200px"
           quality={100}
           priority
         />
@@ -76,25 +78,55 @@ const ChallengeMainImage = ({ src, alt }: ChallengeMainImagesProps) => {
 
 interface ChallengeBallImagesProps {
   images: BallImage[];
+  certificationList: CertificateInfo[];
+  onClickCertificate: (progressDay: number) => void;
+  onClickAddNewChallenge: () => void;
 }
 
-const ChallengeBallImages = ({ images }: ChallengeBallImagesProps) => {
+const ChallengeBallImages = ({
+  images,
+  certificationList,
+  onClickCertificate,
+  onClickAddNewChallenge,
+}: ChallengeBallImagesProps) => {
   return (
     <div className={challengePageStyles.gridContainer}>
-      {images.map((image) => (
-        <div key={image.id} className={challengePageStyles.gridItem}>
-          {image.imgSrc && (
+      {images.map((image) => {
+        const isCertificated = certificationList.find(
+          (certification) => certification.progressDay === image.id,
+        );
+        return (
+          <div
+            style={{ cursor: isCertificated ? 'pointer' : '' }}
+            key={image.id}
+            className={challengePageStyles.gridItem}
+            onClick={() => {
+              isCertificated && onClickCertificate(isCertificated.bettingId);
+            }}
+          >
             <Image
               className={challengePageStyles.image}
-              src={image.imgSrc}
+              src={isCertificated ? image.onImgSrc : image.offImgSrc}
               alt="Challenge Ball Image"
               width={100}
               height={100}
+              sizes="(max-width: 768px) 100px, 200px"
               priority
             />
-          )}
+            <div className={challengePageStyles.imageLabel}>
+              <Text.ButtonM color="white">{image.text}</Text.ButtonM>
+            </div>
+          </div>
+        );
+      })}
+      <div onClick={onClickAddNewChallenge} className={challengePageStyles.gridItem}>
+        <div className={challengePageStyles.blankBox}>
+          <Text.BodyL color="white">+</Text.BodyL>
         </div>
-      ))}
+        <div className={challengePageStyles.imageLabel}>
+          <Text.ButtonM color="white">새 다짐</Text.ButtonM>
+        </div>
+      </div>
     </div>
   );
 };

@@ -27,7 +27,7 @@ export const challengePageStyles = {
       flexDirection: 'column',
       marginTop: `${getRem(16)}`,
       rowGap: `${getRem(10)}`,
-      marginBottom: `${getRem(34)}`,
+      marginBottom: `${getRem(10)}`,
     },
   ]),
 
@@ -46,9 +46,9 @@ export const challengePageStyles = {
     {
       display: 'flex',
       width: '100%',
-      height: `calc(100dvh / 4)`,
+      height: `calc(100dvh / 3)`,
       borderRadius: `${getRem(18)}`,
-      marginBottom: `${getRem(34)}`,
+      marginBottom: `${getRem(10)}`,
       justifyContent: 'center',
     },
   ]),
@@ -56,7 +56,7 @@ export const challengePageStyles = {
   mainImageBox: style([
     flexCenterCenter,
     {
-      width: '50%',
+      width: '40vw',
       height: '100%',
       position: 'relative',
       borderRadius: `${getRem(18)}`,
@@ -75,12 +75,13 @@ export const challengePageStyles = {
       gridTemplateColumns: 'repeat(4, 1fr)',
       gap: `${getRem(8)}`,
       padding: `0 ${getRem(44)}`,
-      marginBottom: `${getRem(12)}`,
+      marginBottom: `${getRem(32)}`,
     },
   ]),
 
   gridItem: style({
     display: 'flex',
+    position: 'relative',
     width: '100%',
     height: '100%',
     justifyContent: 'center',
@@ -95,7 +96,28 @@ export const challengePageStyles = {
     borderRadius: '50%',
   }),
 
+  imageLabel: style([
+    flexCenterCenter,
+    {
+      position: 'absolute',
+      bottom: `-${getRem(7.5)}`,
+      padding: `${getRem(5)} ${getRem(15)}`,
+      backgroundColor: '#50486A',
+      borderRadius: `${getRem(10)}`,
+    },
+  ]),
+
   userCountWrapper: style([flexCenterCenter, {}]),
+
+  blankBox: style([
+    flexCenterCenter,
+    {
+      width: '90%',
+      height: '90%',
+      backgroundColor: vars.color.grey700,
+      borderRadius: '50%',
+    },
+  ]),
 
   textButtonStyles: style([
     flexCenterCenter,
