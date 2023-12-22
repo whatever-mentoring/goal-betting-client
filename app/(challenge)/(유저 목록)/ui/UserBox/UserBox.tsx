@@ -15,7 +15,7 @@ const UserBox = ({ nickName, profileSrc, date, withBorder = false }: UserBoxProp
   return (
     <div className={classNames(userBoxStyles.base, withBorder && userBoxStyles.witheBorder)}>
       <Left profileSrc={profileSrc} />
-      <Middle nickName={nickName} date={date} />
+      <Middle nickName={nickName} date={date} isOwner={withBorder} />
       {/* <Right /> */}
     </div>
   );
@@ -44,13 +44,14 @@ const Left = ({ profileSrc }: LeftProps) => {
 interface MiddleProps {
   nickName: string;
   date: dayjs.Dayjs;
+  isOwner?: boolean;
 }
 
-const Middle = ({ nickName, date }: MiddleProps) => {
+const Middle = ({ nickName, isOwner = false, date }: MiddleProps) => {
   return (
     <div className={userBoxStyles.middleWrapper}>
       <Text.BodyM>{nickName}</Text.BodyM>
-      <Text.BodyS color="grey300">참여자</Text.BodyS>
+      <Text.BodyS color="grey300">{isOwner ? '주최자' : '참여자'}</Text.BodyS>
       <Text.BodyS color="grey600">{dayjs(date).format('MM월 DD일 HH:mm:ss')}</Text.BodyS>
     </div>
   );
