@@ -28,7 +28,7 @@ const SharePage = ({ params }: { params: { goalId: number } }) => {
             labelColor="cyan500"
           />
           {shareData.challengeInfo?.type === 'BILLING' && (
-            <CompoundSharePage.Banner.Item text="기프티콘" labelColor="cyan500" />
+            <CompoundSharePage.Banner.Item text="기프티콘" labelColor="cyan800" />
           )}
         </CompoundSharePage.Banner>
         <CompoundSharePage.ImageCard
