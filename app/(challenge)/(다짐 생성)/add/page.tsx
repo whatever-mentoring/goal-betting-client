@@ -19,7 +19,7 @@ export interface ChallengeAddFunnelProps {
 export interface Challenge {
   title: string;
   gifticon: {
-    file: File | null;
+    imgSrc: string | null;
   };
   startDate: dayjs.Dayjs;
 }
@@ -30,7 +30,7 @@ const ChallengeAddFunnel = () => {
   const [challenge, setChallenge] = useState<Challenge>({
     title: '',
     gifticon: {
-      file: null,
+      imgSrc: null,
     },
     startDate: dayjs().add(1, 'day'),
   });

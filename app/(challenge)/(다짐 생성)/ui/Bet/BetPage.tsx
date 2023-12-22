@@ -1,3 +1,4 @@
+import { usePOSTMediaFileMutation } from '@/app/common/api/media';
 import useDeviceDetect from '@/app/common/hooks/useDeviceDetect';
 import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import ButtonWrapper from '@/app/common/ui/Button/ButtonWrapper';
@@ -30,21 +31,33 @@ const BetPage = ({ challenge, setChallenge, onNext }: ChallengeAddPageProps) => 
     inputRef.current?.click();
   };
 
+  const { mutate } = usePOSTMediaFileMutation({
+    onSuccess: (data) => {
+      setChallenge((prev) => ({
+        ...prev,
+        gifticon: {
+          imgSrc: data.data,
+        },
+      }));
+    },
+  });
+
   const onInputImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
     const file = e.target.files[0];
-    setChallenge((prev) => ({ ...prev, gifticon: { file } }));
+    if (!file) return;
+    mutate({ postData: { multipartFile: file } });
   };
 
   // 1-2. 이미지 삭제
   const onRemoveImage = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    setChallenge((prev) => ({ ...prev, gifticon: { file: null } }));
+    setChallenge((prev) => ({ ...prev, gifticon: { imgSrc: null } }));
   };
 
   // 1-3. 이미지 업로드 씬에서 파일 존재 여부
-  const isFileExist = !!challenge.gifticon.file;
+  const isFileExist = !!challenge.gifticon.imgSrc;
 
   // 2. 유저 > 카카오톡 기프티콘 사러가기
   const { isMobile } = useDeviceDetect();
@@ -90,7 +103,7 @@ const BetPage = ({ challenge, setChallenge, onNext }: ChallengeAddPageProps) => 
             <div>
               <img
                 className={betPageStyles.image}
-                src={URL.createObjectURL(challenge.gifticon.file!)}
+                src={challenge.gifticon.imgSrc ? challenge.gifticon.imgSrc : ''}
               />
             </div>
           </>
