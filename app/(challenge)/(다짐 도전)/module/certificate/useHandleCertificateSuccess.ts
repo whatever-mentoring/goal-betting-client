@@ -37,10 +37,10 @@ const useHandleCertificateSuccess = ({ goalId, goalProofId }: HandleCertificateS
     setCertification((prev) => ({
       ...prev,
       label: {
-        text: `${nthDayFromStartDate(challengeData.data.startDate)}일차`,
+        text: `${nthDayFromStartDate(challengeData.data.goal.startDate)}일차`,
         labelColor: 'purple400',
       },
-      title: challengeData.data.content.value,
+      title: challengeData.data.goal.content.value,
     }));
   }, [challengeData]);
 

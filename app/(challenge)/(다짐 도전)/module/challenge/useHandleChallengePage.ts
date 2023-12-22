@@ -47,10 +47,13 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
 
     setChallengeInfo((prev) => ({
       ...prev,
-      id: challengeInfoData.data.id,
-      label: getLabelInfo(challengeInfoData.data.startDate, challengeInfoData.data.endDate),
-      title: challengeInfoData.data.content.value,
-      periodText: getDayPeriodToText(dayjs(challengeInfoData.data.startDate), 7),
+      id: challengeInfoData.data.goal.id,
+      label: getLabelInfo(
+        challengeInfoData.data.goal.startDate,
+        challengeInfoData.data.goal.endDate,
+      ),
+      title: challengeInfoData.data.goal.content.value,
+      periodText: getDayPeriodToText(dayjs(challengeInfoData.data.goal.startDate), 7),
     }));
   }, [challengeInfoData]);
 
@@ -60,7 +63,7 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
 
   useEffect(() => {
     if (!sessionData || !challengeInfoData) return;
-    if (sessionData.user.userId === challengeInfoData.data.hostUserId) {
+    if (sessionData.user.userId === challengeInfoData.data.goal.hostUserId) {
       setIsMyChallenge(true);
     }
   }, [sessionData, challengeInfoData]);
@@ -94,9 +97,9 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
     setFixedButtonInfo(
       getButtonInfo(
         isMyChallenge,
-        dayjs(challengeInfoData.data.endDate).isBefore(dayjs(), 'day'),
-        challengeInfoData.data.startDate,
-        challengeInfoData.data.id,
+        dayjs(challengeInfoData.data.goal.endDate).isBefore(dayjs(), 'day'),
+        challengeInfoData.data.goal.startDate,
+        challengeInfoData.data.goal.id,
       ),
     );
   }, [challengeInfoData, isMyChallenge]);
