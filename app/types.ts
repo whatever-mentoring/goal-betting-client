@@ -24,7 +24,7 @@ declare module 'next-auth' {
 }
 
 export type BETTING_TYPE = 'FREE' | 'BILLING';
-export type BETTING_RESULT = 'PROCEEDING' | 'SUCCESS' | 'FAIL';
+export type BETTING_RESULT = 'PROCEEDING' | 'FAIL' | 'GET_GIFTICON' | 'NO_GIFTICON';
 
 declare module '@tanstack/react-query' {
   interface Register {
