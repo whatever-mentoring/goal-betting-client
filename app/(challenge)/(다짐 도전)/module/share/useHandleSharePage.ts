@@ -30,16 +30,6 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
     throw error;
   }
 
-  // TODO : Error Boundary 설정 필요
-  useEffect(() => {
-    if (error) {
-      router.push(navigationPath.홈_페이지),
-        {
-          scroll: false,
-        };
-    }
-  }, [error]);
-
   // 1. 챌린지 정보 가져오기
   useEffect(() => {
     if (!challengeInfoData) return;
