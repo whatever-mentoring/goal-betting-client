@@ -111,6 +111,12 @@ export const checkPageStyles = {
       overflow: 'ellipsis',
     },
   ]),
+
+  text: style({
+    whiteSpace: 'pre-wrap',
+    wordBreak: 'break-all',
+  }),
+
   textCount: style([
     flexCenterEnd,
     {
