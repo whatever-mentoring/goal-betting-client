@@ -7,17 +7,17 @@ type Props = {
   children: ReactNode;
 };
 
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+    },
+  },
+});
+
 const QueryProvider = ({ children }: Props) => {
-  const [client] = useState(
-    new QueryClient({
-      defaultOptions: {
-        queries: {
-          refetchOnWindowFocus: false,
-          retry: false,
-        },
-      },
-    }),
-  );
+  const [client] = useState(queryClient);
 
   return (
     <QueryClientProvider client={client}>
