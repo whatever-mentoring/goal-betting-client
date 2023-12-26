@@ -40,15 +40,17 @@ const SuccessPage = ({ goalId, goalProofId }: SuccessPageProps) => {
         </div>
         <div className={successPageStyles.inputImageWrapper}>
           <div className={successPageStyles.imageWrapper}>
-            <Image
-              alt="image"
-              width={100}
-              height={100}
-              layout="responsive"
-              className={successPageStyles.image}
-              priority
-              src={certification.imgSrc}
-            />
+            {certification.imgSrc && (
+              <Image
+                alt="image"
+                width={100}
+                height={100}
+                layout="responsive"
+                className={successPageStyles.image}
+                priority
+                src={certification.imgSrc}
+              />
+            )}
           </div>
         </div>
         <div className={successPageStyles.textAreaWrapper}>
