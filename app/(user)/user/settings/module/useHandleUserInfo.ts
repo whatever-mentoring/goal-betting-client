@@ -87,6 +87,7 @@ const useHandleUserInfo = () => {
   // 유저 > 로그아웃
   const onClickLogout = () => {
     signOut();
+    alert('로그아웃 되었습니다.');
   };
 
   // 유저 > 회원탈퇴
@@ -94,6 +95,8 @@ const useHandleUserInfo = () => {
 
   const onClickDeleteUser = () => {
     deleteUserInfo();
+    signOut();
+    alert('회원탈퇴가 완료되었습니다.');
   };
 
   return {
