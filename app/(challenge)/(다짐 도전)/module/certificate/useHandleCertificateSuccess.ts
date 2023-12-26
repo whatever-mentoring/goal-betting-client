@@ -73,7 +73,7 @@ const useHandleCertificateSuccess = ({ goalId, goalProofId }: HandleCertificateS
       ...prev,
       dateText: dayjs(challengeData.data.goal.startDate)
         .add(certificateInfo.progressDay, 'day')
-        .format('YYYY.MM.DD일'),
+        .format('YYYY.MM.DD'),
     }));
   }, [challengeData, certificatedData, goalProofId]);
 
