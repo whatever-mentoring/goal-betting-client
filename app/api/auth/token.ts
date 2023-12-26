@@ -1,5 +1,5 @@
-import { AuthUser } from '@/auth';
 import axios from 'axios';
+import { AuthUser } from './[...nextauth]/route';
 
 interface PostKakaoLogin {
   accessToken: string;
