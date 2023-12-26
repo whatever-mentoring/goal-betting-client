@@ -1,11 +1,12 @@
 import { style } from '@vanilla-extract/css';
-import getRem from '../../util/getRem';
 import { RecipeVariants, recipe } from '@vanilla-extract/recipes';
-import { flexCenterBetween } from '../common.css';
+import getRem from '../../util/getRem';
+import { flexCenterBetween, phoneMediaQuery } from '../common.css';
 
 export const bottomFixedButtonStyle = {
   base: style([
     flexCenterBetween,
+    phoneMediaQuery,
     {
       position: 'fixed',
       flexDirection: 'column',

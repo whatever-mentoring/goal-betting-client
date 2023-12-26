@@ -1,8 +1,18 @@
 import { style } from '@vanilla-extract/css';
-import { flexCenterCenter } from './common/ui/common.css';
+import { flexCenterCenter, phoneMediaQuery } from './common/ui/common.css';
 import getRem from './common/util/getRem';
 
-export const layoutStyle = style({});
+export const layoutStyle = style([
+  phoneMediaQuery,
+  {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+]);
+
+export const childStyle = style({
+  width: '100%',
+});
 
 export const errorStyles = {
   container: style({

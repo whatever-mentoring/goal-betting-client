@@ -65,3 +65,14 @@ export const headerColumnTextWrapper = style([
 export const withFixedButtonScrollView = style({
   marginBottom: `${getRem(150)}`,
 });
+
+export const phoneMediaQuery = style({
+  maxWidth: '480px',
+  margin: '0 auto',
+
+  '@media': {
+    'screen and (max-width: 480px)': {
+      maxWidth: '100%',
+    },
+  },
+});
