@@ -61,7 +61,10 @@ const SuccessPage = ({ goalId, goalProofId }: SuccessPageProps) => {
       </div>
 
       <BottomFixedButton>
-        <BottomFixedButton.First onClick={onClickDownload} color="purple500-active">
+        <BottomFixedButton.First
+          onClick={() => onClickDownload(certification.title)}
+          color="purple500-active"
+        >
           <Text.ButtonL color={'white'}>다운로드하기</Text.ButtonL>
         </BottomFixedButton.First>
       </BottomFixedButton>
