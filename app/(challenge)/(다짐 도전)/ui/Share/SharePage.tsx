@@ -37,7 +37,9 @@ const SharePage = ({ params }: { params: { goalId: number } }) => {
         />
         {/** 주최자 > 다운로드 */}
         {!!shareData.isMyChallenge && (
-          <CompoundSharePage.DownloadButton onClick={shareData.onClickDownload} />
+          <CompoundSharePage.DownloadButton
+            onClick={() => shareData.onClickDownload(shareData.challengeInfo?.content?.value ?? '')}
+          />
         )}
         {/** 주최자 > 공유하기 */}
         {!!shareData.isMyChallenge && (

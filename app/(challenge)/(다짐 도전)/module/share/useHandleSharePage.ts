@@ -37,10 +37,9 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
   useEffect(() => {
     if (!challengeInfoData) return;
     if (isTodayIsAfterEndDate(challengeInfoData.data.goal.startDate)) {
-      router.push(navigationPath.홈_페이지),
-        {
-          scroll: false,
-        };
+      router.push(navigationPath.다짐_페이지(goalId), {
+        scroll: false,
+      });
       return;
     }
     if (challengeInfoData.data) {
@@ -163,8 +162,8 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
   const imageRef = useRef<HTMLDivElement>(null);
   const { captureAndDownload } = useCaptureAndDownloadImage(imageRef);
 
-  const onClickDownload = () => {
-    captureAndDownload('다짐을 인증해줘!');
+  const onClickDownload = (title: string) => {
+    captureAndDownload(title);
   };
 
   // 주최자 > 공유하기
