@@ -1,7 +1,7 @@
 import useCaptureAndDownloadImage from '@/app/common/hooks/useCaptureAndDownloadImage';
 import useTriggerShare from '@/app/common/hooks/useTriggerShare';
 import { LabelProps } from '@/app/common/ui/Label/Label';
-import dayjs from 'dayjs';
+import { addDayToDate, convertFormatDate } from '@/app/common/util/date';
 import { useEffect, useRef, useState } from 'react';
 import { useGETCertificateResultQuery } from '../api/certificate';
 import { useGETCertificateListQuery } from '../api/certificateList';
@@ -71,9 +71,10 @@ const useHandleCertificateSuccess = ({ goalId, goalProofId }: HandleCertificateS
     if (!certificateInfo) return;
     setCertification((prev) => ({
       ...prev,
-      dateText: dayjs(challengeData.data.goal.startDate)
-        .add(certificateInfo.progressDay, 'day')
-        .format('YYYY.MM.DD'),
+      dateText: convertFormatDate(
+        addDayToDate(challengeData.data.goal.startDate, certificateInfo.progressDay),
+        'YYYY.MM.DD',
+      ),
     }));
   }, [challengeData, certificatedData, goalProofId]);
 
@@ -91,8 +92,8 @@ const useHandleCertificateSuccess = ({ goalId, goalProofId }: HandleCertificateS
   const imageRef = useRef<HTMLDivElement>(null);
   const { captureAndDownload } = useCaptureAndDownloadImage(imageRef);
 
-  const onClickDownload = () => {
-    captureAndDownload('다짐을 인증해줘!');
+  const onClickDownload = (title: string) => {
+    captureAndDownload(title);
   };
 
   // 사용자 > 공유하기
