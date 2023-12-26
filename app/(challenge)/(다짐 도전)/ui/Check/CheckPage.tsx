@@ -7,7 +7,6 @@ import {
   fixedButtonOverWrapper,
   headerTextWrapper,
   withPreWrapCenter,
-  withPreWrapStart,
 } from '@/app/common/ui/common.css';
 import Image from 'next/image';
 import { ChallengeCertificationFunnelProps } from '../../challenge/[goalId]/certificate/page';
@@ -46,7 +45,7 @@ const CheckPage = ({ certification, onNext, params }: ChallengeAddPageProps) => 
       <TextArea>
         <div className={checkPageStyles.textAreaWrapper}>
           <div className={checkPageStyles.textWrapper}>
-            <Text.BodyM color="white" className={withPreWrapStart}>
+            <Text.BodyM className={checkPageStyles.text} color="white">
               {certification.text}
             </Text.BodyM>
           </div>
