@@ -19,7 +19,6 @@ const deleteUserInfoAPI = withSessionUser(async () => {
   const { data } = await client<DeleteUserInfoAPIResponse>({
     method: 'delete',
     url: '/v1/api/user',
-    data: {},
   });
   return data;
 });
