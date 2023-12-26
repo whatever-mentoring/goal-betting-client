@@ -67,7 +67,7 @@ const ChallengeMainImage = ({ src, alt }: ChallengeMainImagesProps) => {
           src={src}
           alt={alt}
           fill
-          sizes="(max-width: 768px) 100px, 200px"
+          sizes="(max-width: 480px) 100px, 200px"
           quality={100}
           priority
         />

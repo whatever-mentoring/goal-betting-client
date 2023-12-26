@@ -35,11 +35,20 @@ export const challengePageStyles = {
     position: 'fixed',
     width: `calc(100% - ${getRem(40)})`,
     height: `60%`,
-    top: '40%',
+    bottom: 0,
     left: `${getRem(20)}`,
     backgroundColor: vars.color.grey800,
     borderRadius: `${getRem(18)}`,
     zIndex: -1,
+    '@media': {
+      'screen and (min-width: 480px)': {
+        maxWidth: '480px',
+        height: '60%',
+        margin: '0 auto',
+        left: '0',
+        right: '0',
+      },
+    },
   }),
 
   mainImageWrapper: style([
@@ -60,6 +69,12 @@ export const challengePageStyles = {
       height: '100%',
       position: 'relative',
       borderRadius: `${getRem(18)}`,
+      '@media': {
+        'screen and (min-width: 480px)': {
+          maxWidth: '240px',
+          height: '270px',
+        },
+      },
     },
   ]),
 
