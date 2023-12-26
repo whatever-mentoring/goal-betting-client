@@ -1,3 +1,5 @@
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import classNames from 'classnames';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
@@ -6,7 +8,7 @@ import QueryProvider from './common/components/QueryProvider';
 import IconLoader from './common/ui/assets/IconLoader';
 import './common/ui/reset.css';
 import './globals.css';
-import { layoutStyle } from './layout.css';
+import { childStyle, layoutStyle } from './layout.css';
 
 const pretendardFont = localFont({
   src: [
@@ -37,7 +39,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <AuthSession>
           <QueryProvider>
             <IconLoader />
-            {children}
+            <div className={childStyle}>
+              {children}
+              <Analytics />
+              <SpeedInsights />
+            </div>
           </QueryProvider>
         </AuthSession>
       </body>
