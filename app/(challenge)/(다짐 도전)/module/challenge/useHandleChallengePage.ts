@@ -1,16 +1,17 @@
 import navigationPath from '@/app/common/navigation/navigationPath';
 import { LabelProps } from '@/app/common/ui/Label/Label';
-import { getDayPeriodToText, nthDayFromStartDate } from '@/app/common/util/date';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ko';
+import {
+  getDayPeriodToText,
+  isBeforeToday,
+  isTodayIsAfterEndDate,
+  nthDayFromStartDate,
+} from '@/app/common/util/date';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useGETCertificateListQuery } from '../api/certificateList';
 import { useGetChallengeInfoQuery } from '../api/challenge';
 import { useGETChallengeParticipantQuery } from '../api/participantList';
-
-dayjs.locale('ko');
 
 export type ButtonInfo = {
   text: string;
@@ -52,7 +53,7 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
   // 첼린지가 시작하지 않는 경우 공유하기 페이지로 이동
   useEffect(() => {
     if (!challengeInfoData) return;
-    if (dayjs(challengeInfoData.data.goal.startDate).isAfter(dayjs())) {
+    if (!isTodayIsAfterEndDate(challengeInfoData.data.goal.startDate)) {
       router.push(navigationPath.다짐_공유_페이지(goalId)),
         {
           scroll: false,
@@ -72,7 +73,7 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
         challengeInfoData.data.goal.endDate,
       ),
       title: challengeInfoData.data.goal.content.value,
-      periodText: getDayPeriodToText(dayjs(challengeInfoData.data.goal.startDate), 7),
+      periodText: getDayPeriodToText(challengeInfoData.data.goal.startDate, 7),
     }));
   }, [challengeInfoData]);
 
@@ -142,7 +143,7 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
     setFixedButtonInfo(
       getButtonInfo(
         isMyChallenge,
-        dayjs(challengeInfoData.data.goal.endDate).isBefore(dayjs(), 'day'),
+        isBeforeToday(challengeInfoData.data.goal.endDate),
         challengeInfoData.data.goal.startDate,
         challengeInfoData.data.goal.id,
       ),
@@ -160,7 +161,7 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
 export default useHandleChallengePage;
 
 const getLabelInfo = (startDate: Date, endDate: Date): LabelProps => {
-  if (dayjs(endDate).isBefore(dayjs(), 'day')) {
+  if (isTodayIsAfterEndDate(endDate)) {
     return {
       text: '내기 종료',
       labelColor: 'grey200',
@@ -168,16 +169,9 @@ const getLabelInfo = (startDate: Date, endDate: Date): LabelProps => {
     };
   }
 
-  if (dayjs(startDate).subtract(1, 'day').isBefore(dayjs(), 'day')) {
-    return {
-      text: `${nthDayFromStartDate(startDate)}일차`,
-      labelColor: 'purple400',
-    };
-  }
-
   return {
-    text: '내기 종료',
-    labelColor: 'grey200',
+    text: `${nthDayFromStartDate(startDate)}일차`,
+    labelColor: 'purple400',
   };
 };
 

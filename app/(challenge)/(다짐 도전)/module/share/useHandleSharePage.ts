@@ -4,8 +4,11 @@ import useCaptureAndDownloadImage from '@/app/common/hooks/useCaptureAndDownload
 import useTriggerShare from '@/app/common/hooks/useTriggerShare';
 import navigationPath from '@/app/common/navigation/navigationPath';
 import { useDrawer } from '@/app/common/ui/Drawer/DrawerContext';
-import { getLeftDaysFromDate } from '@/app/common/util/date';
-import dayjs from 'dayjs';
+import {
+  getDayPeriodToText,
+  getLeftDaysFromDate,
+  isTodayIsAfterEndDate,
+} from '@/app/common/util/date';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -33,7 +36,7 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
   // 1. 챌린지 정보 가져오기
   useEffect(() => {
     if (!challengeInfoData) return;
-    if (dayjs(challengeInfoData.data.goal.startDate).isBefore(dayjs())) {
+    if (isTodayIsAfterEndDate(challengeInfoData.data.goal.startDate)) {
       router.push(navigationPath.홈_페이지),
         {
           scroll: false,
@@ -147,6 +150,11 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
     return getLeftDaysFromDate(challengeInfo.startDate);
   };
 
+  const getPeriodText = () => {
+    if (!challengeInfo) return '';
+    return getDayPeriodToText(challengeInfo.startDate, 7);
+  };
+
   // USER INTERACTION
   // 모든 유저 > 상단 헤더 메뉴 클릭
   const { openDrawer } = useDrawer();
@@ -177,6 +185,7 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
     imageRef,
     participantInfo,
     getLeftDays,
+    getPeriodText,
     openDrawer,
     onClickDownload,
     onClickShare,
