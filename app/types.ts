@@ -1,7 +1,7 @@
+import { AuthUser } from '@/auth';
 import { AxiosError } from 'axios';
 import 'next-auth';
 import { DefaultSession, DefaultUser } from 'next-auth';
-import type { AuthUser } from './api/auth/[...nextauth]/route';
 
 declare module 'next-auth' {
   interface Session extends DefaultSession {
