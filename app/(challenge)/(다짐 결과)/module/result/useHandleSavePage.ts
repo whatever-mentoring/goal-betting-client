@@ -1,7 +1,6 @@
 import { useGetChallengeInfoQuery } from '@/app/(challenge)/(다짐 도전)/module/api/challenge';
 import useCaptureAndDownloadImage from '@/app/common/hooks/useCaptureAndDownloadImage';
 import { getDayPeriodToText } from '@/app/common/util/date';
-import dayjs from 'dayjs';
 import { useEffect, useRef, useState } from 'react';
 
 interface HandleSaveProps {
@@ -26,7 +25,7 @@ const useHandleSavePage = ({ goalId }: HandleSaveProps) => {
     setChallengeInfo((prev) => ({
       ...prev,
       title: challengeData.data.goal.content.value,
-      periodText: getDayPeriodToText(dayjs(challengeData.data.goal.startDate), 7),
+      periodText: getDayPeriodToText(challengeData.data.goal.startDate, 7),
     }));
   }, [challengeData]);
 

@@ -7,15 +7,11 @@ import Header from '@/app/common/ui/Header/Header';
 import Text from '@/app/common/ui/Text/Text';
 import Icon, { ButtonIcon } from '@/app/common/ui/assets/Icon';
 import { fixedButtonOverWrapper, underLineText } from '@/app/common/ui/common.css';
-import { getDayPeriodToText } from '@/app/common/util/date';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ko';
+import { getDayPeriodToText, getLeftDaysFromToday } from '@/app/common/util/date';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useRef } from 'react';
 import { Challenge, ChallengeAddFunnelProps } from '../../add/page';
 import { resultPageStyles } from './result.css';
-
-dayjs.locale('ko');
 
 interface ResultPageProps extends ChallengeAddFunnelProps {
   challenge: Challenge;
@@ -25,12 +21,11 @@ interface ResultPageProps extends ChallengeAddFunnelProps {
 const ResultPage = ({ challenge, onNext }: ResultPageProps) => {
   // TODO : 추후 새로고침 여부에 따라 첫 화면으로 넘길 것
   const title = challenge.title || '한달동안 3kg 감량할거야';
-  const startDate = challenge.startDate || dayjs();
+  const startDate = challenge.startDate || new Date();
 
   // UI RENDER
   const getLeftDate = () => {
-    const today = dayjs();
-    return startDate.diff(today, 'day');
+    getLeftDaysFromToday(startDate);
   };
 
   // USER INTERACTION

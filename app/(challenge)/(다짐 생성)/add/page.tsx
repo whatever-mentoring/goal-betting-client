@@ -2,7 +2,6 @@
 import RefreshCheck from '@/app/common/hooks/funnel/RefreshCheck';
 import { extractNonEmptyArrayKeys } from '@/app/common/hooks/funnel/models';
 import navigationPath from '@/app/common/navigation/navigationPath';
-import dayjs from 'dayjs';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useFunnel } from '../../../common/hooks/funnel/useFunnel';
 import BetPage from '../ui/Bet/BetPage';
@@ -21,7 +20,7 @@ export interface Challenge {
   gifticon: {
     imgSrc: string | null;
   };
-  startDate: dayjs.Dayjs;
+  startDate: Date;
 }
 
 const ChallengeAddFunnel = () => {
@@ -32,7 +31,7 @@ const ChallengeAddFunnel = () => {
     gifticon: {
       imgSrc: null,
     },
-    startDate: dayjs().add(1, 'day'),
+    startDate: new Date(),
   });
 
   return (

@@ -5,6 +5,7 @@ import Header from '@/app/common/ui/Header/Header';
 import Text from '@/app/common/ui/Text/Text';
 import Icon from '@/app/common/ui/assets/Icon';
 import { fixedButtonOverWrapper, headerTextWrapper } from '@/app/common/ui/common.css';
+import { convertFormatDate } from '@/app/common/util/date';
 import dayjs from 'dayjs';
 import { ChallengeAddFunnelProps } from '../../add/page';
 import { startDatePageStyles } from './startDate.css';
@@ -13,11 +14,11 @@ interface StartDatePageProps extends ChallengeAddFunnelProps {}
 
 const StartDatePage = ({ challenge, setChallenge, onNext }: StartDatePageProps) => {
   // UI RENDER
-  const formattedDate = challenge.startDate?.format('YYYY.MM.DD') || dayjs().format('YYYY.MM.DD');
+  const formattedDate = convertFormatDate(challenge.startDate, 'YYYY.MM.DD일');
   // USER INTERACTION
   // 1. 유저 > 시작 날짜 선택
   const onChangeDate = (date: dayjs.Dayjs) => {
-    setChallenge((prev) => ({ ...prev, startDate: date }));
+    setChallenge((prev) => ({ ...prev, startDate: date.toDate() }));
   };
 
   return (
