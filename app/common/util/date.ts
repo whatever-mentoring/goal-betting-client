@@ -69,7 +69,7 @@ export const isBeforeToday = (date: Date): boolean => {
  * @returns {boolean} 오늘이 종료 날짜 이후면 true, 그렇지 않으면 false
  */
 export const isTodayIsAfterEndDate = (endDate: Date): boolean => {
-  return dayjs().startOf('day').isAfter(dayjs(endDate).startOf('day'));
+  return dayjs().startOf('day').isSameOrAfter(dayjs(endDate).startOf('day'));
 };
 
 /**
@@ -80,4 +80,14 @@ export const isTodayIsAfterEndDate = (endDate: Date): boolean => {
  */
 export const getLeftDaysFromToday = (endDate: Date): number => {
   return dayjs(endDate).startOf('day').diff(dayjs().startOf('day'), 'day') + 1;
+};
+
+/**
+ * 주어진 날짜에 주어진 일수를 더합니다.
+ * @param {Date} date - 날짜
+ * @param {number} day - 더할 일수
+ * @returns {Date} 더해진 날짜
+ */
+export const addDayToDate = (date: Date, day: number): Date => {
+  return dayjs(date).add(day, 'day').toDate();
 };
