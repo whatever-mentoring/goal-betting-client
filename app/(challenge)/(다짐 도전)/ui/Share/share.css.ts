@@ -52,7 +52,7 @@ export const sharePageStyles = {
   image: style({
     width: '100%',
     height: '100%',
-    objectFit: 'fill',
+    objectFit: 'cover',
     borderRadius: `${getRem(16)}`,
   }),
 
