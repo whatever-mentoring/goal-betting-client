@@ -47,7 +47,7 @@ const SuccessPage = ({ goalId, goalProofId }: SuccessPageProps) => {
               layout="responsive"
               className={successPageStyles.image}
               priority
-              src={certification.imgSrc ? certification.imgSrc : '/images/dog.png'}
+              src={certification.imgSrc}
             />
           </div>
         </div>
