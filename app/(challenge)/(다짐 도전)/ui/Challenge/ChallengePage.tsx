@@ -1,3 +1,5 @@
+'use client';
+
 import { ballImages } from '@/app/common/constants/ballImage';
 import navigationPath from '@/app/common/navigation/navigationPath';
 import { useDrawer } from '@/app/common/ui/Drawer/DrawerContext';
