@@ -17,14 +17,6 @@ export const successPageStyles = {
       marginBottom: `${getRem(20)}`,
     },
   ]),
-  dateLeftBox: style([
-    flexCenterCenter,
-    {
-      backgroundColor: vars.color.purple400,
-      borderRadius: `9999px`,
-      padding: `${getRem(6)} ${getRem(18)}`,
-    },
-  ]),
 
   headerTextWrapper: style([
     flexCenterCenter,
@@ -64,6 +56,7 @@ export const successPageStyles = {
       width: `100%`,
       display: 'block',
       borderRadius: `${getRem(16)}`,
+      padding: `0 ${getRem(20)}`,
     },
   ]),
 
