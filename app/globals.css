@@ -3,6 +3,12 @@
 	user-select: none;
 	-webkit-tap-highlight-color: transparent;
 	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+img {
+  display: initial !important;
 }
 
 html, body, div, span, applet, object, iframe,
