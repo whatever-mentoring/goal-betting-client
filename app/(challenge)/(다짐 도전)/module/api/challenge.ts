@@ -2,7 +2,7 @@
 import client from '@/app/common/api/client';
 import { withSessionUser } from '@/app/common/api/withSessionUser';
 import { BETTING_RESULT } from '@/app/types';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { ChallengeType } from './challengeList';
 
 export interface Json {
@@ -10,6 +10,7 @@ export interface Json {
   data: {
     goal: ChallengeData;
     myBetting: MyBetting | null;
+    winnerNickname: string | null;
   };
   errorResponse: unknown;
 }
@@ -19,6 +20,7 @@ export interface ChallengeData {
   hostUserNickname: string;
   id: number;
   type: ChallengeType;
+  result: 'PROCEEDING' | 'SUCCESS' | 'FAIL';
   content: Content;
   threshold: Threshold;
   startDate: Date;
@@ -64,6 +66,59 @@ export const useGetChallengeInfoQuery = (params: GetChallengeInfoQueryRequest) =
   return useSuspenseQuery({
     queryKey: GET_CHALLENGE_INFO_KEY(params),
     queryFn: () => getChallengeInfoAPI(params),
-    notifyOnChangeProps: ['data'],
+  });
+};
+
+export interface ChallengeWithoutToken {
+  isSuccess: boolean;
+  data: ChallengeInfoData;
+  errorResponse: unknown;
+}
+export interface ChallengeInfoData {
+  hostUserId: number;
+  hostUserNickname: string;
+  id: number;
+  type: string;
+  content: Content;
+  threshold: Threshold;
+  startDate: string;
+  endDate: string;
+  result: string;
+}
+export interface Content {
+  value: string;
+}
+export interface Threshold {
+  value: number;
+}
+
+interface RequestInterface {
+  goalId: number;
+  token?: string;
+}
+
+const getChallengeInfoWithoutToken = async ({ goalId }: RequestInterface) => {
+  const { data } = await client<Json>({
+    method: 'get',
+    url: `/v1/api/goal/${goalId}/simple`,
+  });
+  return data;
+};
+
+export interface GetChallengeInfoWithoutTokenRequest {
+  goalId: number;
+}
+
+const GetChallengeInfoWithoutTokenKey = (params: GetChallengeInfoWithoutTokenRequest) => [
+  'GET_CHALLENGE_INFO_WITHOUT_TOKEN',
+  params.goalId,
+];
+
+export const useGetChallengeInfoWithoutTokenQuery = (
+  params: GetChallengeInfoWithoutTokenRequest,
+) => {
+  return useQuery({
+    queryKey: GetChallengeInfoWithoutTokenKey(params),
+    queryFn: () => getChallengeInfoWithoutToken(params),
   });
 };
