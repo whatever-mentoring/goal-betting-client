@@ -50,7 +50,7 @@ const ChallengeFunnel = () => {
     <>
       {!!currentChallengeId && (
         <Suspense fallback={<div></div>}>
-          <ChallengeDynamicPage goalId={6} />
+          <ChallengeDynamicPage goalId={currentChallengeId} />
         </Suspense>
       )}
     </>
