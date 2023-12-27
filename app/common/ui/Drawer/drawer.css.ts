@@ -12,6 +12,13 @@ export const drawerStyles = {
     display: 'flex',
     flexDirection: 'column',
     zIndex: 99999,
+
+    '@media': {
+      'screen and (min-width: 480px)': {
+        right: 'calc((100% - 480px) / 2)',
+        width: '320px',
+      },
+    },
   }),
 
   closeButtonWrapper: style({
@@ -22,7 +29,7 @@ export const drawerStyles = {
   }),
 
   containerOpen: style({
-    transform: 'translateX(0)',
+    transform: 'translateX(0%)',
   }),
   containerClose: style({
     transform: 'translateX(-100%)',
@@ -34,7 +41,7 @@ export const drawerStyles = {
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    backgroundColor: 'rgba(35, 37, 47, 0.5)',
     zIndex: 2,
     cursor: 'pointer',
   }),
