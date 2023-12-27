@@ -2,7 +2,6 @@ import navigationPath from '@/app/common/navigation/navigationPath';
 import { LabelProps } from '@/app/common/ui/Label/Label';
 import {
   getDayPeriodToText,
-  isBeforeToday,
   isTodayIsAfterEndDate,
   nthDayFromStartDate,
 } from '@/app/common/util/date';
@@ -70,7 +69,7 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
       id: challengeInfoData.data.goal.id,
       label: getLabelInfo(
         challengeInfoData.data.goal.startDate,
-        challengeInfoData.data.goal.endDate,
+        challengeInfoData.data.goal.result !== 'PROCEEDING',
       ),
       title: challengeInfoData.data.goal.content.value,
       periodText: getDayPeriodToText(challengeInfoData.data.goal.startDate, 7),
@@ -143,7 +142,7 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
     setFixedButtonInfo(
       getButtonInfo(
         isMyChallenge,
-        isBeforeToday(challengeInfoData.data.goal.endDate),
+        challengeInfoData.data.goal.result !== 'PROCEEDING',
         challengeInfoData.data.goal.startDate,
         challengeInfoData.data.goal.id,
       ),
@@ -160,8 +159,8 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
 
 export default useHandleChallengePage;
 
-const getLabelInfo = (startDate: Date, endDate: Date): LabelProps => {
-  if (isTodayIsAfterEndDate(endDate)) {
+const getLabelInfo = (startDate: Date, isChallengeEnded: boolean): LabelProps => {
+  if (isChallengeEnded) {
     return {
       text: '내기 종료',
       labelColor: 'grey200',
