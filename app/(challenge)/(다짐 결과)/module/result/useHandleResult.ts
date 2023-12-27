@@ -26,9 +26,6 @@ const useHandleResult = ({ goalId, setStep }: HandleResultProps) => {
   useEffect(() => {
     if (!sessionData) return;
     if (!challengeInfo) return;
-    if (!challengeInfo.data.myBetting) {
-      throw new Error('아직 종료되지 않은 챌린지입니다.');
-    }
   }, [sessionData, challengeInfo]);
 
   useEffect(() => {
@@ -38,9 +35,8 @@ const useHandleResult = ({ goalId, setStep }: HandleResultProps) => {
       nickname: challengeInfo.data.goal.hostUserNickname,
       hasGifticon: challengeInfo.data.goal.type === 'BILLING',
       isOwner: sessionData.user.userId === challengeInfo.data.goal.hostUserId,
-      // TODO : 백엔드 수정 후 수정 필요
-      isSuccess: false,
-      winnerNickname: '김코딩',
+      isSuccess: challengeInfo.data.goal.result === 'SUCCESS',
+      winnerNickname: challengeInfo.data.winnerNickname || '',
       isWinner: challengeInfo.data.myBetting?.result === 'GET_GIFTICON',
     });
     const actionHandler = builderSteps.build();
