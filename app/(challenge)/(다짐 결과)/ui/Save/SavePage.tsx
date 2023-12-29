@@ -21,7 +21,7 @@ const SavePage = ({ goalId }: SaverPageProps) => {
       <Header showBackButton backTo={navigationPath.홈_페이지} />
 
       <div className={savePageStyles.headerTextWrapper}>
-        <Text.TitleH1 className={withPreWrapCenter}>{'다음에는\n기프티콘 회수해보자'}</Text.TitleH1>
+        <Text.TitleH1 className={withPreWrapCenter}>{'7일 동안 고생했어!'}</Text.TitleH1>
       </div>
 
       <div className={savePageStyles.boxCanvas}>
