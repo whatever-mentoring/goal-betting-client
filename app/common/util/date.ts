@@ -91,3 +91,12 @@ export const getLeftDaysFromToday = (endDate: Date): number => {
 export const addDayToDate = (date: Date, day: number): Date => {
   return dayjs(date).add(day, 'day').toDate();
 };
+
+/**
+ * 한국 현재 시간을 반환 합니다.
+ * @returns {Date} 한국 현재 시간
+ */
+
+export const getKoreanCurrentTime = (): Date => {
+  return dayjs().toDate();
+};
