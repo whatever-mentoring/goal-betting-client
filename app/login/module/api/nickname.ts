@@ -20,7 +20,6 @@ interface RequestInterface {
   putData: {
     nickname: string;
   };
-  token?: string;
 }
 
 const putNicknameAPI = withSessionUser(async ({ putData }: RequestInterface) => {
@@ -46,5 +45,42 @@ export const usePUTNickname = () => {
     onSuccess: async (data) => {
       await update({ nickname: data.data.nickname.value });
     },
+  });
+};
+
+export interface CheckNicknameJson {
+  isSuccess: boolean;
+  data: CheckNicknameData;
+  errorResponse: unknown;
+}
+export interface CheckNicknameData {
+  nicknameIsDuplicated: boolean;
+}
+
+interface POSTNicknameCheckRequestInterface {
+  postData: {
+    nickname: string;
+  };
+}
+
+const postCheckNickname = withSessionUser(
+  async ({ postData }: POSTNicknameCheckRequestInterface) => {
+    const { data } = await client<CheckNicknameJson>({
+      method: 'post',
+      url: '/v1/api/user/nickname',
+
+      data: postData,
+    });
+    return data;
+  },
+);
+
+export interface PostCheckNicknameRequest {
+  token?: string;
+}
+
+export const usePostCheckNicknameMutation = () => {
+  return useMutation({
+    mutationFn: postCheckNickname,
   });
 };

@@ -1,7 +1,8 @@
 import { useDELETEUserInfoMutation } from '@/app/login/module/api/deleteUser';
-import { usePUTNickname } from '@/app/login/module/api/nickname';
+import { usePUTNickname, usePostCheckNicknameMutation } from '@/app/login/module/api/nickname';
+import { debounce } from 'lodash';
 import { signOut, useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface Input {
   nickname: {
@@ -14,6 +15,16 @@ interface Input {
 
 const useHandleUserInfo = () => {
   const { data: sessionData } = useSession();
+
+  const [debounceNickname, setDebounceNickname] = useState('');
+  const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false);
+
+  const { mutate: nicknameCheck } = usePostCheckNicknameMutation();
+
+  const debouncedChangeNickname = useCallback(
+    debounce((url) => setDebounceNickname(url), 750),
+    [],
+  );
 
   const [input, setInput] = useState<Input>({
     nickname: {
@@ -36,6 +47,19 @@ const useHandleUserInfo = () => {
     }));
   }, [sessionData?.user.nickname]);
 
+  useEffect(() => {
+    if (debounceNickname === '') return;
+    if (debounceNickname === sessionData?.user.nickname) return;
+    nicknameCheck(
+      { postData: { nickname: debounceNickname } },
+      {
+        onSuccess: (data) => {
+          setIsNicknameDuplicated(data.data.nicknameIsDuplicated);
+        },
+      },
+    );
+  }, [sessionData?.user.nickname, debounceNickname]);
+
   const onToggleInput = (key: keyof Input) => {
     setInput((prev) => ({
       ...prev,
@@ -55,6 +79,10 @@ const useHandleUserInfo = () => {
         value,
       },
     }));
+    debouncedChangeNickname(value);
+    if (key === 'nickname' && value === '') {
+      setIsNicknameDuplicated(false);
+    }
   };
 
   const { mutate: putUserNickname } = usePUTNickname();
@@ -91,10 +119,10 @@ const useHandleUserInfo = () => {
   };
 
   // 유저 > 회원탈퇴
-  const { mutate: deleteUserInfo } = useDELETEUserInfoMutation();
+  const { mutateAsync: deleteUserInfo } = useDELETEUserInfoMutation();
 
-  const onClickDeleteUser = () => {
-    deleteUserInfo();
+  const onClickDeleteUser = async () => {
+    await deleteUserInfo();
     signOut();
     alert('회원탈퇴가 완료되었습니다.');
   };
@@ -102,6 +130,7 @@ const useHandleUserInfo = () => {
   return {
     nickname: sessionData?.user.nickname,
     input,
+    isNicknameDuplicated,
     onToggleInput,
     onChangeInput,
     onClickSaveInput,

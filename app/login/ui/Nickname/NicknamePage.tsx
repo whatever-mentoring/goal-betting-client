@@ -10,11 +10,12 @@ import { nicknamePageStyles } from './nickname.css';
 interface NicknamePageProps extends LoginFunnelProps {}
 
 const NicknamePage = ({ user, setUser, onNext }: NicknamePageProps) => {
-  const { placeholder, isAllFilled, onChangeNickname, onSubmit } = useHandleNickname({
-    user,
-    setUser,
-    onNext,
-  });
+  const { placeholder, isAllFilled, isNicknameDuplicated, onChangeNickname, onSubmit } =
+    useHandleNickname({
+      user,
+      setUser,
+      onNext,
+    });
 
   return (
     <>
@@ -37,6 +38,7 @@ const NicknamePage = ({ user, setUser, onNext }: NicknamePageProps) => {
               initialVisible: true,
             }}
             required
+            inputUnderText={isNicknameDuplicated ? '중복된 닉네임입니다' : undefined}
           />
         </TextArea>
         <BottomFixedButton>
