@@ -74,7 +74,7 @@ const ChallengeMainImage = ({ src, alt }: ChallengeMainImagesProps) => {
 
 interface ChallengeBallImagesProps {
   images: BallImage[];
-  certificationList: CertificateInfo[];
+  certificationList?: CertificateInfo[];
   onClickCertificate?: (progressDay: number) => void;
   onClickAddNewChallenge?: () => void;
 }
@@ -88,9 +88,9 @@ const ChallengeBallImages = ({
   return (
     <div className={challengePageStyles.gridContainer}>
       {images.map((image) => {
-        const isCertificated = certificationList.find(
-          (certification) => certification.progressDay === image.id,
-        );
+        const isCertificated = certificationList
+          ? certificationList.find((certification) => certification.progressDay === image.id)
+          : undefined;
         return (
           <div
             style={{ cursor: isCertificated ? 'pointer' : '' }}
