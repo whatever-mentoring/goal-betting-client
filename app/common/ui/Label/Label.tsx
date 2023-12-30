@@ -11,7 +11,7 @@ export interface LabelProps {
 const Label = ({ text, labelColor, textColor = 'white' }: LabelProps) => {
   return (
     <div style={{ backgroundColor: vars.color[labelColor] }} className={labelStyles.labelBox}>
-      <Text.ButtonM color={textColor}>{text}</Text.ButtonM>
+      <Text.BodyXS color={textColor}>{text}</Text.BodyXS>
     </div>
   );
 };
