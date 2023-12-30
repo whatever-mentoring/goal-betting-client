@@ -56,3 +56,42 @@ export const useGETChallengeParticipantQuery = (params: GetParticipantAPIRequest
     queryFn: () => getParticipantAPI(params),
   });
 };
+
+export interface WithoutAuthParticipantsList {
+  isSuccess: boolean;
+  data: WithoutAuthParticipantsListData;
+  errorResponse: unknown;
+}
+export interface WithoutAuthParticipantsListData {
+  hostUser: HostUser;
+  participants: Participants[];
+}
+
+interface RequestInterface {
+  goalId: number;
+}
+
+const getParticipantListAPI = async ({ goalId }: RequestInterface) => {
+  const { data } = await client<WithoutAuthParticipantsList>({
+    method: 'get',
+    url: `/v1/api/goal/betting/${goalId}/no-auth`,
+  });
+  return data;
+};
+
+export interface GetParticipantListAPIRequest {
+  goalId: number;
+  token?: string;
+}
+
+const GET_PARTICIPANT_WITHOUT_TOKEN = (params: GetParticipantListAPIRequest) => [
+  'GET_PARTICIPANT_WITHOUT_TOKEN',
+  params.goalId,
+];
+
+export const useGETParticipantListWithoutTokenQuery = (params: GetParticipantListAPIRequest) => {
+  return useSuspenseQuery({
+    queryKey: GET_PARTICIPANT_WITHOUT_TOKEN(params),
+    queryFn: () => getParticipantListAPI(params),
+  });
+};
