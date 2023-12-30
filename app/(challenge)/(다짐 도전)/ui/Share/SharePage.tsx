@@ -29,8 +29,8 @@ const SharePage = ({ params }: { params: { goalId: number } }) => {
         </CompoundSharePage.Banner>
         {/** 챌린지 정보 */}
         <CompoundSharePage.ImageCard
-          src={'/images/dog.png'}
-          alt={'challenge-info'}
+          src={'/images/mirr/mirr_happy.png'}
+          alt={'mirr laugh character'}
           title={shareData.challengeInfo?.content?.value ?? ''}
           periodText={shareData.getPeriodText()}
           ref={shareData.imageRef}
