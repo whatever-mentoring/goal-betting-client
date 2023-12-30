@@ -1,7 +1,7 @@
-import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { debounce } from 'lodash';
+import { useCallback, useEffect, useState } from 'react';
 import { LoginFunnelProps } from '../../page';
-import { usePUTNickname } from '../api/nickname';
+import { usePUTNickname, usePostCheckNicknameMutation } from '../api/nickname';
 import { useGETUserInfoQuery } from '../api/user';
 
 interface HandleNicknameProps extends LoginFunnelProps {}
@@ -14,6 +14,7 @@ const useHandleNickname = ({ user, setUser, onNext }: HandleNicknameProps) => {
       setUser({
         nickname: userInfo.data.nickname.value,
       });
+      setDebounceNickname(userInfo.data.nickname.value);
     }
   }, [userInfo]);
   // USER INTERACTION
@@ -23,23 +24,53 @@ const useHandleNickname = ({ user, setUser, onNext }: HandleNicknameProps) => {
   // 1. 유저 > 닉네임 입력
   const onChangeNickname = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setUser((prev) => ({ ...prev, nickname: e.target.value }));
+    debouncedChangeNickname(e.target.value);
+    if (e.target.value === '') {
+      setIsNicknameDuplicated(false);
+    }
   };
 
   // 2. 유저 > 다음으로
   const isAllFilled = user.nickname.length > 0;
 
   // 3. 닉네임 저장
-  const { data } = useSession();
-  const { mutate } = usePUTNickname();
+  const { mutate: nicknameChange } = usePUTNickname();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isAllFilled) return;
-    mutate({ putData: { nickname: user.nickname }, token: data?.user.accessToken });
+    nicknameChange({ putData: { nickname: user.nickname } });
     onNext();
   };
 
-  return { placeholder, isAllFilled, onChangeNickname, onSubmit };
+  // 4. 닉네임 중복 여부
+  const [debounceNickname, setDebounceNickname] = useState('');
+  const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false);
+  const { mutate: nicknameCheck } = usePostCheckNicknameMutation();
+
+  const debouncedChangeNickname = useCallback(
+    debounce((url) => setDebounceNickname(url), 750),
+    [],
+  );
+
+  useEffect(() => {
+    nicknameCheck(
+      { postData: { nickname: debounceNickname } },
+      {
+        onSuccess: (data) => {
+          setIsNicknameDuplicated(data.data.nicknameIsDuplicated);
+        },
+      },
+    );
+  }, [debounceNickname]);
+
+  return {
+    placeholder,
+    isAllFilled: !isNicknameDuplicated,
+    isNicknameDuplicated,
+    onChangeNickname,
+    onSubmit,
+  };
 };
 
 export default useHandleNickname;

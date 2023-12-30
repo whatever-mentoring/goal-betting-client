@@ -6,6 +6,7 @@ const SettingsPage = () => {
   const {
     nickname,
     input,
+    isNicknameDuplicated,
     onChangeInput,
     onToggleInput,
     onClickSaveInput,
@@ -24,6 +25,7 @@ const SettingsPage = () => {
           value={input.nickname.value}
           disabled={input.nickname.disabled}
           onChange={(e) => onChangeInput('nickname', e.target.value)}
+          inputUnderText={isNicknameDuplicated ? '중복된 닉네임입니다' : undefined}
         >
           {!!input.nickname.disabled && (
             <CompoundSettings.EditInput.StateChangeButton onClick={() => onToggleInput('nickname')}>
