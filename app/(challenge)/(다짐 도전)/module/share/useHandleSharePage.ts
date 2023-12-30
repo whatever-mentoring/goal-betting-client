@@ -13,7 +13,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { ParticipateButtonProps } from '../../ui/Share/CompoundSharePage';
-import { useGetChallengeInfoQuery, useGetChallengeInfoWithoutTokenQuery } from '../api/challenge';
+import { useGetChallengeInfoQuery } from '../api/challenge';
 import { ChallengeData } from '../api/challengeList';
 import { useDeleteParticipateMutation } from '../api/deleteParticipate';
 import { useGETChallengeParticipantQuery } from '../api/participantList';
@@ -25,29 +25,12 @@ interface HandleSharePageProps {
 
 const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
   const router = useRouter();
-  const { data } = useSession();
-  console.log(data);
   // SERVER
   const [challengeInfo, setChallengeInfo] = useState<ChallengeData | null>(null);
   const { data: challengeInfoData } = useGetChallengeInfoQuery({
     goalId,
     token: '',
   });
-
-  const { data: challengeInfoDataQuery } = useGetChallengeInfoWithoutTokenQuery({ goalId });
-
-  useEffect(() => {
-    if (!challengeInfoDataQuery) return;
-    if (!isTodayIsAfterEndDate(challengeInfoDataQuery.data.goal.startDate)) {
-      router.push(navigationPath.다짐_페이지(goalId), {
-        scroll: false,
-      });
-      return;
-    }
-    if (challengeInfoDataQuery.data) {
-      setChallengeInfo(challengeInfoDataQuery.data.goal);
-    }
-  }, [challengeInfoDataQuery]);
 
   // 1. 챌린지 정보 가져오기
   useEffect(() => {
