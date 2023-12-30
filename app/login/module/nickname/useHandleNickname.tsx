@@ -34,12 +34,12 @@ const useHandleNickname = ({ user, setUser, onNext }: HandleNicknameProps) => {
   const isAllFilled = user.nickname.length > 0;
 
   // 3. 닉네임 저장
-  const { mutate: nicknameChange } = usePUTNickname();
+  const { mutateAsync: nicknameChange } = usePUTNickname();
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isAllFilled) return;
-    nicknameChange({ putData: { nickname: user.nickname } });
+    await nicknameChange({ putData: { nickname: user.nickname } });
     onNext();
   };
 
