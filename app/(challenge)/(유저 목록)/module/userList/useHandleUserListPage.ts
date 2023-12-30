@@ -28,7 +28,7 @@ const useHandleUserListPage = ({ goalId }: HandleUserListPageProps) => {
 
       userList.push({
         nickName: hostUser.nickname,
-        profileSrc: '/images/dog.png',
+        profileSrc: '/images/mirr/mirr_2.png',
         date: dayjs(hostUser.goalCreatedAt),
         withBorder: true,
       });
@@ -36,7 +36,7 @@ const useHandleUserListPage = ({ goalId }: HandleUserListPageProps) => {
       participants.forEach((participant) => {
         userList.push({
           nickName: participant.nickname,
-          profileSrc: '/images/dog.png',
+          profileSrc: '/images/mirr/mirr_1.png',
           date: dayjs(),
         });
       });
