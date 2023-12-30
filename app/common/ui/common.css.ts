@@ -1,5 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import getRem from '../util/getRem';
+import { vars } from './colors.css';
 
 const flex = style({
   display: 'flex',
@@ -76,3 +77,19 @@ export const phoneMediaQuery = style({
     },
   },
 });
+
+export const textButtonStyle = style([
+  flexCenterCenter,
+  {
+    boxSizing: 'border-box',
+    borderRadius: `${getRem(16)}`,
+    marginBottom: `${getRem(5)}`,
+    backgroundColor: vars.color.grey900,
+    transition: 'opacity 0.3s ease-in-out',
+    selectors: {
+      '&:active': {
+        opacity: 0.7,
+      },
+    },
+  },
+]);
