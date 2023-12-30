@@ -17,16 +17,26 @@ const LoginPage = ({}: LoginPageProps) => {
   return (
     <>
       <div className={loginPageStyles.headerWrapper}>
-        <Text.TitleH1>미르었던 다짐</Text.TitleH1>
-        <Text.BodyM color="grey500">다짐을 위해 친구들과 7일간 내기를 걸어요!</Text.BodyM>
+        <div className={loginPageStyles.logoImageWrapper}>
+          <Image
+            priority
+            className={loginPageStyles.logoImage}
+            src="/images/mirr/mirr_logo.png"
+            fill
+            alt="challenge_add"
+            sizes="(max-width: 480px) 380px, (max-width: 768px) 480px, 768px"
+          />
+        </div>
       </div>
       <div className={loginPageStyles.imageWrapper}>
         <Image
           priority
           className={loginPageStyles.image}
-          src="/images/dog.png"
+          src="/images/mirr/mirr_half.png"
           fill
           alt="challenge_add"
+          sizes="(max-width: 480px) 380px"
+          quality={100}
         />
       </div>
       <BottomFixedButton>

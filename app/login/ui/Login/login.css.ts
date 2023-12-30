@@ -6,25 +6,46 @@ export const loginPageStyles = {
   headerWrapper: style([
     flexCenterCenter,
     {
-      flexDirection: 'column',
       marginTop: `${getRem(40)}`,
       rowGap: `${getRem(20)}`,
     },
   ]),
+  logoImageWrapper: style([
+    flexCenterCenter,
+    {
+      margin: `${getRem(47)}  0 ${getRem(20)} ${getRem(20)}`,
+      width: `${getRem(140)}`,
+      height: `${getRem(140)}`,
+      position: 'relative',
+      borderRadius: `${getRem(16)}`,
+      '@media': {
+        'screen and (min-width: 480px)': {
+          width: `${getRem(200)}`,
+          height: `${getRem(200)}`,
+        },
+      },
+    },
+  ]),
+  logoImage: style({
+    objectFit: 'contain',
+  }),
   imageWrapper: style([
     flexCenterCenter,
     {
-      margin: `${getRem(135)}  0 ${getRem(20)} ${getRem(20)}`,
-      width: `calc(100% - ${getRem(40)})`,
-      height: `${getRem(250)}`,
-      position: 'relative',
+      width: `100%`,
+      height: `${getRem(400)}`,
+      position: 'fixed',
+      bottom: `${getRem(80)}`,
       borderRadius: `${getRem(16)}`,
+      '@media': {
+        'screen and (max-width: 480px)': {
+          width: `100%`,
+          height: `${getRem(340)}`,
+        },
+      },
     },
   ]),
   image: style({
-    width: `100%`,
-    height: `100%`,
-    objectFit: 'cover',
-    borderRadius: `${getRem(16)}`,
+    objectFit: 'contain',
   }),
 };
