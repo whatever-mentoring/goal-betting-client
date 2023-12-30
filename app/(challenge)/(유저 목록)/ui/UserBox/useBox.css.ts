@@ -33,13 +33,14 @@ export const userBoxStyles = {
       width: `${getRem(41)}`,
       height: `${getRem(41)}`,
       borderRadius: '50%',
+      backgroundColor: vars.color.white,
     },
   ]),
 
   userImage: style({
     width: '100%',
     height: '100%',
-    borderRadius: '50%',
+    objectFit: 'contain',
   }),
 
   middleWrapper: style([
