@@ -65,13 +65,27 @@ export const textAreaStyle = {
     },
   }),
 
-  countContainerStyle: style([
+  inputUnderWrapper: style([
     {
       display: 'flex',
       width: '100%',
+      justifyContent: 'space-between',
+      padding: `${getRem(20)} ${getRem(20)} 0 ${getRem(20)}`,
+    },
+  ]),
+
+  inputUnderDescription: style([
+    {
+      flex: 1,
+      width: '100%',
+    },
+  ]),
+
+  countContainerStyle: style([
+    {
+      display: 'flex',
+      flex: 1,
       justifyContent: 'flex-end',
-      paddingTop: `${getRem(3)}`,
-      paddingRight: `${getRem(20)}`,
     },
   ]),
   descriptionWrapper: style({
