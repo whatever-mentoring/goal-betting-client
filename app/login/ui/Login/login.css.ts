@@ -32,10 +32,12 @@ export const loginPageStyles = {
   imageWrapper: style([
     flexCenterCenter,
     {
+      position: 'fixed',
+      left: '50%',
+      bottom: `${getRem(80)}`,
+      transform: 'translateX(-50%)',
       width: `100%`,
       height: `${getRem(400)}`,
-      position: 'fixed',
-      bottom: `${getRem(80)}`,
       borderRadius: `${getRem(16)}`,
       '@media': {
         'screen and (max-width: 480px)': {
