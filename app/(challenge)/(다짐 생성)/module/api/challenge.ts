@@ -1,5 +1,5 @@
-import { withSessionUser } from '@/app/common/api/withSessionUser';
 import client from '@/app/common/api/client';
+import { withSessionUser } from '@/app/common/api/withSessionUser';
 import { useMutation } from '@tanstack/react-query';
 
 export interface Json {
@@ -31,6 +31,7 @@ interface RequestInterface {
     content: string;
     startDate: string;
     endDate: string;
+    gifticonUrl?: string | null;
   };
 }
 
