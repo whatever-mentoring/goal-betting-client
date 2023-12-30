@@ -2,6 +2,7 @@
 import RefreshCheck from '@/app/common/hooks/funnel/RefreshCheck';
 import { extractNonEmptyArrayKeys } from '@/app/common/hooks/funnel/models';
 import navigationPath from '@/app/common/navigation/navigationPath';
+import { addDayToDate, getKoreanCurrentTime } from '@/app/common/util/date';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useFunnel } from '../../../common/hooks/funnel/useFunnel';
 import BetPage from '../ui/Bet/BetPage';
@@ -31,7 +32,7 @@ const ChallengeAddFunnel = () => {
     gifticon: {
       imgSrc: null,
     },
-    startDate: new Date(),
+    startDate: addDayToDate(getKoreanCurrentTime(), 1),
   });
 
   return (
