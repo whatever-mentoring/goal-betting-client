@@ -40,10 +40,11 @@ export type BaseProps = {
     max: number;
     initialVisible?: boolean;
   };
+  inputUnderText?: string;
 } & TextareaAutosizeProps;
 
 const Base = forwardRef<HTMLTextAreaElement, BaseProps>(
-  ({ value, onChange, withCount, className, ...rest }, ref) => {
+  ({ value, onChange, withCount, inputUnderText, className, ...rest }, ref) => {
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
       if (rest.maxRows && rest.maxRows === 1 && e.target.value.includes('\n')) return;
       if (withCount && e.target.value.length > withCount.max) return;
@@ -78,10 +79,17 @@ const Base = forwardRef<HTMLTextAreaElement, BaseProps>(
           )}
         </div>
         {getCountVisible() && (
-          <div className={textAreaStyle.countContainerStyle}>
-            <Text.BodyM color="grey600">
-              {value.length}/{withCount?.max}
-            </Text.BodyM>
+          <div className={textAreaStyle.inputUnderWrapper}>
+            <div className={textAreaStyle.inputUnderDescription}>
+              {inputUnderText && <Text.BodyM color="grey600">{inputUnderText}</Text.BodyM>}
+            </div>
+            {getCountVisible() && (
+              <div className={textAreaStyle.countContainerStyle}>
+                <Text.BodyM color="grey600">
+                  {value.length}/{withCount?.max}
+                </Text.BodyM>
+              </div>
+            )}
           </div>
         )}
       </div>
