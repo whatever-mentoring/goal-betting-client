@@ -3,6 +3,7 @@ import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import ButtonWrapper from '@/app/common/ui/Button/ButtonWrapper';
 import Label from '@/app/common/ui/Label/Label';
 import Text from '@/app/common/ui/Text/Text';
+import { textButtonStyle } from '@/app/common/ui/common.css';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import { CertificateInfo } from '../../module/challenge/useHandleChallengePage';
@@ -13,12 +14,7 @@ interface CompoundChallengePageProps {
 }
 
 const CompoundChallengePage = ({ children }: CompoundChallengePageProps) => {
-  return (
-    <>
-      {children}
-      <div className={challengePageStyles.fixedBox}></div>
-    </>
-  );
+  return <>{children}</>;
 };
 
 export default CompoundChallengePage;
@@ -67,7 +63,7 @@ const ChallengeMainImage = ({ src, alt }: ChallengeMainImagesProps) => {
           src={src}
           alt={alt}
           fill
-          sizes="(max-width: 480px) 100px, 200px"
+          sizes="(max-width: 480px) 155px, 200px"
           quality={100}
           priority
         />
@@ -79,8 +75,8 @@ const ChallengeMainImage = ({ src, alt }: ChallengeMainImagesProps) => {
 interface ChallengeBallImagesProps {
   images: BallImage[];
   certificationList: CertificateInfo[];
-  onClickCertificate: (progressDay: number) => void;
-  onClickAddNewChallenge: () => void;
+  onClickCertificate?: (progressDay: number) => void;
+  onClickAddNewChallenge?: () => void;
 }
 
 const ChallengeBallImages = ({
@@ -101,7 +97,8 @@ const ChallengeBallImages = ({
             key={image.id}
             className={challengePageStyles.gridItem}
             onClick={() => {
-              isCertificated && onClickCertificate(isCertificated.bettingId);
+              if (isCertificated && onClickCertificate)
+                onClickCertificate(isCertificated.bettingId);
             }}
           >
             <Image
@@ -147,13 +144,27 @@ const LinkButton = ({ onClick, buttonText }: LinkButtonProps) => {
 };
 
 interface BottomFixedButtonProps {
+  overButtonText: string;
+  onClickOverButton: () => void;
   buttonText: string;
   onClick: () => void;
 }
 
-const NavigateFixedButton = ({ buttonText, onClick }: BottomFixedButtonProps) => {
+const NavigateFixedButton = ({
+  overButtonText,
+  onClickOverButton,
+  buttonText,
+  onClick,
+}: BottomFixedButtonProps) => {
   return (
     <BottomFixedButton>
+      <BottomFixedButton.OverItem>
+        <div className={challengePageStyles.userCountWrapper}>
+          <ButtonWrapper onClick={onClickOverButton} className={textButtonStyle}>
+            <Text.BodyS color="grey300">{overButtonText}</Text.BodyS>
+          </ButtonWrapper>
+        </div>
+      </BottomFixedButton.OverItem>
       <BottomFixedButton.First onClick={onClick}>
         <Text.ButtonL>{buttonText}</Text.ButtonL>
       </BottomFixedButton.First>
