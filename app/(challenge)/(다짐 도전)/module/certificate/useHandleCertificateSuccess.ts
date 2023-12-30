@@ -1,5 +1,4 @@
 import useCaptureAndDownloadImage from '@/app/common/hooks/useCaptureAndDownloadImage';
-import useTriggerShare from '@/app/common/hooks/useTriggerShare';
 import { LabelProps } from '@/app/common/ui/Label/Label';
 import { addDayToDate, convertFormatDate } from '@/app/common/util/date';
 import { useEffect, useRef, useState } from 'react';
@@ -96,17 +95,7 @@ const useHandleCertificateSuccess = ({ goalId, goalProofId }: HandleCertificateS
     captureAndDownload(title);
   };
 
-  // 사용자 > 공유하기
-  const { triggerShare } = useTriggerShare();
-
-  const onClickShare = () => {
-    triggerShare({
-      title: certification.title,
-      files: [Object.assign(new File([], ''), { preview: certification.imgSrc })],
-    });
-  };
-
-  return { certification, imageRef, onClickDownload, onClickShare };
+  return { certification, imageRef, onClickDownload };
 };
 
 export default useHandleCertificateSuccess;

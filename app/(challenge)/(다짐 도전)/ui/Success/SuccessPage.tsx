@@ -3,7 +3,6 @@ import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import Header from '@/app/common/ui/Header/Header';
 import Label from '@/app/common/ui/Label/Label';
 import Text from '@/app/common/ui/Text/Text';
-import { ButtonIcon } from '@/app/common/ui/assets/Icon';
 import { withPreWrapCenter } from '@/app/common/ui/common.css';
 import Image from 'next/image';
 import useHandleCertificateSuccess from '../../module/certificate/useHandleCertificateSuccess';
@@ -15,19 +14,13 @@ interface SuccessPageProps {
 }
 
 const SuccessPage = ({ goalId, goalProofId }: SuccessPageProps) => {
-  const { certification, imageRef, onClickDownload, onClickShare } = useHandleCertificateSuccess({
+  const { certification, imageRef, onClickDownload } = useHandleCertificateSuccess({
     goalId,
     goalProofId,
   });
   return (
     <>
-      <Header
-        showBackButton
-        backTo={navigationPath.홈_페이지}
-        appendingRightButton={
-          <ButtonIcon name="share" fill="white" size="l" onClick={onClickShare} />
-        }
-      />
+      <Header showBackButton backTo={navigationPath.홈_페이지} />
       <div className={successPageStyles.wrapper} ref={imageRef}>
         <div className={successPageStyles.dateLeftWrapper}>
           <Label {...certification.label} />
