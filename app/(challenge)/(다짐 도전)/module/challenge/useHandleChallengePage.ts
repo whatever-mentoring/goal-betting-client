@@ -149,11 +149,31 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
     );
   }, [challengeInfoData, isMyChallenge]);
 
+  // 새 다짐 클릭
+  const onClickAddNewChallenge = () => {
+    if (!sessionData) return;
+    if (challengeInfoData.data.goal.result === 'PROCEEDING') return;
+    router.push(navigationPath.다짐_생성_퍼널.다짐_입력, {
+      scroll: false,
+    });
+  };
+
+  // 유저 목록 클릭
+  const onClickUserList = () => {
+    router.push(navigationPath.유저_목록_페이지(challengeInfo.id), {
+      scroll: false,
+    });
+  };
+
   return {
     challengeInfo,
     certificateList,
     fixedButtonInfo,
+    isMyChallenge,
+    challengeStatus: challengeInfoData?.data.goal.result,
     onClickCertificate,
+    onClickAddNewChallenge,
+    onClickUserList,
   };
 };
 
