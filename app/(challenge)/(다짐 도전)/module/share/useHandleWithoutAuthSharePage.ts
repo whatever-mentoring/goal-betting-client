@@ -7,6 +7,7 @@ import {
   getLeftDaysFromDate,
   isTodayIsAfterEndDate,
 } from '@/app/common/util/date';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ParticipateButtonProps } from '../../ui/Share/CompoundSharePage';
@@ -63,10 +64,14 @@ const useHandleWithoutAuthSharePage = ({ goalId }: HandleSharePageProps) => {
     });
   };
 
-  const onClickParticipate = () => {
-    router.push(navigationPath.로그인_퍼널.로그인, {
-      scroll: false,
-    });
+  const onClickParticipate = async () => {
+    try {
+      await signIn('kakao', {
+        redirect: false,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   // UI LOGIC
