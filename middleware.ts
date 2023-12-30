@@ -12,14 +12,32 @@ interface CustomToken extends JWT {
 
 export async function middleware(req: NextRequest) {
   const token = (await getToken({ req })) as CustomToken | null;
-  const { origin, pathname } = req.nextUrl;
+  const { origin, pathname, searchParams } = req.nextUrl;
+
+  const callbackUrl = searchParams.get('callback');
 
   // 로그인 상태
   if (token) {
+    if (pathname.includes('/add')) {
+      if (callbackUrl?.length) {
+        return NextResponse.redirect(`${origin}${callbackUrl}`);
+      }
+    }
+    if (pathname.includes('/share')) {
+      if (!token.user.nicknameIsModified) {
+        return NextResponse.redirect(
+          `${origin}${navigationPath.로그인_퍼널.닉네임_설정}` + '&callback=' + pathname,
+        );
+      }
+    }
     // 로그인 페이지 접근
     if (pathname === '/login') {
       if (token.user.nicknameIsModified) {
-        return NextResponse.redirect(`${origin}/`);
+        if (callbackUrl?.length) {
+          return NextResponse.redirect(`${origin}${callbackUrl}`);
+        } else {
+          return NextResponse.redirect(`${origin}/`);
+        }
       }
       // 닉네임 설정 페이지 접근
       if (req.nextUrl.searchParams.has('step')) {
@@ -46,5 +64,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/login', '/login/:path*', '/user/:path*'],
+  matcher: ['/login', '/login/:path*', '/user/:path*', '/share/:path*', '/add'],
 };
