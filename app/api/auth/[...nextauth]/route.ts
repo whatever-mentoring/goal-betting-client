@@ -42,6 +42,7 @@ const handler = NextAuth({
             ...token,
             user: {
               ...(token.user as AuthUser),
+              nicknameIsModified: true,
               nickname: session.nickname,
             },
           };
