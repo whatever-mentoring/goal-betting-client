@@ -1,11 +1,11 @@
 import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import ButtonWrapper from '@/app/common/ui/Button/ButtonWrapper';
+import ImageCard from '@/app/common/ui/Card/ImageCard';
 import Label from '@/app/common/ui/Label/Label';
 import Text from '@/app/common/ui/Text/Text';
 import Icon from '@/app/common/ui/assets/Icon';
 import { fixedButtonOverWrapper } from '@/app/common/ui/common.css';
-import Image from 'next/image';
-import { ForwardRefRenderFunction, HTMLAttributes, ReactNode, forwardRef } from 'react';
+import { ReactNode } from 'react';
 import { sharePageStyles } from './share.css';
 
 interface CompoundSharePageProps {
@@ -31,32 +31,6 @@ const Banner = ({ children }: BannerProps) => {
 };
 
 Banner.Item = Label;
-
-type ImageCardProps = {
-  src: string;
-  alt: string;
-  title: string;
-  periodText: string;
-} & HTMLAttributes<HTMLDivElement>;
-
-const ImageCard: ForwardRefRenderFunction<HTMLDivElement, ImageCardProps> = (
-  { src, alt, title, periodText, ...rest },
-  forwardRef,
-) => {
-  return (
-    <div className={sharePageStyles.boxCanvas}>
-      <div ref={forwardRef} {...rest} className={sharePageStyles.boxWrapper}>
-        <div className={sharePageStyles.imageWrapper}>
-          <Image src={src} fill alt={alt} priority className={sharePageStyles.image} />
-        </div>
-        <div className={sharePageStyles.challengeTextWrapper}>
-          <Text.BodyL>{title}</Text.BodyL>
-          <Text.BodyS color="grey400">{periodText}</Text.BodyS>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 interface DownloadButtonProps {
   onClick: () => void;
@@ -115,7 +89,7 @@ const ParticipateButtonWithOverItem = ({
 };
 
 CompoundSharePage.Banner = Banner;
-CompoundSharePage.ImageCard = forwardRef(ImageCard);
+CompoundSharePage.ImageCard = ImageCard;
 CompoundSharePage.DownloadButton = DownloadButton;
 CompoundSharePage.ShareButton = ShareButton;
 CompoundSharePage.ParticipateButtonWithOverItem = ParticipateButtonWithOverItem;
