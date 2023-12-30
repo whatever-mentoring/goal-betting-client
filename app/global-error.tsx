@@ -18,7 +18,7 @@ const GlobalErrorPage = () => {
     <>
       <CenterBlank>
         <div className={errorStyles.imageWrapper}>
-          <Image src="/images/mirr/stand.png" alt="error" fill className={errorStyles.image} />
+          <Image src="/images/mirr/mirr_sad.png" alt="error" fill className={errorStyles.image} />
         </div>
         <div className={errorStyles.textWrapper}>
           <Text.TitleH2>접근할 수 없는 페이지 입니다</Text.TitleH2>
