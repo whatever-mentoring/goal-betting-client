@@ -26,7 +26,7 @@ const SuccessPage = ({ goalId, goalProofId }: SuccessPageProps) => {
           <Label {...certification.label} />
         </div>
         <div className={successPageStyles.headerTextWrapper}>
-          <Text.TitleH1 className={withPreWrapCenter}>{certification.title}</Text.TitleH1>
+          <Text.TitleH2 className={withPreWrapCenter}>{certification.title}</Text.TitleH2>
           <Text.BodyS className={withPreWrapCenter} color="grey400">
             {certification.dateText}
           </Text.BodyS>
