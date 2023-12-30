@@ -16,13 +16,13 @@ export const userListPageStyles = {
 
   challengerWrapper: style({
     padding: `0 ${getRem(20)}`,
-    marginBottom: `${getRem(20)}`,
+    marginBottom: `${getRem(12)}`,
   }),
 
   userList: style({
     display: 'flex',
     flexDirection: 'column',
-    rowGap: `${getRem(20)}`,
+    rowGap: `${getRem(12)}`,
     padding: `0 ${getRem(20)}`,
   }),
 };
