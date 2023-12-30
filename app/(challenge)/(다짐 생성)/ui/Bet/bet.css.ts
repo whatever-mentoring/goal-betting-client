@@ -29,7 +29,6 @@ export const betPageStyles = {
       width: `${getRem(30)}`,
       height: `${getRem(30)}`,
       cursor: 'pointer',
-      zIndex: 1,
     },
   ]),
 
@@ -50,7 +49,6 @@ export const betPageStyles = {
     objectFit: 'cover',
     boxSizing: 'border-box',
     borderRadius: `${getRem(16)}`,
-    opacity: 0.3,
   }),
 
   imageUploadBox: style([
@@ -94,6 +92,7 @@ export const betPageStyles = {
   ]),
 
   underLineText: style({
-    textDecoration: 'underline',
+    paddingBottom: `${getRem(5)}`,
+    borderBottom: `1px solid ${vars.color.grey600}`,
   }),
 };
