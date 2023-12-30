@@ -1,4 +1,5 @@
 import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
+import ImageCard from '@/app/common/ui/Card/ImageCard';
 import Header from '@/app/common/ui/Header/Header';
 import Text from '@/app/common/ui/Text/Text';
 import {
@@ -7,7 +8,7 @@ import {
   withPreWrapCenter,
 } from '@/app/common/ui/common.css';
 import { getDayPeriodToText } from '@/app/common/util/date';
-import Image from 'next/image';
+import classNames from 'classnames';
 import { Dispatch, SetStateAction } from 'react';
 import { Challenge, ChallengeAddFunnelProps } from '../../add/page';
 import useHandlePreview from '../../module/preview/useHandlePreview';
@@ -29,28 +30,18 @@ const PreviewPage = ({ challenge }: PreviewPageProps) => {
   return (
     <>
       <Header showBackButton />
-      <div className={headerTextWrapper}>
-        <Text.TitleH1 className={withPreWrapCenter}>
-          {'이렇게 내기할까?\n등록이 완료되면\n친구에게 공유할 수 있어'}
-        </Text.TitleH1>
+      <div className={classNames(headerTextWrapper, previewPageStyles.headerTextWrapper)}>
+        <Text.TitleH1 className={withPreWrapCenter}>{'이렇게 내기할까?'}</Text.TitleH1>
       </div>
-      <div className={previewPageStyles.boxWrapper}>
-        <div className={previewPageStyles.imageWrapper}>
-          <Image
-            src="/images/dog.png"
-            fill
-            alt="challenge-info"
-            className={previewPageStyles.image}
-          />
-        </div>
-        <div className={previewPageStyles.challengeTextWrapper}>
-          <Text.BodyL>{challenge.title}</Text.BodyL>
-          <Text.BodyS color="grey400">{getDayPeriodToText(challenge.startDate, 7)}</Text.BodyS>
-        </div>
-      </div>
+      <ImageCard
+        src="/images/mirr/mirr_happy.png"
+        alt="mirr laugh character"
+        periodText={getDayPeriodToText(challenge.startDate, 7)}
+        title={challenge.title}
+      />
       <BottomFixedButton>
         <BottomFixedButton.OverItem className={fixedButtonOverWrapper}>
-          <Text.BodyM color="white">지금 등록하면 수정할 수 없어요!</Text.BodyM>
+          <Text.BodyS color="white">지금 등록하면 수정할 수 없어요!</Text.BodyS>
         </BottomFixedButton.OverItem>
         <BottomFixedButton.First width={100} onClick={onClickSubmit}>
           <Text.ButtonL>내기 등록 완료하기</Text.ButtonL>
