@@ -2,7 +2,7 @@
 import client from '@/app/common/api/client';
 import { withSessionUser } from '@/app/common/api/withSessionUser';
 import { BETTING_RESULT } from '@/app/types';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { ChallengeType } from './challengeList';
 
 export interface Json {
@@ -71,18 +71,18 @@ export const useGetChallengeInfoQuery = (params: GetChallengeInfoQueryRequest) =
 
 export interface ChallengeWithoutToken {
   isSuccess: boolean;
-  data: ChallengeInfoData;
+  data: ChallengeDataWithoutAuth;
   errorResponse: unknown;
 }
-export interface ChallengeInfoData {
+export interface ChallengeDataWithoutAuth {
   hostUserId: number;
   hostUserNickname: string;
   id: number;
   type: string;
   content: Content;
   threshold: Threshold;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date;
   result: string;
 }
 export interface Content {
@@ -98,7 +98,7 @@ interface RequestInterface {
 }
 
 const getChallengeInfoWithoutToken = async ({ goalId }: RequestInterface) => {
-  const { data } = await client<Json>({
+  const { data } = await client<ChallengeWithoutToken>({
     method: 'get',
     url: `/v1/api/goal/${goalId}/simple`,
   });
@@ -117,7 +117,7 @@ const GetChallengeInfoWithoutTokenKey = (params: GetChallengeInfoWithoutTokenReq
 export const useGetChallengeInfoWithoutTokenQuery = (
   params: GetChallengeInfoWithoutTokenRequest,
 ) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: GetChallengeInfoWithoutTokenKey(params),
     queryFn: () => getChallengeInfoWithoutToken(params),
   });
