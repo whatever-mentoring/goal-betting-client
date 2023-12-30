@@ -8,6 +8,7 @@ import Icon from '@/app/common/ui/assets/Icon';
 import {
   fixedButtonOverWrapper,
   headerTextWrapper,
+  textButtonStyle,
   withPreWrapCenter,
 } from '@/app/common/ui/common.css';
 import Link from 'next/link';
@@ -110,7 +111,7 @@ const BetPage = ({ challenge, setChallenge, onNext }: ChallengeAddPageProps) => 
         )}
       </div>
       <div className={betPageStyles.imageUploadTextWrapper}>
-        <Text.BodyS color="grey600" className={betPageStyles.imageUploadText}>
+        <Text.BodyS color="grey500" className={betPageStyles.imageUploadText}>
           {'만료/사용완료된 기프티콘 업로드 후 발생하는\n문제는 사용자 책임입니다.'}
         </Text.BodyS>
       </div>
@@ -124,8 +125,8 @@ const BetPage = ({ challenge, setChallenge, onNext }: ChallengeAddPageProps) => 
       <BottomFixedButton>
         {!isFileExist && (
           <BottomFixedButton.OverItem className={fixedButtonOverWrapper}>
-            <ButtonWrapper onClick={onNext}>
-              <Text.BodyM className={betPageStyles.underLineText} color="grey700">
+            <ButtonWrapper onClick={onNext} className={textButtonStyle}>
+              <Text.BodyM className={betPageStyles.underLineText} color="grey600">
                 안걸고 내기하기
               </Text.BodyM>
             </ButtonWrapper>
