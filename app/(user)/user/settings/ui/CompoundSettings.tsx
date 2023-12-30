@@ -1,11 +1,10 @@
 import BottomFixedButton from '@/app/common/ui/Button/BottomFixedButton';
 import ButtonWrapper from '@/app/common/ui/Button/ButtonWrapper';
 import Text from '@/app/common/ui/Text/Text';
-import TextArea from '@/app/common/ui/TextArea/TextArea';
+import TextArea, { BaseProps } from '@/app/common/ui/TextArea/TextArea';
 import { Color } from '@/app/common/ui/colors.css';
 import { fixedButtonOverWrapper } from '@/app/common/ui/common.css';
 import { ChangeEvent, ReactNode } from 'react';
-import { TextareaAutosizeProps } from 'react-textarea-autosize';
 import { settingsPageStyles } from '../settings.css';
 
 interface CompoundSettingsProps {
@@ -35,7 +34,7 @@ type EditInputProps = {
   value: string;
   disabled: boolean;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-} & TextareaAutosizeProps;
+} & BaseProps;
 
 const EditInput = ({ title, value, disabled, children, onChange, ...rest }: EditInputProps) => {
   return (
