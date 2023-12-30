@@ -7,14 +7,17 @@ import Icon from '@/app/common/ui/assets/Icon';
 import { fixedButtonOverWrapper, headerTextWrapper } from '@/app/common/ui/common.css';
 import { convertFormatDate } from '@/app/common/util/date';
 import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
 import { ChallengeAddFunnelProps } from '../../add/page';
 import { startDatePageStyles } from './startDate.css';
+
+dayjs.locale('ko');
 
 interface StartDatePageProps extends ChallengeAddFunnelProps {}
 
 const StartDatePage = ({ challenge, setChallenge, onNext }: StartDatePageProps) => {
   // UI RENDER
-  const formattedDate = convertFormatDate(challenge.startDate, 'YYYY.MM.DD일');
+  const formattedDate = convertFormatDate(challenge.startDate, 'YYYY. MM. DD');
   // USER INTERACTION
   // 1. 유저 > 시작 날짜 선택
   const onChangeDate = (date: dayjs.Dayjs) => {
@@ -45,7 +48,7 @@ const StartDatePage = ({ challenge, setChallenge, onNext }: StartDatePageProps) 
       <BottomFixedButton>
         <BottomFixedButton.OverItem className={fixedButtonOverWrapper}>
           <ButtonWrapper onClick={onNext}>
-            <Text.BodyM color="white">시작일 전까지 내기 참여자를 모을 수 있어!</Text.BodyM>
+            <Text.BodyS color="white">시작일 전까지 내기 참여자를 모을 수 있어!</Text.BodyS>
           </ButtonWrapper>
         </BottomFixedButton.OverItem>
         <BottomFixedButton.First width={100} onClick={onNext}>
