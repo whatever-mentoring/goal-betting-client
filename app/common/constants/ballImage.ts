@@ -49,3 +49,48 @@ export const ballImages: BallImage[] = [
     id: 7,
   },
 ] as const;
+
+export const unknownBallImages: BallImage[] = [
+  {
+    onImgSrc: '/images/balls/ball_unknown.png',
+    offImgSrc: '/images/balls/ball_unknown.png',
+    text: '하루',
+    id: 1,
+  },
+  {
+    onImgSrc: '/images/balls/ball_unknown.png',
+    offImgSrc: '/images/balls/ball_unknown.png',
+    text: '이틀',
+    id: 2,
+  },
+  {
+    onImgSrc: '/images/balls/ball_unknown.png',
+    offImgSrc: '/images/balls/ball_unknown.png',
+    text: '사흘',
+    id: 3,
+  },
+  {
+    onImgSrc: '/images/balls/ball_unknown.png',
+    offImgSrc: '/images/balls/ball_unknown.png',
+    text: '나흘',
+    id: 4,
+  },
+  {
+    onImgSrc: '/images/balls/ball_unknown.png',
+    offImgSrc: '/images/balls/ball_unknown.png',
+    text: '닷새',
+    id: 5,
+  },
+  {
+    onImgSrc: '/images/balls/ball_unknown.png',
+    offImgSrc: '/images/balls/ball_unknown.png',
+    text: '엿새',
+    id: 6,
+  },
+  {
+    onImgSrc: '/images/balls/ball_unknown.png',
+    offImgSrc: '/images/balls/ball_unknown.png',
+    text: '이레',
+    id: 7,
+  },
+] as const;
