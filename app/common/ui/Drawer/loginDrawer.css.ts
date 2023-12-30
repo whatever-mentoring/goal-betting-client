@@ -7,6 +7,7 @@ export const loginDrawerStyles = {
   container: style({
     padding: `0 ${getRem(31)}`,
   }),
+
   headerTextWrapper: style([
     {
       display: 'flex',
@@ -15,7 +16,14 @@ export const loginDrawerStyles = {
       rowGap: `${getRem(8)}`,
     },
   ]),
+
   nicknameWrapper: style([flexCenterStart]),
+
+  loginButton: style({
+    display: 'flex',
+    columnGap: `${getRem(8)}`,
+    alignItems: 'center',
+  }),
 
   linkButtonWrapper: style([
     {
