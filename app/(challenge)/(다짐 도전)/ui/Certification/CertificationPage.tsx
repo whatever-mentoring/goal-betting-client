@@ -47,6 +47,7 @@ const CertificationPage = ({ certification, setCertification, onNext }: Challeng
   const onRemoveImage = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setCertification((prev) => ({ ...prev, file: null }));
+    setCertification((prev) => ({ ...prev, imageSrc: null }));
   };
 
   // 1-3. 이미지 업로드 씬에서 파일 존재 여부
