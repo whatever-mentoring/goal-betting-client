@@ -42,6 +42,10 @@ export const textStyles = {
       fontSize: '14px',
       fontWeight: 'medium',
     }),
+    bodyXS: style({
+      fontSize: '12px',
+      fontWeight: 'medium',
+    }),
   },
 };
 

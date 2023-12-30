@@ -152,4 +152,13 @@ Text.BodyS = ({ children, color, className }: TextComponentProps) => (
   </Text>
 );
 
+Text.BodyXS = ({ children, color, className }: TextComponentProps) => (
+  <Text
+    className={classNames(textStyles.pretendard.medium, textStyles.textSize.bodyXS, className)}
+    color={color}
+  >
+    {children}
+  </Text>
+);
+
 export default Text;
