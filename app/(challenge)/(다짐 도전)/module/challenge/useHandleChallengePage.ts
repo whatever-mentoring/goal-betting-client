@@ -2,6 +2,7 @@ import navigationPath from '@/app/common/navigation/navigationPath';
 import { LabelProps } from '@/app/common/ui/Label/Label';
 import {
   getDayPeriodToText,
+  getKoreanCurrentTime,
   isTodayIsAfterEndDate,
   nthDayFromStartDate,
 } from '@/app/common/util/date';
@@ -90,6 +91,7 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
   // 3. 인증 내역 가져오기
   const [certificateList, setCertificateList] = useState<CertificateInfo[]>([]);
   const { data: certificateListData } = useGETCertificateListQuery({ goalId });
+  const [todayCertificate, setTodayCertificate] = useState(false);
 
   useEffect(() => {
     if (!sessionData) return;
@@ -105,6 +107,17 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
     });
     setCertificateList((prev) => prev.sort((a, b) => a.progressDay - b.progressDay));
   }, [sessionData, certificateListData]);
+
+  useEffect(() => {
+    if (!certificateList) return;
+    if (!challengeInfoData) return;
+    const todayCertificate = certificateList.find(
+      (certificate) => certificate.progressDay === nthDayFromStartDate(getKoreanCurrentTime()),
+    );
+    if (todayCertificate) {
+      setTodayCertificate(true);
+    }
+  }, [certificateList, challengeInfoData]);
 
   const onClickCertificate = (bettingId: number) => {
     router.push(navigationPath.다짐_인증_확인_페이지(goalId)(bettingId)),
@@ -143,11 +156,12 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
       getButtonInfo(
         isMyChallenge,
         challengeInfoData.data.goal.result !== 'PROCEEDING',
+        todayCertificate,
         challengeInfoData.data.goal.startDate,
         challengeInfoData.data.goal.id,
       ),
     );
-  }, [challengeInfoData, isMyChallenge]);
+  }, [challengeInfoData, isMyChallenge, todayCertificate]);
 
   // 새 다짐 클릭
   const onClickAddNewChallenge = () => {
@@ -197,19 +211,29 @@ const getLabelInfo = (startDate: Date, isChallengeEnded: boolean): LabelProps =>
 const getButtonInfo = (
   isOrganizer: boolean,
   isChallengeEnded: boolean,
+  isTodayChallenge: boolean,
   startDate: Date,
   goalId: number,
 ): ButtonInfo => {
   if (isOrganizer) {
-    return isChallengeEnded
-      ? {
-          text: '내기 종료',
-          link: navigationPath.다짐_결과_퍼널(goalId).도전_결과,
-        }
-      : {
+    if (isChallengeEnded) {
+      return {
+        text: '결과 보기',
+        link: navigationPath.다짐_결과_퍼널(goalId).도전_결과,
+      };
+    } else {
+      if (isTodayChallenge) {
+        return {
+          text: '인증 확인하기',
+          link: navigationPath.다짐_인증_확인_페이지(goalId)(0),
+        };
+      } else {
+        return {
           text: `${nthDayFromStartDate(startDate)}일차 인증하기`,
           link: navigationPath.다짐_도전_퍼널(goalId).다짐_인증,
         };
+      }
+    }
   } else {
     return isChallengeEnded
       ? {
