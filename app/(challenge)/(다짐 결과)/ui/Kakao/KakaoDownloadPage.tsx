@@ -25,18 +25,19 @@ const KakaoDownloadPage = ({}: SaverPageProps) => {
     <>
       <Header showBackButton backTo={navigationPath.홈_페이지} />
       <div className={kakaoPageStyles.headerTextWrapper}>
-        <Text.TitleH1 className={withPreWrapCenter}>{'기프티콘을\n저장해주세요'}</Text.TitleH1>
+        <Text.TitleH1 className={withPreWrapCenter}>{'기프티콘을 저장해보자'}</Text.TitleH1>
       </div>
-
       <div className={kakaoPageStyles.imageDownloadWrapper} ref={imageRef}>
         <div className={kakaoPageStyles.imageWrapper}>
           <Image
             className={kakaoPageStyles.image}
             src="/images/dog.png"
             alt="Image description"
-            fill
+            width={0}
+            height={0}
             quality={100}
             priority
+            sizes="100vw"
           />
         </div>
       </div>
