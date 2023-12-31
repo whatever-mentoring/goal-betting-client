@@ -37,7 +37,7 @@ const useHandleResult = ({ goalId, setStep }: HandleResultProps) => {
       isOwner: sessionData.user.userId === challengeInfo.data.goal.hostUserId,
       isSuccess: challengeInfo.data.goal.result === 'SUCCESS',
       winnerNickname: challengeInfo.data.winnerNickname || '',
-      isWinner: challengeInfo.data.myBetting?.result === 'GET_GIFTICON',
+      isWinner: challengeInfo.data.myBetting?.result === 'GET_GIFTICON' ?? false,
     });
     const actionHandler = builderSteps.build();
     if (!actionHandler) return;
@@ -61,6 +61,7 @@ const transformStep = <T>(
   if (!builderStep.buttonTo)
     return {
       headerText: builderStep.headerText,
+      imageUrl: builderStep.imageUrl,
       button: {
         text: builderStep.buttonText,
         callback: () => {},
@@ -69,11 +70,14 @@ const transformStep = <T>(
   if (builderStep.buttonTo && builderStep.buttonTo.type === 'link') {
     return {
       headerText: builderStep.headerText,
+      imageUrl: builderStep.imageUrl,
       button: {
         text: builderStep.buttonText,
         callback: () => {
           if (builderStep.buttonTo && builderStep.buttonTo.type === 'link') {
-            router.push(builderStep.buttonTo.link);
+            router.push(builderStep.buttonTo.link, {
+              scroll: false,
+            });
           }
         },
       },
@@ -81,6 +85,7 @@ const transformStep = <T>(
   }
   return {
     headerText: builderStep.headerText,
+    imageUrl: builderStep.imageUrl,
     button: {
       text: builderStep.buttonText,
       callback: () => {
