@@ -1,5 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import getRem from '../../util/getRem';
+import { flexCenterCenter } from '../common.css';
 
 export const transitionStyles = {
   container: style({
@@ -43,5 +44,18 @@ export const transitionStyles = {
     minHeight: `calc(100dvh - ${getRem(200)})`,
     transform: 'translateX(-50%)',
     transition: 'transform 0.5s ease-out',
+  }),
+  imageWrapper: style([
+    flexCenterCenter,
+    {
+      width: `100%`,
+      height: `${getRem(400)}`,
+      margin: `0 ${getRem(20)}`,
+      borderRadius: `${getRem(16)}`,
+      position: 'relative',
+    },
+  ]),
+  image: style({
+    objectFit: 'contain',
   }),
 };

@@ -1,7 +1,8 @@
 'use client';
 
 import classNames from 'classnames';
-import { ReactNode, useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import Text from '../Text/Text';
 import { withPreWrapCenter } from '../common.css';
@@ -9,6 +10,7 @@ import { transitionStyles } from './transition.css';
 
 export interface Step {
   headerText: string;
+  imageUrl: string;
   button: {
     text: string;
     callback: () => void;
@@ -17,12 +19,11 @@ export interface Step {
 
 interface TransitionComponentProps {
   steps: Step[];
-  children?: ReactNode;
 }
 
 // TODO : 추후 추가될 동적 요소들을 위해 구조 개선 필요
 
-const TransitionComponent = ({ steps, children }: TransitionComponentProps) => {
+const TransitionComponent = ({ steps }: TransitionComponentProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [entering, setEntering] = useState(false);
 
@@ -60,7 +61,21 @@ const TransitionComponent = ({ steps, children }: TransitionComponentProps) => {
           {steps[currentStep].headerText}
         </Text.TitleH1>
       </div>
-      <div className={transitionStyles.childrenWrapper}>{children}</div>
+      <div
+        className={classNames(
+          transitionStyles.childrenWrapper,
+          entering ? transitionStyles.enterFromRight : transitionStyles.center,
+        )}
+      >
+        <div className={transitionStyles.imageWrapper}>
+          <Image
+            src={steps[currentStep].imageUrl}
+            fill
+            alt="challenge-info"
+            className={transitionStyles.image}
+          />
+        </div>
+      </div>
       <div
         className={classNames(
           transitionStyles.buttonWrapper,
