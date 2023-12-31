@@ -30,7 +30,7 @@ export const kakaoPageStyles = {
   headerTextWrapper: style([
     flexCenterCenter,
     {
-      marginBottom: `${getRem(20)}`,
+      marginBottom: `${getRem(41)}`,
     },
   ]),
 
@@ -40,15 +40,15 @@ export const kakaoPageStyles = {
     flexCenterCenter,
     {
       width: `100%`,
-      display: 'block',
+      height: '100%',
+      position: 'relative',
       padding: `0 ${getRem(20)}`,
       borderRadius: `${getRem(16)}`,
     },
   ]),
 
   image: style({
-    width: '100%',
-    height: '100%',
-    borderRadius: `${getRem(16)}`,
+    width: `100%`,
+    height: 'auto',
   }),
 };
