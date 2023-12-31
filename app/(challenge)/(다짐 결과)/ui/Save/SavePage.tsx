@@ -14,29 +14,33 @@ interface SaverPageProps extends OmitOnNext {
 }
 
 const SavePage = ({ goalId }: SaverPageProps) => {
-  const { imageRef, challengeInfo, onClickDownload } = useHandleSavePage({ goalId });
+  const { isChallengeSuccess, imageRef, challengeInfo, onClickDownload, getHeaderText } =
+    useHandleSavePage({ goalId });
 
   return (
     <>
       <Header showBackButton backTo={navigationPath.홈_페이지} />
 
       <div className={savePageStyles.headerTextWrapper}>
-        <Text.TitleH1 className={withPreWrapCenter}>{'7일 동안 고생했어!'}</Text.TitleH1>
+        <Text.TitleH1 className={withPreWrapCenter}>
+          {getHeaderText(isChallengeSuccess)}
+        </Text.TitleH1>
       </div>
 
       <div className={savePageStyles.boxCanvas}>
         <div ref={imageRef} className={savePageStyles.boxWrapper}>
           <div className={savePageStyles.imageWrapper}>
             <Image
-              src={'/images/dog.png'}
+              src={'/images/mirr/mirr_2.png'}
               fill
               alt="mirr character"
               priority
               className={savePageStyles.image}
+              sizes="(max-width: 480px) 152px 186px"
             />
           </div>
           <div className={savePageStyles.challengeTextWrapper}>
-            <Text.BodyL>{challengeInfo.title}</Text.BodyL>
+            <Text.TitleH2>{challengeInfo.title}</Text.TitleH2>
             <Text.BodyS color="grey400">{challengeInfo.periodText}</Text.BodyS>
           </div>
         </div>

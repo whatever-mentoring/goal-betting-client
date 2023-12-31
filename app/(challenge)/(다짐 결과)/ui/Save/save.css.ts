@@ -88,8 +88,8 @@ export const savePageStyles = {
 
   boxCanvas: style([
     {
-      padding: `0 ${getRem(20)}`,
-      marginTop: `${getRem(20)}`,
+      padding: `0 ${getRem(35)}`,
+      marginTop: `15dvh`,
     },
   ]),
 
@@ -107,18 +107,20 @@ export const savePageStyles = {
   imageWrapper: style([
     flexCenterCenter,
     {
-      width: '100%',
-      height: `${getRem(250)}`,
+      width: `${getRem(152)}`,
+      height: `${getRem(186)}`,
       position: 'relative',
-      borderRadius: `${getRem(16)}`,
+      '@media': {
+        'screen and (max-width: 480px)': {
+          width: `${getRem(152)}`,
+          height: `${getRem(186)}`,
+        },
+      },
     },
   ]),
 
   image: style({
-    width: '100%',
-    height: '100%',
-    objectFit: 'fill',
-    borderRadius: `${getRem(16)}`,
+    objectFit: 'contain',
   }),
 
   challengeTextWrapper: style([
