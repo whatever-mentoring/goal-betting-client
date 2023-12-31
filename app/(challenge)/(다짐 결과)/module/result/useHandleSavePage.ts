@@ -19,6 +19,7 @@ const useHandleSavePage = ({ goalId }: HandleSaveProps) => {
     title: '',
     periodText: '',
   });
+  const [isChallengeSuccess, setIsChallengeSuccess] = useState(false);
 
   useEffect(() => {
     if (!challengeData) return;
@@ -27,6 +28,7 @@ const useHandleSavePage = ({ goalId }: HandleSaveProps) => {
       title: challengeData.data.goal.content.value,
       periodText: getDayPeriodToText(challengeData.data.goal.startDate, 7),
     }));
+    setIsChallengeSuccess(challengeData.data.goal.result === 'SUCCESS');
   }, [challengeData]);
 
   const imageRef = useRef<HTMLDivElement>(null);
@@ -34,13 +36,22 @@ const useHandleSavePage = ({ goalId }: HandleSaveProps) => {
   const { captureAndDownload } = useCaptureAndDownloadImage(imageRef);
 
   const onClickDownload = () => {
-    captureAndDownload(challengeInfo.title + ' ' + challengeInfo.periodText);
+    captureAndDownload(challengeInfo.title + challengeInfo.periodText + '.png');
+  };
+
+  const getHeaderText = (isChallengeSuccess: boolean) => {
+    if (isChallengeSuccess) {
+      return '7일 동안 고생했어!';
+    }
+    return '다음에는\n다짐을 성공해보자';
   };
 
   return {
+    isChallengeSuccess,
     challengeInfo,
     imageRef,
     onClickDownload,
+    getHeaderText,
   };
 };
 
