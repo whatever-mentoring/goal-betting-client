@@ -19,7 +19,7 @@ const SavePage = ({ goalId }: SaverPageProps) => {
 
   return (
     <>
-      <Header showBackButton backTo={navigationPath.홈_페이지} />
+      <Header showBackButton backTo={navigationPath.다짐_페이지(goalId)} />
 
       <div className={savePageStyles.headerTextWrapper}>
         <Text.TitleH1 className={withPreWrapCenter}>
