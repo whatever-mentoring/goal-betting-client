@@ -144,7 +144,10 @@ class 참여자_다짐실패_기프티콘_없음 implements ActionHandler {
 }
 
 class 참여자_다짐실패_기프티콘있음_당첨 implements ActionHandler {
-  constructor(private nickname: string) {}
+  constructor(
+    private nickname: string,
+    private goalId: number,
+  ) {}
   getSteps(): BuilderStep[] {
     return [
       {
@@ -158,7 +161,7 @@ class 참여자_다짐실패_기프티콘있음_당첨 implements ActionHandler 
         buttonText: '기프티콘 받기',
         buttonTo: {
           type: 'link',
-          link: navigationPath.다짐_결과_퍼널(0).도전_기프티콘,
+          link: navigationPath.다짐_결과_퍼널(this.goalId).도전_기프티콘,
         },
       },
     ];
@@ -196,6 +199,7 @@ interface StepBuilderConstructor {
   isSuccess: boolean;
   hasGifticon: boolean;
   winnerNickname: string;
+  goalId?: number;
   isWinner?: boolean;
 }
 
@@ -205,6 +209,7 @@ export class ResultStepBuilder {
   private isSuccess: boolean;
   private hasGifticon: boolean;
   private winnerNickname: string;
+  private goalId?: number;
   private isWinner?: boolean;
 
   constructor({
@@ -213,6 +218,7 @@ export class ResultStepBuilder {
     isSuccess,
     hasGifticon,
     winnerNickname,
+    goalId,
     isWinner,
   }: StepBuilderConstructor) {
     this.nickname = nickname;
@@ -220,6 +226,7 @@ export class ResultStepBuilder {
     this.isSuccess = isSuccess;
     this.hasGifticon = hasGifticon;
     this.winnerNickname = winnerNickname;
+    this.goalId = goalId;
     this.isWinner = isWinner ?? false;
   }
 
@@ -249,9 +256,9 @@ export class ResultStepBuilder {
       console.log('참여자_다짐성공_기프티콘없음');
       return new 참여자_다짐성공_기프티콘없음(this.nickname);
     }
-    if (!this.isOwner && !this.isSuccess && this.hasGifticon && this.isWinner) {
+    if (!this.isOwner && !this.isSuccess && this.hasGifticon && this.isWinner && this.goalId) {
       console.log('참여자_다짐실패_기프티콘있음_당첨');
-      return new 참여자_다짐실패_기프티콘있음_당첨(this.nickname);
+      return new 참여자_다짐실패_기프티콘있음_당첨(this.nickname, this.goalId);
     }
     if (!this.isOwner && !this.isSuccess && this.hasGifticon && !this.isWinner) {
       console.log('참여자_다짐실패_기프티콘있음_미당첨');
