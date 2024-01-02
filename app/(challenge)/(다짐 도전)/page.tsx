@@ -1,7 +1,7 @@
 'use client';
-import dynamic from 'next/dynamic';
-import { Dispatch, SetStateAction, Suspense } from 'react';
+import { Dispatch, SetStateAction, Suspense, lazy } from 'react';
 import { 다짐_도전_퍼널_Key } from '../../common/navigation/navigationPath';
+import ChallengeSkeleton from './loading';
 import useHandleHomeRouting from './module/challenge/useHandleHomeRouting';
 
 interface Certification {
@@ -16,17 +16,17 @@ export interface ChallengerFunnelProps {
   setStep?: (step: 다짐_도전_퍼널_Key) => void;
 }
 
-const ChallengeDynamicPage = dynamic(() => import('./ui/Challenge/ChallengePage'), {
-  ssr: false,
-});
+const ChallengeDynamicPage = lazy(() => import('./ui/Challenge/ChallengePage'));
 
 const ChallengeFunnel = () => {
-  const { currentChallengeId } = useHandleHomeRouting();
+  const { currentChallengeId, isLoading } = useHandleHomeRouting();
+
+  if (isLoading) return <ChallengeSkeleton />;
 
   return (
     <>
       {!!currentChallengeId && (
-        <Suspense fallback={<div></div>}>
+        <Suspense fallback={<ChallengeSkeleton />}>
           <ChallengeDynamicPage goalId={currentChallengeId} />
         </Suspense>
       )}
