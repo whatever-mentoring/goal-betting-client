@@ -60,6 +60,12 @@ export const betPageStyles = {
       height: `${getRem(177)}`,
       backgroundColor: vars.color.grey800,
       borderRadius: `${getRem(16)}`,
+      transition: 'background-color 0.3s ease-in-out',
+      selectors: {
+        '&:active': {
+          backgroundColor: vars.color.grey700,
+        },
+      },
     },
   ]),
 
@@ -88,6 +94,12 @@ export const betPageStyles = {
       borderRadius: `${getRem(16)}`,
       height: `${getRem(87)}`,
       width: `100%`,
+      transition: 'background-color 0.3s ease-in-out',
+      selectors: {
+        '&:active': {
+          backgroundColor: vars.color.grey700,
+        },
+      },
     },
   ]),
 
