@@ -9,6 +9,7 @@ import {
   withPreWrapCenter,
 } from '@/app/common/ui/common.css';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { ChallengeCertificationFunnelProps } from '../../challenge/[goalId]/certificate/page';
 import useHandleCertificate from '../../module/certificate/useHandleCertificate';
 import { checkPageStyles } from './check.css';
@@ -22,26 +23,36 @@ interface ChallengeAddPageProps extends ChallengeCertificationFunnelProps {
 
 const CheckPage = ({ certification, onNext, params }: ChallengeAddPageProps) => {
   const { onClickSubmit } = useHandleCertificate({ certification, goalId: params.goalId, onNext });
+  const router = useRouter();
 
   return (
     <>
-      <Header showBackButton />
+      <Header
+        showBackButton
+        appendingRightButton={
+          <ButtonWrapper onClick={() => router.back()}>
+            <Text.BodyM color="white">수정하기</Text.BodyM>
+          </ButtonWrapper>
+        }
+      />
       <div className={headerTextWrapper}>
         <Text.TitleH1 className={withPreWrapCenter}>{'다짐을 인증해줘!'}</Text.TitleH1>
       </div>
-      <div className={checkPageStyles.inputImageWrapper}>
-        <>
-          <div className={checkPageStyles.imageWrapper}>
-            <Image
-              alt="image"
-              fill
-              priority
-              className={checkPageStyles.image}
-              src={certification.imageSrc ? certification.imageSrc : '/images/dog.png'}
-            />
-          </div>
-        </>
-      </div>
+      {!!certification.imageSrc && (
+        <div className={checkPageStyles.inputImageWrapper}>
+          <>
+            <div className={checkPageStyles.imageWrapper}>
+              <Image
+                alt="image"
+                fill
+                priority
+                className={checkPageStyles.image}
+                src={certification.imageSrc && certification.imageSrc}
+              />
+            </div>
+          </>
+        </div>
+      )}
       <TextArea>
         <div className={checkPageStyles.textAreaWrapper}>
           <div className={checkPageStyles.textWrapper}>

@@ -54,7 +54,7 @@ const CertificationPage = ({ certification, setCertification, onNext }: Challeng
   const isFileExist = !!certification.imageSrc;
 
   // 3. 유저 > 다음으로
-  const isAllFilled = isFileExist;
+  const isAllFilled = certification.imageSrc || certification.text;
 
   return (
     <>
