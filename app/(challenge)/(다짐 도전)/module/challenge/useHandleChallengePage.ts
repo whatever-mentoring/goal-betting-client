@@ -112,7 +112,9 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
     if (!certificateList) return;
     if (!challengeInfoData) return;
     const todayCertificate = certificateList.find(
-      (certificate) => certificate.progressDay === nthDayFromStartDate(getKoreanCurrentTime()),
+      (certificate) =>
+        certificate.progressDay ===
+        nthDayFromStartDate(getKoreanCurrentTime(), challengeInfoData.data.goal.startDate),
     );
     if (todayCertificate) {
       setTodayCertificate(true);
