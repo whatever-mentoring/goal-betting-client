@@ -29,7 +29,7 @@ const useHandleChallenge = () => {
         title: bet.goal.content.value,
         date: convertFormatDate(bet.goal.startDate, 'YYYY-MM-DD'),
         challengeStatus: 'SUCCESS',
-        nickname: sessionData.user.nickname,
+        nickname: bet.goal.hostUserNickname,
         href: isChallengeStarted
           ? navigationPath.다짐_페이지(bet.goal.id)
           : navigationPath.다짐_공유_페이지(bet.goal.id),

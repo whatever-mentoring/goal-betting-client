@@ -24,6 +24,7 @@ export interface MyBetting {
 
 export interface Data {
   hostUserId: number;
+  hostUserNickname: string;
   id: number;
   type: BETTING_TYPE;
   content: Content;
