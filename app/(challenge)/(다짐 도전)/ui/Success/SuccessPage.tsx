@@ -31,21 +31,23 @@ const SuccessPage = ({ goalId, goalProofId }: SuccessPageProps) => {
             {certification.dateText}
           </Text.BodyS>
         </div>
-        <div className={successPageStyles.inputImageWrapper}>
-          <div className={successPageStyles.imageWrapper}>
-            {certification.imgSrc && (
-              <Image
-                alt="image"
-                width={100}
-                height={100}
-                layout="responsive"
-                className={successPageStyles.image}
-                priority
-                src={certification.imgSrc}
-              />
-            )}
+        {!!certification.imgSrc && (
+          <div className={successPageStyles.inputImageWrapper}>
+            <div className={successPageStyles.imageWrapper}>
+              {certification.imgSrc && (
+                <Image
+                  alt="image"
+                  width={100}
+                  height={100}
+                  layout="responsive"
+                  className={successPageStyles.image}
+                  priority
+                  src={certification.imgSrc}
+                />
+              )}
+            </div>
           </div>
-        </div>
+        )}
         <div className={successPageStyles.textAreaWrapper}>
           <Text.BodyS className={withPreWrapCenter} color="white">
             {certification.content}
