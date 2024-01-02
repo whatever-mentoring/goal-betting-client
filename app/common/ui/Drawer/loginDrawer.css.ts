@@ -23,6 +23,16 @@ export const loginDrawerStyles = {
     display: 'flex',
     columnGap: `${getRem(8)}`,
     alignItems: 'center',
+    selectors: {
+      '&:hover': {
+        cursor: 'pointer',
+        opacity: 0.5,
+      },
+      '&:active': {
+        cursor: 'pointer',
+        opacity: 0.5,
+      },
+    },
   }),
 
   linkButtonWrapper: style([
