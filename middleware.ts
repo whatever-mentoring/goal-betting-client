@@ -19,6 +19,11 @@ export async function middleware(req: NextRequest) {
   // 로그인 상태
   if (token) {
     if (pathname.includes('/add')) {
+      if (!token.user.nicknameIsModified) {
+        return NextResponse.redirect(
+          `${origin}${navigationPath.로그인_퍼널.닉네임_설정}` + '&callback=' + pathname,
+        );
+      }
       if (callbackUrl?.length) {
         return NextResponse.redirect(`${origin}${callbackUrl}`);
       }
