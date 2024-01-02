@@ -1,11 +1,10 @@
 'use client';
 import { useSession } from 'next-auth/react';
 import dynamic from 'next/dynamic';
-import { Suspense } from 'react';
+import { Suspense, lazy } from 'react';
+import ChallengeSkeleton from '../../loading';
 
-const ChallengeDynamicPage = dynamic(() => import('../../ui/Challenge/ChallengePage'), {
-  ssr: false,
-});
+const ChallengeDynamicPage = lazy(() => import('../../ui/Challenge/ChallengePage'));
 
 const WithoutAuthDynamicChallengePage = dynamic(
   () => import('../../ui/Challenge/WithoutAuthChallengePage'),
@@ -20,7 +19,7 @@ const ChallengePage = ({ params }: { params: { goalId: number } }) => {
   const isLogin = !!data?.user?.accessToken;
 
   return (
-    <Suspense>
+    <Suspense fallback={<ChallengeSkeleton />}>
       {!isLogin && <WithoutAuthDynamicChallengePage goalId={params.goalId} />}
       {!!isLogin && <ChallengeDynamicPage goalId={params.goalId} />}
     </Suspense>
