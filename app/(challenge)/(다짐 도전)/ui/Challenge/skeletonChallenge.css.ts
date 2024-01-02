@@ -1,5 +1,5 @@
 // skeletonStyles.css.ts
-import { flexCenterCenter } from '@/app/common/ui/common.css';
+import { flexCenterCenter, phoneMediaQuery } from '@/app/common/ui/common.css';
 import getRem from '@/app/common/util/getRem';
 import { style } from '@vanilla-extract/css';
 import { challengePageStyles } from './challenge.css';
@@ -41,7 +41,7 @@ export const skeletonStyles = {
     borderRadius: `${getRem(18)}`,
   }),
 
-  gridContainer: style([challengePageStyles.gridContainer, {}]),
+  gridContainer: style([challengePageStyles.gridContainer, phoneMediaQuery]),
 
   gridItem: style([
     {
@@ -51,8 +51,13 @@ export const skeletonStyles = {
       justifyContent: 'center',
       padding: `${getRem(8)}`,
       borderRadius: `${getRem(18)}`,
-      height: getRem(75),
-      width: getRem(75),
+      selectors: {
+        '&:after': {
+          content: '""',
+          display: 'block',
+          paddingTop: '100%',
+        },
+      },
     },
   ]),
 };
