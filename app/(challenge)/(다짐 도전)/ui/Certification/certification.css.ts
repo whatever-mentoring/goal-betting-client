@@ -50,6 +50,7 @@ export const certificationPageStyles = {
     objectFit: 'cover',
     boxSizing: 'border-box',
     borderRadius: `${getRem(16)}`,
+    opacity: 0.6,
   }),
 
   imageUploadBox: style([
