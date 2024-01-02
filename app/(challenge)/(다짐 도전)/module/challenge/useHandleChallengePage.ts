@@ -91,7 +91,7 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
   // 3. 인증 내역 가져오기
   const [certificateList, setCertificateList] = useState<CertificateInfo[]>([]);
   const { data: certificateListData } = useGETCertificateListQuery({ goalId });
-  const [todayCertificate, setTodayCertificate] = useState(false);
+  const [todayCertificateId, setTodayCertificateId] = useState(0);
 
   useEffect(() => {
     if (!sessionData) return;
@@ -111,13 +111,16 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
   useEffect(() => {
     if (!certificateList) return;
     if (!challengeInfoData) return;
-    const todayCertificate = certificateList.find(
-      (certificate) =>
+
+    const todayCertificate = certificateList.find((certificate) => {
+      return (
         certificate.progressDay ===
-        nthDayFromStartDate(getKoreanCurrentTime(), challengeInfoData.data.goal.startDate),
-    );
+        nthDayFromStartDate(getKoreanCurrentTime(), challengeInfoData.data.goal.startDate)
+      );
+    });
+
     if (todayCertificate) {
-      setTodayCertificate(true);
+      setTodayCertificateId(todayCertificate.bettingId);
     }
   }, [certificateList, challengeInfoData]);
 
@@ -158,12 +161,12 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
       getButtonInfo(
         isMyChallenge,
         challengeInfoData.data.goal.result !== 'PROCEEDING',
-        todayCertificate,
+        todayCertificateId,
         challengeInfoData.data.goal.startDate,
         challengeInfoData.data.goal.id,
       ),
     );
-  }, [challengeInfoData, isMyChallenge, todayCertificate]);
+  }, [challengeInfoData, isMyChallenge, todayCertificateId]);
 
   // 새 다짐 클릭
   const onClickAddNewChallenge = () => {
@@ -213,7 +216,7 @@ const getLabelInfo = (startDate: Date, isChallengeEnded: boolean): LabelProps =>
 const getButtonInfo = (
   isOrganizer: boolean,
   isChallengeEnded: boolean,
-  isTodayChallenge: boolean,
+  certificationId: number,
   startDate: Date,
   goalId: number,
 ): ButtonInfo => {
@@ -224,10 +227,10 @@ const getButtonInfo = (
         link: navigationPath.다짐_결과_퍼널(goalId).도전_결과,
       };
     } else {
-      if (isTodayChallenge) {
+      if (certificationId !== 0) {
         return {
           text: '인증 확인하기',
-          link: navigationPath.다짐_인증_확인_페이지(goalId)(0),
+          link: navigationPath.다짐_인증_확인_페이지(goalId)(certificationId),
         };
       } else {
         return {
