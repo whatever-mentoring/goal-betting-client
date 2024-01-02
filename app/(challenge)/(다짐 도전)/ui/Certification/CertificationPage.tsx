@@ -112,7 +112,7 @@ const CertificationPage = ({ certification, setCertification, onNext }: Challeng
       </TextArea>
       <BottomFixedButton>
         <BottomFixedButton.OverItem className={fixedButtonOverWrapper}>
-          <ButtonWrapper onClick={onNext}>
+          <ButtonWrapper>
             <Text.BodyM color="grey500">다짐을 인증할 메세지를 적어주세요</Text.BodyM>
           </ButtonWrapper>
         </BottomFixedButton.OverItem>

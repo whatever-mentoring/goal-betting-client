@@ -47,7 +47,7 @@ const StartDatePage = ({ challenge, setChallenge, onNext }: StartDatePageProps) 
       </div>
       <BottomFixedButton>
         <BottomFixedButton.OverItem className={fixedButtonOverWrapper}>
-          <ButtonWrapper onClick={onNext}>
+          <ButtonWrapper>
             <Text.BodyS color="white">시작일 전까지 내기 참여자를 모을 수 있어!</Text.BodyS>
           </ButtonWrapper>
         </BottomFixedButton.OverItem>
