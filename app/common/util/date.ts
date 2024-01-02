@@ -26,7 +26,7 @@ export const getDayPeriodToText = (startDate: Date, day: number): string => {
  */
 export const nthDayFromStartDate = (startDate: Date, date?: Date): number => {
   if (!date) return dayjs().startOf('day').diff(dayjs(startDate).startOf('day'), 'day') + 1;
-  else return dayjs(date).startOf('day').diff(dayjs(startDate).startOf('day'), 'day') + 1;
+  else return dayjs(startDate).startOf('day').diff(dayjs(date).startOf('day'), 'day') + 1;
 };
 
 /**
