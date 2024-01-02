@@ -21,6 +21,16 @@ export const sharePageStyles = {
     },
   ]),
 
+  headerTextWrapper: style([
+    flexCenterCenter,
+    {
+      flexDirection: 'column',
+      marginTop: `${getRem(16)}`,
+      rowGap: `${getRem(10)}`,
+      marginBottom: `${getRem(18)}`,
+    },
+  ]),
+
   boxCanvas: style([
     {
       padding: `0 ${getRem(20)}`,

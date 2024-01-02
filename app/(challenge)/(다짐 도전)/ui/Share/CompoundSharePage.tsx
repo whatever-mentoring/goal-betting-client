@@ -32,6 +32,22 @@ const Banner = ({ children }: BannerProps) => {
 
 Banner.Item = Label;
 
+interface HeaderTextProps {
+  title: string;
+  description: string;
+}
+
+const HeaderText = ({ title, description }: HeaderTextProps) => {
+  return (
+    <>
+      <div className={sharePageStyles.headerTextWrapper}>
+        <Text.TitleH2>{title}</Text.TitleH2>
+        <Text.BodyS color="grey400">{description}</Text.BodyS>
+      </div>
+    </>
+  );
+};
+
 interface DownloadButtonProps {
   onClick: () => void;
 }
@@ -48,12 +64,19 @@ const DownloadButton = ({ onClick }: DownloadButtonProps) => {
 };
 
 interface ShareButtonProps {
+  overItemText: string;
+  onClickOverItem: () => void;
   onClick: () => void;
 }
 
-const ShareButton = ({ onClick }: ShareButtonProps) => {
+const ShareButton = ({ overItemText, onClickOverItem, onClick }: ShareButtonProps) => {
   return (
     <BottomFixedButton>
+      <BottomFixedButton.OverItem className={fixedButtonOverWrapper}>
+        <ButtonWrapper onClick={onClickOverItem}>
+          <Text.BodyM color="white">{overItemText}</Text.BodyM>
+        </ButtonWrapper>
+      </BottomFixedButton.OverItem>
       <BottomFixedButton.First width={100} onClick={onClick}>
         <Text.ButtonL>링크 보내기</Text.ButtonL>
       </BottomFixedButton.First>
@@ -89,6 +112,7 @@ const ParticipateButtonWithOverItem = ({
 };
 
 CompoundSharePage.Banner = Banner;
+CompoundSharePage.HeaderText = HeaderText;
 CompoundSharePage.ImageCard = ImageCard;
 CompoundSharePage.DownloadButton = DownloadButton;
 CompoundSharePage.ShareButton = ShareButton;

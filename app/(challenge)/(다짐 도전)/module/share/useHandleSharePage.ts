@@ -70,7 +70,10 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
   // 4. 참가하기
   const { mutate: postParticipate } = usePOSTParticipateChallengeMutation({});
 
+  const [isParticipant, setIsParticipant] = useState(false);
+
   const onClickParticipate = () => {
+    setIsParticipant(true);
     postParticipate(
       { postData: { goalId, predictionType: 'FAIL' } },
       {
@@ -92,6 +95,7 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
   const { mutate: deleteParticipate } = useDeleteParticipateMutation();
 
   const onClickCancel = (bettingId: number) => {
+    setIsParticipant(false);
     deleteParticipate(
       { bettingId },
       {
@@ -118,6 +122,8 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
     const isParticipant = participants.find((participant) => {
       return participant.userId === Number(sessionData.user.userId);
     });
+
+    setIsParticipant(!!isParticipant);
 
     if (!isParticipant) {
       setParticipantInfo({
@@ -146,6 +152,21 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
   const getLeftDays = () => {
     if (!challengeInfo) return 0;
     return getLeftDaysFromDate(challengeInfo.startDate);
+  };
+
+  // 참여자 > 챌린지 정보
+  const getChallengeTitle = (isParticipant: boolean) => {
+    const hostNickname = challengeInfoData.data.goal.hostUserNickname;
+    if (!isParticipant) {
+      return {
+        title: '내기를 참여해보세요 :O',
+        description: `${hostNickname}님이 만들었어요`,
+      };
+    }
+    return {
+      title: '내기에 참여중입니다 :)',
+      description: `${hostNickname}님이 만들었어요`,
+    };
   };
 
   const getPeriodText = () => {
@@ -182,7 +203,9 @@ const useHandleSharePage = ({ goalId }: HandleSharePageProps) => {
     challengeInfo,
     imageRef,
     participantInfo,
+    isParticipant,
     getLeftDays,
+    getChallengeTitle,
     getPeriodText,
     openDrawer,
     onClickDownload,

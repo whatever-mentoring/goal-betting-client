@@ -27,6 +27,10 @@ const SharePage = ({ params }: { params: { goalId: number } }) => {
             <CompoundSharePage.Banner.Item text="기프티콘" labelColor="cyan800" />
           )}
         </CompoundSharePage.Banner>
+        {/** 참여자용 챌린지 헤더 */}
+        {!shareData.isMyChallenge && (
+          <CompoundSharePage.HeaderText {...shareData.getChallengeTitle(shareData.isParticipant)} />
+        )}
         {/** 챌린지 정보 */}
         <CompoundSharePage.ImageCard
           src={'/images/mirr/mirr_happy.png'}
@@ -43,7 +47,11 @@ const SharePage = ({ params }: { params: { goalId: number } }) => {
         )}
         {/** 주최자 > 공유하기 */}
         {!!shareData.isMyChallenge && (
-          <CompoundSharePage.ShareButton onClick={shareData.onClickShare} />
+          <CompoundSharePage.ShareButton
+            overItemText={shareData.participantInfo.overItemText}
+            onClickOverItem={shareData.participantInfo.onClickOverItem}
+            onClick={shareData.onClickShare}
+          />
         )}
         {/** 참여자 > 참여하기 */}
         {!shareData.isMyChallenge && (
