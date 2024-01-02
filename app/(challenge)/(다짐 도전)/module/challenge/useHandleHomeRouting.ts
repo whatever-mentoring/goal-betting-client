@@ -7,7 +7,7 @@ import { useGetChallengeListQuery } from '../api/challengeList';
 const useHandleHomeRouting = () => {
   const router = useRouter();
 
-  const { data: challengeList } = useGetChallengeListQuery();
+  const { data: challengeList, isLoading } = useGetChallengeListQuery();
   const [currentChallengeId, setCurrentChallengeId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const useHandleHomeRouting = () => {
     router.push(navigationPath.다짐_생성_퍼널.다짐_입력, { scroll: false });
   }, [challengeList]);
 
-  return { currentChallengeId };
+  return { currentChallengeId, isLoading };
 };
 
 export default useHandleHomeRouting;
