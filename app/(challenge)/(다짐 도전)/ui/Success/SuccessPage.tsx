@@ -20,7 +20,7 @@ const SuccessPage = ({ goalId, goalProofId }: SuccessPageProps) => {
   });
   return (
     <>
-      <Header showBackButton backTo={navigationPath.홈_페이지} />
+      <Header showBackButton backTo={navigationPath.다짐_페이지(goalId)} />
       <div className={successPageStyles.wrapper} ref={imageRef}>
         <div className={successPageStyles.dateLeftWrapper}>
           <Label {...certification.label} />
