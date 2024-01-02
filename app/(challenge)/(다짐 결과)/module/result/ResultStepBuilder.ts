@@ -231,37 +231,28 @@ export class ResultStepBuilder {
   }
 
   build(): ActionHandler | null {
-    console.log(this);
     if (this.isOwner && this.isSuccess && this.hasGifticon && !this.isWinner) {
-      console.log('주최자_다짐성공_기프티콘있음');
       return new 주최자_다짐성공_기프티콘있음(this.nickname);
     }
     if (this.isOwner && this.isSuccess && !this.hasGifticon && !this.isWinner) {
-      console.log('주최자_다짐성공_기프티콘없음');
       return new 주최자_다짐성공_기프티콘없음(this.nickname);
     }
     if (this.isOwner && !this.isSuccess && this.hasGifticon && !this.isWinner) {
-      console.log('주최자_다짐실패_기프티콘있음');
       return new 주최자_다짐실패_기프티콘있음(this.nickname, this.winnerNickname);
     }
     if (this.isOwner && !this.isSuccess && !this.hasGifticon && !this.isWinner) {
-      console.log('주최자_다짐실패_기프티콘없음');
       return new 주최자_다짐실패_기프티콘없음(this.nickname);
     }
     if (!this.isOwner && !this.isSuccess && !this.hasGifticon && !this.isWinner) {
-      console.log('참여자_다짐실패_기프티콘_없음');
       return new 참여자_다짐실패_기프티콘_없음(this.nickname);
     }
     if (!this.isOwner && this.isSuccess && !this.hasGifticon && !this.isWinner) {
-      console.log('참여자_다짐성공_기프티콘없음');
       return new 참여자_다짐성공_기프티콘없음(this.nickname);
     }
     if (!this.isOwner && !this.isSuccess && this.hasGifticon && this.isWinner && this.goalId) {
-      console.log('참여자_다짐실패_기프티콘있음_당첨');
       return new 참여자_다짐실패_기프티콘있음_당첨(this.nickname, this.goalId);
     }
     if (!this.isOwner && !this.isSuccess && this.hasGifticon && !this.isWinner) {
-      console.log('참여자_다짐실패_기프티콘있음_미당첨');
       return new 참여자_다짐실패_기프티콘있음_미당첨(this.nickname, this.winnerNickname);
     }
     return null;
