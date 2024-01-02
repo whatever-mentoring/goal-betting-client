@@ -38,6 +38,7 @@ const useHandleResult = ({ goalId, setStep }: HandleResultProps) => {
       isSuccess: challengeInfo.data.goal.result === 'SUCCESS',
       winnerNickname: challengeInfo.data.winnerNickname || '',
       isWinner: challengeInfo.data.myBetting?.result === 'GET_GIFTICON' ?? false,
+      goalId: challengeInfo.data.goal.id,
     });
     const actionHandler = builderSteps.build();
     if (!actionHandler) return;

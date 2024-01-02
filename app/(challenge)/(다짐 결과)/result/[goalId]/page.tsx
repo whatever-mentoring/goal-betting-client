@@ -36,7 +36,7 @@ const page = ({ params }: { params: { goalId: number } }) => {
         </Suspense>
       </Funnel.Step>
       <Funnel.Step name="도전_기프티콘">
-        <KakaoDownloadPage />
+        <KakaoDownloadPage goalId={params.goalId} />
       </Funnel.Step>
     </Funnel>
   );

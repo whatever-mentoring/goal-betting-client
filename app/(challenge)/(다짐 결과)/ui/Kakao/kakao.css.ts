@@ -50,5 +50,6 @@ export const kakaoPageStyles = {
   image: style({
     width: `100%`,
     height: 'auto',
+    borderRadius: `${getRem(16)}`,
   }),
 };
