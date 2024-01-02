@@ -117,7 +117,13 @@ const BetPage = ({ challenge, setChallenge, onNext }: ChallengeAddPageProps) => 
       </div>
       {!isFileExist && (
         <div className={betPageStyles.linkButtonWrapper}>
-          <Link className={betPageStyles.linkButton} href={getKakaoLink()} scroll={false}>
+          <Link
+            className={betPageStyles.linkButton}
+            href={getKakaoLink()}
+            rel="noopener noreferrer"
+            target="_blank"
+            scroll={false}
+          >
             <Text.BodyM color="grey600">카카오톡으로 사러가기</Text.BodyM>
           </Link>
         </div>
