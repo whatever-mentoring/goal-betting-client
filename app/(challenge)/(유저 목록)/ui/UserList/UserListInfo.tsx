@@ -8,7 +8,7 @@ import UserBox from '../UserBox/UserBox';
 import { userListPageStyles } from './userList.css';
 
 const UserListInfo = ({ params }: { params: { goalId: number } }) => {
-  const { userList } = useHandleUserListPage({ goalId: params.goalId });
+  const { hostUser, participantList } = useHandleUserListPage({ goalId: params.goalId });
   return (
     <>
       <Header showBackButton />
@@ -16,33 +16,29 @@ const UserListInfo = ({ params }: { params: { goalId: number } }) => {
         <Text.TitleH2>유저 목록</Text.TitleH2>
       </div>
       <div className={userListPageStyles.challengerWrapper}>
-        {userList.length > 0 && (
-          <UserBox
-            nickName={userList[0].nickName}
-            profileSrc={userList[0].profileSrc}
-            date={userList[0].date}
-            withBorder
-          />
-        )}
+        <UserBox
+          nickName={hostUser.nickName}
+          profileSrc={hostUser.profileSrc}
+          date={hostUser.date}
+          withBorder
+        />
       </div>
       {!!params.goalId && (
         <div className={userListPageStyles.userList}>
-          {!userList.slice(1).length && (
+          {!participantList.length && (
             <CenterBlank>
               <Text.BodyS color="grey500">내기에 참여한 사람이 없어요</Text.BodyS>
             </CenterBlank>
           )}
-          {!!userList.length &&
-            userList
-              .slice(1)
-              .map((user, index) => (
-                <UserBox
-                  key={index}
-                  nickName={user.nickName}
-                  profileSrc={user.profileSrc}
-                  date={user.date}
-                />
-              ))}
+          {!!participantList.length &&
+            participantList.map((user, index) => (
+              <UserBox
+                key={index}
+                nickName={user.nickName}
+                profileSrc={user.profileSrc}
+                date={user.date}
+              />
+            ))}
         </div>
       )}
     </>

@@ -17,35 +17,37 @@ export interface User {
 
 const useHandleUserListPage = ({ goalId }: HandleUserListPageProps) => {
   const { data } = useGETChallengeParticipantQuery({ goalId });
-  const [userList, setUserList] = useState<User[]>([]);
+  const [hostUser, setHostUser] = useState<User>({
+    nickName: '',
+    profileSrc: '',
+    date: dayjs(),
+  });
+  const [participantList, setParticipantList] = useState<User[]>([]);
 
   useEffect(() => {
     if (data?.data) {
       const participants = data.data.participants;
       const hostUser = data.data.hostUser;
 
-      const userList: User[] = [];
-
-      userList.push({
+      setHostUser({
         nickName: hostUser.nickname,
-        profileSrc: '/images/mirr/mirr_2.png',
+        profileSrc: '/images/mirr/mirr_1.png',
         date: dayjs(hostUser.goalCreatedAt),
-        withBorder: true,
       });
 
-      participants.forEach((participant) => {
-        userList.push({
+      const userList = participants.map((participant) => {
+        return {
           nickName: participant.nickname,
           profileSrc: '/images/mirr/mirr_1.png',
-          date: dayjs(),
-        });
+          date: dayjs(participant.bettingCreatedAt),
+        };
       });
 
-      setUserList(userList);
+      setParticipantList(userList);
     }
   }, [data]);
 
-  return { userList };
+  return { hostUser, participantList };
 };
 
 export default useHandleUserListPage;
