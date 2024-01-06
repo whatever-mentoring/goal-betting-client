@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     description: '미르었던 다짐 - 미르었던 다짐',
     images: [
       {
-        url: 'https://mirr-dajim.co.kr/images/mirr/mirr_half.png',
+        url: 'https://whatever-storage.s3.ap-northeast-2.amazonaws.com/mirr/mirr_half.png',
         width: 800,
         height: 600,
         alt: '미르었던 다짐',
@@ -47,12 +47,11 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    url: 'https://mirr-dajim.co.kr',
     title: '미르었던 다짐',
     description: '미르었던 다짐 - 미르었던 다짐',
     images: [
       {
-        url: 'https://mirr-dajim.co.kr/images/mirr/mirr_half.png',
+        url: 'https://whatever-storage.s3.ap-northeast-2.amazonaws.com/mirr/mirr_half.png',
         width: 800,
         height: 600,
         alt: '미르었던 다짐',
