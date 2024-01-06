@@ -4,7 +4,7 @@ import { useFunnel } from '@/app/common/hooks/funnel/useFunnel';
 import navigationPath from '@/app/common/navigation/navigationPath';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
-import KakaoDownloadPage from '../../ui/Kakao/KakaoDownloadPage';
+import KakaoDownloadPage from '../../ui/Gifticon/GifticonDownloadPage';
 
 export interface ChallengeResultFunnel {
   onNext: () => void;

@@ -30,6 +30,34 @@ const pretendardFont = localFont({
 export const metadata: Metadata = {
   title: 'Root Layout',
   description: 'Root Layout',
+  metadataBase: new URL('https://mirr-dajim.co.kr'),
+  twitter: {
+    card: 'summary_large_image',
+    title: '미르었던 다짐',
+    description: '미르었던 다짐 - 미르었던 다짐',
+    images: [
+      {
+        url: 'https://whatever-storage.s3.ap-northeast-2.amazonaws.com/mirr/mirr_half.png',
+        width: 800,
+        height: 600,
+        alt: '미르었던 다짐',
+      },
+    ],
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'ko_KR',
+    title: '미르었던 다짐',
+    description: '미르었던 다짐 - 미르었던 다짐',
+    images: [
+      {
+        url: 'https://whatever-storage.s3.ap-northeast-2.amazonaws.com/mirr/mirr_half.png',
+        width: 800,
+        height: 600,
+        alt: '미르었던 다짐',
+      },
+    ],
+  },
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {

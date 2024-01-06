@@ -4,16 +4,16 @@ import Header from '@/app/common/ui/Header/Header';
 import Text from '@/app/common/ui/Text/Text';
 import { withPreWrapCenter } from '@/app/common/ui/common.css';
 import Image from 'next/image';
-import useHandleGifticonPage from '../../module/gitficon/useHandleGifticonPage';
+import useHandleGifticonPage from '../../module/gifticon/useHandleGifticonPage';
 import { ChallengeResultFunnel } from '../../result/[goalId]/page';
-import { kakaoPageStyles } from './kakao.css';
+import { kakaoPageStyles } from './gifticon.css';
 
 type OmitOnNext = Omit<ChallengeResultFunnel, 'onNext'>;
 interface SaverPageProps extends OmitOnNext {
   goalId: number;
 }
 
-const KakaoDownloadPage = ({ goalId }: SaverPageProps) => {
+const GifticonDownloadPage = ({ goalId }: SaverPageProps) => {
   const { gifticonURL, imageRef, onClickDownload } = useHandleGifticonPage({ goalId });
 
   return (
@@ -48,4 +48,4 @@ const KakaoDownloadPage = ({ goalId }: SaverPageProps) => {
   );
 };
 
-export default KakaoDownloadPage;
+export default GifticonDownloadPage;
