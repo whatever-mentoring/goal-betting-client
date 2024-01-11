@@ -97,10 +97,14 @@ const useHandleChallengePage = ({ goalId }: HandleChallengePageProps) => {
     if (!sessionData) return;
     if (!certificateListData) return;
     certificateListData.data.goalProofs.forEach((proof) => {
+      const findIndex = certificateListData.data.goalProofs.findIndex(
+        (certificate) => certificate.id === proof.id,
+      );
+      if (findIndex === -1) return;
       setCertificateList((prev) => [
         ...prev,
         {
-          progressDay: proof.progressDay,
+          progressDay: certificateListData.data.progressDays[findIndex],
           bettingId: proof.id,
         },
       ]);
