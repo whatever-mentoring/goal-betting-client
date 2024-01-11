@@ -48,14 +48,14 @@ const useHandleCertificateSuccess = ({ goalId, goalProofId }: HandleCertificateS
   useEffect(() => {
     if (!certificateList) return;
     if (!goalProofId) return;
-    const certificateInfo = certificateList.data.goalProofs.find(
+    const findIndex = certificateList.data.goalProofs.findIndex(
       (certificate) => Number(certificate.id) === Number(goalProofId),
     );
-    if (!certificateInfo) return;
+    if (findIndex === -1) return;
     setCertification((prev) => ({
       ...prev,
       label: {
-        text: `${certificateInfo.progressDay}일차`,
+        text: `${String(certificateList.data.progressDays[findIndex])}일차`,
         labelColor: 'purple400',
       },
     }));
@@ -64,14 +64,17 @@ const useHandleCertificateSuccess = ({ goalId, goalProofId }: HandleCertificateS
   useEffect(() => {
     if (!challengeData) return;
     if (!certificatedData) return;
-    const certificateInfo = certificateList.data.goalProofs.find(
+    const findIndex = certificateList.data.goalProofs.findIndex(
       (certificate) => certificate.id === Number(goalProofId),
     );
-    if (!certificateInfo) return;
+    if (findIndex === -1) return;
     setCertification((prev) => ({
       ...prev,
       dateText: convertFormatDate(
-        addDayToDate(challengeData.data.goal.startDate, certificateInfo.progressDay),
+        addDayToDate(
+          challengeData.data.goal.startDate,
+          certificateList.data.progressDays[findIndex],
+        ),
         'YYYY.MM.DD',
       ),
     }));
