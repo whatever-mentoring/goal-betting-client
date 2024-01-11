@@ -9,6 +9,7 @@ export interface Json {
 }
 export interface Data {
   goalProofs: GoalProofs[];
+  progressDays: number[];
 }
 export interface GoalProofs {
   id: number;
@@ -16,7 +17,6 @@ export interface GoalProofs {
   goalId: number;
   url: string;
   comment: string;
-  progressDay: number;
 }
 
 interface RequestInterface {
